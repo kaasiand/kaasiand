@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>counter</title>
+    <style>
+        body {
+            margin: 5px;
+            font-family: sans-serif;
+/*            background-color: #2155DA;*/
+            background-color: #ECE9D8;
+        }
+        button, input {
+            font-size: x-large;
+        }
+        .item {
+            display: block;
+            width: auto;
+            background-color: #c7675f;
+            border-radius: 5px;
+            padding: 8px;
+            margin-bottom: 7px;
+            box-shadow: 0 0 5px #0003;
+        }
+        .name {
+            width: 20vw;
+            margin-right: 5vw;
+        }
+        .inp {
+            width: 80px;
+            text-align: right;
+        }
+        .close, .clr {
+            float: right;
+        }
+        .item *:not(:first-child) {
+            margin-left: 5px;
+        }
+    </style>
+  </head>
+  <body onload="init()">
+    <div id="list"></div>
+    <button id="plus" onclick="addNew();">new counter</button>
+    <script>
+        function init() {
+            if (!localStorage || localStorage.length == 0) {
+                addNew();
+            }
+            else {
+                let data = JSON.parse(localStorage.getItem("data"));
+
+                for (let i = 0; i < data.length; i++) {
+                    add(data[i].name, data[i].number, data[i].color)
+                }
+            }
+            
+        }
+
+
+        
+        function save() {
+            let data = [];
+            for (let i = 0; i < list.children.length; i++) {
+                let item = list.children[i];
+                data.push({name:   item.children[0].value,
+                           number: item.children[2].value,
+                           color:  item.style.backgroundColor});
+            }
+            localStorage.setItem("data", JSON.stringify(data));
+        }
+
+        function addNew() {
+            add("", 0, `hsl(${Math.random() * 360}deg, 50%, 50%)`);
+            save();
+        }
+
+        function add(name, number, color) {
+            let d = document.createElement("div");
+            let i1 = document.createElement("input"),
+                b1 = document.createElement("button"),
+                i2 = document.createElement("input"),
+                b2 = document.createElement("button"),
+                b3 = document.createElement("button"),
+                i3 = document.createElement("input");
+
+            i1.type = "text";
+            i2.type = "number";
+            i3.type = "color";
+
+            d.classList.add("item");
+            i1.classList.add("name");
+            i2.classList.add("inp");
+            i3.classList.add("clr");
+            b1.classList.add("minus");
+            b2.classList.add("plus");
+            b3.classList.add("close");
+
+            i1.value = name;
+            i1.placeholder = "untitled";
+            i2.value = number;
+            d.style.backgroundColor = color;
+
+            b1.innerHTML = "&minus;";
+            b2.innerHTML = "+";
+            b3.innerHTML = "&times;";
+
+            i1.onchange = save;
+            i2.onchange = save;
+            i3.onchange = () => { i3.parentElement.style.backgroundColor = i3.value; save(); };
+            b1.onclick = () => { b1.nextElementSibling.value--; save(); };
+            b2.onclick = () => { b2.previousElementSibling.value++; save(); };
+            b3.onclick = () => { b3.parentElement.remove(); save(); };
+
+            d.appendChild(i1);
+            d.appendChild(b1);
+            d.appendChild(i2);
+            d.appendChild(b2);
+            d.appendChild(b3);
+            d.appendChild(i3);
+
+            list.appendChild(d);
+        }
+    </script>
+  </body>
+</html>
