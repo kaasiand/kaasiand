@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>oven</title>
+	<style>
+		body {
+			background-color: #222;
+			margin: 10px;
+			font-family: sans-serif;
+			color: #ccc;
+		}
+		#left, #right {
+			display: block;
+			position: fixed;
+			top: 10px;
+			box-sizing: border-box;
+			border-radius: 20px;
+			border: 2px solid #555;
+			width: calc(50vw - 144px);
+			height: calc(100vh - 20px);
+			padding: 0 20px 0 20px;
+			overflow-y: auto;
+		}
+		#left {
+			left: 10px;
+		}
+		#right {
+			right: 10px;
+		}
+		#convert {
+			display: block;
+			box-sizing: border-box;
+			margin-left: 50%;
+			transform: translate(-50%, 0);
+			width: 250px;
+			padding: 20px 20px 0 20px;
+		}
+		h1, p, input, label {
+			color: #ccc;
+			font-family: sans-serif;
+		}
+		.imagewrap {
+			position: relative;
+			width: 100%;
+			border: 2px solid #333;
+			overflow: auto;
+			margin-bottom: 20px;
+			background-color: #1c1c1c;
+			min-height: 240px;
+		}
+		.em {
+			font-weight: bold;
+			color: #ee0;
+		}
+		#btn {
+			width: 100%;
+			height: 40px;
+			font-size: 1.7em;
+			font-family: sans-serif;
+			margin-bottom: 20px;
+		}
+		label img, #convert canvas {
+			border:1px solid #666;
+		}
+		label {
+			margin-left: 2px;
+		}
+		.disabled {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+		.disabled .disabled {
+			opacity: 1;
+		}
+	</style>
+	<script>
+	let imageIn = document.createElement("img");
+	let ctx, ct2, cc;
+	let img64 = document.createElement("img");
+	let dragcurve = false;
+	
+	let mtx17c = [[16/17,  8/17, 14/17,  6/17],
+				  [ 4/17, 12/17,  2/17, 10/17],
+				  [13/17,  5/17, 15/17,  7/17],
+				  [ 1/17,  9/17,  3/17, 11/17]];
+				  
+	let mtx17h = [[16/17, 12/17, 15/17, 10/17],
+				  [ 4/17,  8/17,  3/17,  6/17],
+				  [13/17, 11/17, 14/17,  9/17],
+				  [ 1/17,  7/17,  2/17,  5/17]];
+				  
+	let mtx17x = [[16/17, 12/17, 14/17, 10/17],
+				  [ 4/17,  8/17,  2/17,  6/17],
+				  [13/17,  9/17, 15/17, 11/17],
+				  [ 1/17,  5/17,  3/17,  7/17]];
+	
+	let mtx9c = [[8/9, 4/9, 7/9, 3/9],
+				 [2/9, 6/9, 1/9, 5/9],
+				 [7/9, 3/9, 8/9, 4/9],
+				 [1/9, 5/9, 2/9, 6/9]];
+				 
+	let mtx9h = [[8/9, 6/9, 8/9, 5/9],
+				 [2/9, 4/9, 2/9, 3/9],
+				 [7/9, 6/9, 7/9, 5/9],
+				 [1/9, 4/9, 1/9, 3/9]];
+				 
+	let mtx9x = [[8/9, 5/9, 7/9, 6/9],
+				 [2/9, 3/9, 1/9, 4/9],
+				 [7/9, 6/9, 8/9, 5/9],
+				 [1/9, 4/9, 2/9, 3/9]];
+				 
+	let mtx5c = [[4/5, 2/5],
+				 [1/5, 3/5]];
+	let mtx5h = [[4/5, 3/5],
+				 [1/5, 2/5]];
+				 
+	let mtx3c = [[2/3, 1/3],
+				 [1/3, 2/3]];
+	let mtx3h = [[2/3, 2/3],
+				 [1/3, 1/3]];
+	let mtx1 = [[1/2]];
+	let mtxblue = [];
+	
+	let i256 = [];
+	let curve = [];
+	
+	img64.onload = function() {
+		let c = document.createElement("canvas");
+		c.width = 64;
+		c.height = 64;
+		let ct = c.getContext("2d");
+		ct.drawImage(img64, 0, 0);
+		let data = ct.getImageData(0, 0, 64, 64).data;
+		
+		i = 0;
+		for (let y = 0; y < 64; y++) {
+			let arr = [];
+			for (let x = 0; x < 64; x++, i+=4) {
+				arr.push(data[i]/255);
+			}
+			mtxblue.push(arr);
+		}
+	};
+	img64.src = "data:image/png;base64,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";
+	
+	function init() {
+		input.addEventListener("change", handleFiles, false);
+		ctx = canv.getContext("2d");
+		ct2 = preview.getContext("2d");
+		cc = curves.getContext("2d");
+		for (let i = 0; i < 256; i++)
+			i256.push(i), curve.push(i);
+		checkdpt();
+		updateCurve();
+		
+		let c = curvebg.getContext("2d");
+		
+		c.fillStyle = "#333";
+		c.fillRect(curvebg.width/4,0,1,curvebg.height);
+		c.fillRect(curvebg.width/4*3,0,1,curvebg.height);
+		c.fillRect(0,curvebg.height/4,curvebg.width,1);
+		c.fillRect(0,curvebg.height/4*3,curvebg.width,1);
+		
+		c.fillStyle = "#444";
+		c.fillRect(curvebg.width/2,0,1,curvebg.height);
+		c.fillRect(0,curvebg.height/2,curvebg.width,1);
+		
+		c.fillStyle = "#666";
+		c.font = '16px sans-serif';
+		c.textAlign = "right";
+		c.fillText("input", curvebg.width - 4, curvebg.height - 8);
+		c.textAlign = "left";
+		c.fillText("output", 5, 16);
+		
+		let grad = cc.createLinearGradient(0, curvebg.height, curvebg.width/2, curvebg.height/2);
+		grad.addColorStop(0, 'black');
+		grad.addColorStop(1, 'white');
+		c.fillStyle = grad;
+		c.fillRect(0,0,1,curvebg.height);
+		c.fillRect(0,curvebg.height - 1,curvebg.width,1);
+		
+		curves.onmousedown = (e) => {
+			dragcurve = true;
+			
+			let b = curves.getBoundingClientRect();
+			let x = (e.x - b.x) < 0 ? 0 : (e.x - b.x) > curves.width  ? curves.width  : (e.x - b.x);
+			let y = (e.y - b.y) < 0 ? 0 : (e.y - b.y) > curves.height ? curves.height : (e.y - b.y);
+			x = Math.round(x / curves.width  * 63);
+			y = 63 - Math.round(y / curves.height * 63);
+			
+			for (let i = 0; i < 4; i++)
+				curve[x * 4 + i] = y * 4;
+			
+			updateCurve();
+		};
+		window.onmousemove = (e) => {
+			if (!dragcurve) return;
+			let b = curves.getBoundingClientRect();
+			let x = (e.x - b.x) < 0 ? 0 : (e.x - b.x) > curves.width  ? curves.width  : (e.x - b.x);
+			let y = (e.y - b.y) < 0 ? 0 : (e.y - b.y) > curves.height ? curves.height : (e.y - b.y);
+			x = Math.round(x / curves.width  * 63);
+			y = 63 - Math.round(y / curves.height * 63);
+			
+			for (let i = 0; i < 4; i++)
+				curve[x * 4 + i] = y * 4;
+			
+			updateCurve();
+		};
+		window.onmouseup = (e) => {
+			dragcurve = false;
+		};
+		window.onmouseleave = (e) => {
+			dragcurve = false;
+		};
+		exp.value = 1;
+	}
+	
+	function handleFiles() {
+		const fileList = this.files;
+		console.log(this.files);
+		imgin.src = URL.createObjectURL(this.files[0]);
+		imageIn.src = URL.createObjectURL(this.files[0]);
+	}
+	
+	window.addEventListener("paste", async function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		e.clipboardData.items[0].getAsString(s => console.log(s));
+		let file = e.clipboardData.items[0].getAsFile();
+		
+		imageIn.onload = function() {
+			imgin.src = imageIn.src;
+			URL.revokeObjectURL(imageIn.src);
+		};
+		if ('srcObject' in imageIn) {
+		  imageIn.srcObject = file;
+		} else {
+		  imageIn.src = URL.createObjectURL(file);
+		}
+	});
+	
+	function bake() {
+		canv.width  = imageIn.width;
+		canv.height = imageIn.height;
+		
+		ctx.imageSmoothingEnabled = false;
+		let scale = d11.checked ? 1 : d22.checked ? 2 : d44.checked ? 4 : 1;
+		let mtx = p17.checked && cheq.checked ? mtx17c :
+				  p17.checked && hatc.checked ? mtx17h :
+				  p17.checked && hybr.checked ? mtx17x :
+				  
+				   p9.checked && cheq.checked ? mtx9c :
+				   p9.checked && hatc.checked ? mtx9h :
+				   p9.checked && hybr.checked ? mtx9x :
+				   
+				   p5.checked && cheq.checked ? mtx5c :
+				   p5.checked && hatc.checked ? mtx5h :
+				   
+				   p3.checked && cheq.checked ? mtx3c :
+				   p3.checked && hatc.checked ? mtx3h :
+				   bn.checked ? mtxblue :
+				   mtx1;
+		
+		ctx.drawImage(imgin, 0, 0, canv.width / scale, canv.height / scale);
+		ctx.drawImage(canv, 0, 0, canv.width / scale, canv.height / scale, 0, 0, canv.width, canv.height);
+		data = ctx.getImageData(0, 0, canv.width, canv.height);
+		
+		let w = mtx[0].length,
+			h = mtx.length;
+			
+		let white = gg.checked ? [0xb1, 0xae, 0xa8] : [0xff, 0xff, 0xff];
+		let black = gg.checked ? [0x32, 0x2f, 0x29] : [0, 0, 0];
+		let func =  greylight.checked ? getLightness :
+					greyvalue.checked ? getValue :
+					greylstar.checked ? getLstar : getLightness;
+		
+		let i = 0, grey;
+		for (let y = 0; y < canv.height; y++) {
+			for (let x = 0; x < canv.width; x++, i += 4) {
+			
+				grey = func(data.data[i], data.data[i+1], data.data[i+2]);
+				grey = Math.round(grey * 255);
+				
+				if (grey < 0) grey = 0;
+				else if (grey > 255) grey = 255;
+				
+				grey = curve[grey];
+				grey /= 255;
+				
+				if (grey > mtx[y%h][x%w]) { // white
+					data.data[i]   = white[0];
+					data.data[i+1] = white[1];
+					data.data[i+2] = white[2];
+				}
+				else { // black
+					data.data[i]   = black[0];
+					data.data[i+1] = black[1];
+					data.data[i+2] = black[2];
+				}
+			}
+		}
+		ctx.putImageData(data, 0, 0);
+	}
+	
+	function getLstar(r, g, b) { // D65/2°
+		let Y, yr;
+		r /= 255;
+		g /= 255;
+		b /= 255;
+
+		r = ((r > 0.04045) ? Math.pow((r+0.055)/1.055,2.4) : r/12.92) * 100;
+		g = ((g > 0.04045) ? Math.pow((g+0.055)/1.055,2.4) : g/12.92) * 100;
+		b = ((b > 0.04045) ? Math.pow((b+0.055)/1.055,2.4) : b/12.92) * 100;
+
+		Y = (0.2126*r + 0.7152*g + 0.0722*b) / 100;
+		yr = (Y > 0.008856) ? Math.pow(Y, 1/3) : (7.787 * Y) + 16/116;
+
+		let L = (116*yr)-16;
+
+		return L/100;
+	}
+	function getLightness(r, g, b) {
+		r /= 255;
+		g /= 255;
+		b /= 255;
+		let Cmax = Math.max(r, g, b);
+		let Cmin = Math.min(r, g, b);
+
+		return (Cmax + Cmin) / 2;
+	}
+	function getValue(r, g, b) {
+		return Math.max(r, g, b) / 255;
+	}
+	
+	function checkdpt() {
+		cheq.disabled = false;
+		hatc.disabled = false;
+		hybr.disabled = false;
+		
+		if (!(p3.checked || p5.checked || p9.checked || p17.checked)) {
+			cheq.disabled = true;
+			hatc.disabled = true;
+			hybr.disabled = true;
+		}
+		if (p3.checked || p5.checked) {
+			if (hybr.checked) hatc.checked = true;
+			hybr.disabled = true;
+		}
+		
+		dpt.classList.toggle("disabled", !(p3.checked || p5.checked || p9.checked || p17.checked));
+		hybrid.classList.toggle("disabled", !(p9.checked || p17.checked));
+		
+		updatePreview();
+	}
+	function updatePreview() {
+		data = ct2.createImageData(preview.width, preview.height);
+		
+		ctx.imageSmoothingEnabled = false;
+		let scale = d11.checked ? 1 : d22.checked ? 2 : d44.checked ? 4 : 1;
+		let mtx = p17.checked && cheq.checked ? mtx17c :
+				  p17.checked && hatc.checked ? mtx17h :
+				  p17.checked && hybr.checked ? mtx17x :
+				  
+				   p9.checked && cheq.checked ? mtx9c :
+				   p9.checked && hatc.checked ? mtx9h :
+				   p9.checked && hybr.checked ? mtx9x :
+				   
+				   p5.checked && cheq.checked ? mtx5c :
+				   p5.checked && hatc.checked ? mtx5h :
+				   
+				   p3.checked && cheq.checked ? mtx3c :
+				   p3.checked && hatc.checked ? mtx3h :
+				   bn.checked ? mtxblue :
+				   mtx1;
+		
+		let grad = ct2.createLinearGradient(0, 0, preview.width / scale, 0);
+		grad.addColorStop(0, 'black');
+		grad.addColorStop(1, 'white');
+		ct2.fillStyle = grad;
+		ct2.fillRect(0, 0, preview.width / scale, preview.height / scale);
+		
+		ct2.drawImage(preview, 0, 0, preview.width / scale, preview.height / scale, 0, 0, preview.width, preview.height);
+		data = ct2.getImageData(0, 0, preview.width, preview.height);
+		
+		let w = mtx[0].length,
+			h = mtx.length;
+			
+		let white = gg.checked ? [0xb1, 0xae, 0xa8] : [0xff, 0xff, 0xff];
+		let black = gg.checked ? [0x32, 0x2f, 0x29] : [0, 0, 0];
+		let func =  greylight.checked ? getLightness :
+					greyvalue.checked ? getValue :
+					greylstar.checked ? getLstar : getLightness;
+		
+		let i = 0, grey;
+		for (let y = 0; y < preview.height; y++) {
+			for (let x = 0; x < preview.width; x++, i += 4) {
+			
+				grey = func(data.data[i], data.data[i+1], data.data[i+2]);
+				grey = Math.round(grey * 255);
+				
+				if (grey < 0) grey = 0;
+				else if (grey > 255) grey = 255;
+				
+				grey = curve[grey];
+				grey /= 255;
+				
+				if (grey > mtx[y%h][x%w]) { // white
+					data.data[i]   = white[0];
+					data.data[i+1] = white[1];
+					data.data[i+2] = white[2];
+				}
+				else { // black
+					data.data[i]   = black[0];
+					data.data[i+1] = black[1];
+					data.data[i+2] = black[2];
+				}
+			}
+		}
+		ct2.putImageData(data, 0, 0);
+		
+		grad = ct2.createLinearGradient(0, 0, preview.width, 0);
+		grad.addColorStop(0, 'black');
+		grad.addColorStop(1, 'white');
+		ct2.fillStyle = grad;
+		ct2.fillRect(0, 0, preview.width, preview.height >> 1);
+	}
+	
+	function updateCurve() {
+		cc.clearRect(0,0,curves.width,curves.height);
+		
+		cc.strokeStyle = "#ee0";
+		cc.lineWidth = 2;
+		cc.beginPath();
+		cc.moveTo(0, curves.height);
+		for (let i = 0; i < 255; i++) {
+			cc.lineTo(i/255 * curves.width + 1, (1 - curve[i]/255) * curves.height - 1);
+		}
+		cc.stroke(); 
+		cc.clearRect(0,0,1,curves.height);
+		cc.clearRect(0,curves.height - 1,curves.width,1);
+		updatePreview();
+	}
+	function setCurve(c) {
+		for (let i = 0; i < 256; i++) {
+			curve[i] = c[i];
+		}
+		updateCurve();
+	}
+	function setPower() {
+		let p = exp.value;
+		for (let i = 0; i < 256; i++) {
+			curve[i] = Math.round(Math.pow(i/255, p) * 255);
+		}
+		updateCurve();
+	}
+	</script>
+</head>
+<body onload="init()">
+	<div id="left" ondragover="event.preventDefault()">
+		<h1>of <span class="em">in</span> the cold food</h1>
+		<div class="imagewrap">
+		<img id="imgin" src=""></img>
+		</div>
+		<input type="file" id="input" name="img" accept="image/*" />
+		<p>alternatively, <span class="em">paste</span> an image from the clipboard*</p>
+		<p style="font-size:.8em; font-style: italic; color: #888; margin-top: -10px;">* doesn't seem to work with images copied from the browser. known issue, makes my brain hurt</p>
+	</div>
+	<div id="convert">
+		<button id="btn" onclick="bake()">bake</button>
+		<canvas id="preview" width="208" height="16"></canvas>
+		
+		<span class="em">palette</span><br/>
+		<input type="radio" id="gg" name="palette" onchange="updatePreview()" checked /><label><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAYAAAB3AH1ZAAAAMElEQVRIDWPYsHb5f0qwoZ76f0owAyWWg/RSYjlI76gDRkNgNARGQ2A0BEZDYDQEAHfNiD2pZSBTAAAAAElFTkSuQmCC" style="vertical-align: middle; transform: scale(-1)"/>  grey and grey</label><br/>
+		<input type="radio" id="bw" name="palette" onchange="updatePreview()" /><label><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAYAAAB3AH1ZAAAAMElEQVRIDWP49+/ff0owAwPDf4owJZaD9FJkOcjxow4YDYHREBgNgdEQGA2BER8CALoK+D0ECPUrAAAAAElFTkSuQmCC" style="vertical-align: middle; transform: scale(-1)"/>  black and white</label><br/>
+		<br/>
+		<span class="em">dither pattern</span><br/>
+		<input type="radio" id="nd" name="ditherpat" onchange="checkdpt()" /><label>no dithering</label><br/>
+		<input type="radio" id="p3" name="ditherpat" onchange="checkdpt()" /><label>3 patterns</label><br/>
+		<input type="radio" id="p5" name="ditherpat" onchange="checkdpt()" /><label>5 patterns</label><br/>
+		<input type="radio" id="p9" name="ditherpat" onchange="checkdpt()" /><label>9 patterns</label><br/>
+		<input type="radio" id="p17"name="ditherpat" onchange="checkdpt()" checked /><label>17 patterns</label><br/>
+		<input type="radio" id="bn" name="ditherpat" onchange="checkdpt()" /><label>blue noise</label><br/>
+		<br/>
+		<span id="dpt"><span class="em">dither pattern type</span><br/>
+		<input type="radio" id="cheq" name="dithertype" onchange="updatePreview()" checked /><label>chequered</label><br/>
+		<input type="radio" id="hatc" name="dithertype" onchange="updatePreview()" /><label>hatched</label><br/>
+		<span id="hybrid"><input type="radio" id="hybr" onchange="updatePreview()" name="dithertype" /><label>hybrid</label></span><br/>
+		</span>
+		<br/>
+		<span class="em">dither block size</span><br/>
+		<input type="radio" id="d11" name="dithersize" onchange="updatePreview()" checked /><label>1&times;1 pixels</label><br/>
+		<input type="radio" id="d22" name="dithersize" onchange="updatePreview()" /><label>2&times;2 pixels</label><br/>
+		<input type="radio" id="d44" name="dithersize" onchange="updatePreview()" /><label>4&times;4 pixels</label><br/><br/>
+		
+		<span class="em">what to use for greyscale</span><br/>
+		<input type="radio" id="greylight" name="greytype" onchange="updatePreview()" /><label>lightness</label><br/>
+		<input type="radio" id="greyvalue" name="greytype" onchange="updatePreview()" /><label>value</label><br/>
+		<input type="radio" id="greylstar" name="greytype" onchange="updatePreview()" checked /><label>L* (D65/2°)</label><br/>
+		<br/>
+		<span class="em">curves</span><br/>
+		
+		<div style="display:block;height:218px">
+		<canvas id="curvebg" width="208" height="208" style="position:absolute;margin-top:3px"></canvas>
+		<canvas id="curves" width="208" height="208" style="position:absolute;margin-top:3px"></canvas>
+		</div>
+		x to the power <input type="number" id="exp" min="0.1" max="5" step="0.1" style="width:40px;color:#222" onchange="setPower()" value="1"></input>
+		<button onclick="exp.value = 1; exp.onchange()">reset</button>
+	</div>
+	<div id="right">
+		<h1>of <span class="em">out</span> hot eat the food</h1>
+		<div class="imagewrap">
+			<canvas id="canv" width="1" height="1"></canvas>
+		</div>
+		<p style="font-size:.9em; font-style: italic; color: #888;">(right click the output to copy or save it)</p>
+	</div>
+</body>
+</html>
