@@ -2,53 +2,42 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="twitter:dnt" content="on">
     <title>kaasiand</title>
-    <style>
-        body {
-            margin: 5px;
-            font-family: sans-serif;
-/*            background-color: #2155DA;*/
-            background-color: #ECE9D8;
-        }
-        button, input {
-
-            font-size: x-large;
-        }
-        .item {
-            display: block;
-            width: auto;
-            background-color: #c7675f;
-            border-radius: 5px;
-            padding: 8px;
-            margin-bottom: 7px;
-            box-shadow: 0 0 5px #0003;
-        }
-        .name {
-            width: 20vw;
-            margin-right: 5vw;
-        }
-        .inp {
-            width: 80px;
-            text-align: right;
-        }
-        .close {
-            float: right;
-        }
-        .clr {
-            float: right;
-        }
-        .item *:not(:first-child) {
-            margin-left: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body onload="init()">
-    <div id="cont">
-        UNDER CONSTRUCTION
-
+    <div id="top" class="wrapper">
+        <img src="assets/cheese.gif" class="cheese" style="transform: scaleX(-1);">
+        <h1 id="topshadow">&nbsp;<span style="text-decoration: underline solid darkorange 2px;">Kaasiand.cool</span>&nbsp;</h1><h1 id="topgradient">&nbsp;<span style="text-decoration: underline solid darkorange 2px;">Kaasiand.cool</span>&nbsp;</h1>
+        <img src="assets/cheese.gif" class="cheese">
+        <br>
+        <sup>the one and onion</sup>
     </div>
-    <a href="counter/">counter</a>
-    <a href="oven/">oven</a>
+    <div id="main" class="wrapper">
+        <div class="container left" id="nav">
+            <ul>
+                <li><a href="">Home</a></li>
+                <!-- <li class="new"><a href="#">Web apps</a></li>
+                <li><a href="#">Other things</a></li>
+                <li><a href="#">About</a></li> -->
+            </ul>
+
+        </div>
+        <div class="container" id="cont">
+            Welcome to Kaasiand.cool!
+
+            UNDER CONSTRUCTION
+            <br>
+            <a href="counter/">counter</a>
+            <br>
+            <a href="oven/">oven</a>
+        </div>
+        <div class="container right" id="rightbar">
+            <a class="twitter-timeline" data-chrome="transparen" data-width="260" data-height="700" data-dnt="true" href="https://twitter.com/kaasIand?ref_src=twsrc%5Etfw">Tweets by kaasIand</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+        </div>
+    </div>
 
 
     <script>
