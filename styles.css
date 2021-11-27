@@ -21,10 +21,10 @@ div {
     background: url(assets/banana.bmp) repeat;
     box-sizing: border-box;
 }
-.left {
+.leftbar {
     width: 200px;
 }
-.right {
+.rightbar {
     width: 300px;
 }
 .noborder {
@@ -65,11 +65,11 @@ h1 {
     margin: 0;
 }
 
-#nav {
-
-}
 #cont {
     width: calc(100vw - 580px);
+    position: relative;
+    min-height: 500px;
+    box-shadow: 2px 2px 5px black;
 }
 .cheese {
     background: 66% -14% / 50px 50px no-repeat url(assets/fire.gif);
@@ -77,10 +77,25 @@ h1 {
     vertical-align: bottom;
 }
 
-
-
+.left {
+    float: left;
+}
+.right {
+    float: right;
+    word-wrap: break-word;
+}
+.fadedown {
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1), 80%, rgba(0,0,0,0));
+}
+.fadeleft {
+    mask-image: linear-gradient(to left, rgba(0,0,0,1), 80%, rgba(0,0,0,0));
+}
 #nav ul {
     list-style-image: url('assets/arrow.gif');
+}
+#nav li {
+    list-style-image: url('assets/arrow.gif');
+    margin-bottom: 2px;
 }
 #nav li.new {
     list-style-image: url('assets/new.gif');
@@ -88,4 +103,54 @@ h1 {
 #nav li * {
     position: relative;
     top: -3px;
+    text-shadow: 0px 1px 3px black;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+#nav li a {
+    color: yellow;
+}
+#nav li a:hover {
+    color: white;
+}
+#nav li a:active {
+    color: red;
+}
+
+.rightbar, .leftbar {
+    background: url(assets/wood.jpg);
+    min-height: 300px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: burlywood maroon maroon burlywood;
+    box-shadow: 2px 2px 5px black;
+    color:ivory;
+}
+
+#cont img {
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+hr {
+    clear: both;
+}
+
+.appbtn {
+    display: inline-block;
+    background: darkred;
+    color:yellow;
+    padding: 5px;
+    text-decoration: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: medium;
+    border-width: 5px;
+    border-style: solid;
+    border-color: burlywood black black burlywood;
+
+}
+.appbtn:hover {
+    background:crimson;
+    color:white;
+    border-color: white black black white;
+
 }
