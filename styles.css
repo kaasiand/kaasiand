@@ -86,11 +86,11 @@ h1 {
 }
 .fadedown {
     mask-image: linear-gradient(to bottom, rgba(0,0,0,1), 80%, rgba(0,0,0,0));
-    border: none;
+    border: none !important;
 }
 .fadeleft {
     mask-image: linear-gradient(to left, rgba(0,0,0,1), 80%, rgba(0,0,0,0));
-    border: none;
+    border: none !important;
 }
 #nav ul {
     list-style-image: url('assets/arrow.gif');
