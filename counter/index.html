@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>counter</title>
-    <link rel="icon" href="favicon.png">
+    <link id="favi" rel="icon">
     <style>
         body {
             margin: 5px;
@@ -43,7 +43,15 @@
     <div id="list"></div>
     <button id="plus" onclick="addNew();">new counter</button>
     <script>
+        let digits = new Image();
+        let ico = document.createElement('canvas');
+        let ctx = ico.getContext('2d');
+
         function init() {
+            ico.width = 32;
+            ico.height = 32;
+            digits.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAQCAAAAACkIqcdAAAACXBIWXMAAA9hAAAPYQGoP6dpAAAA0ElEQVQ4jc2Uy3YGIQiDv3jm/R+ZdDFe0B/b067KxgHHECKo4DUBYNj831v747mrPTQgAPTy635iLHDyBU77WmEMrQ0QJcrf8Vbhaq0PRMZj+JPE3Jn6OnElsxfwnARifinfUYoWwWQT0Itj2/CEdQQ6ZtkIhVoNYkpy0ttXg1EnLdWADQKM3cV+6djutbqs2et4hbf9c7EhhF+1esKi5Dh86SJXmfHacTr77edZFIYnXSoimKOyzcbquk+2e7u2gM8qRyjVNLrZl/hM/u9fmy/LT0cs1od5KAAAAABJRU5ErkJggg==";
+
             if (!localStorage || localStorage.length == 0) {
                 addNew();
             }
@@ -55,9 +63,29 @@
                 }
             }
             
+            digits.onload = function() {
+                updateFavicon(list.children[0]);
+            }
         }
 
+        function updateFavicon(el) {
+            let number = el.children[2].value.substr(-4);
 
+            ctx.clearRect(0, 0, 32, 32);
+            ctx.fillStyle = el.style.backgroundColor;
+            ctx.beginPath(); ctx.arc( 2,  4, 2, 0, 7); ctx.fill();
+            ctx.beginPath(); ctx.arc( 2, 28, 2, 0, 7); ctx.fill();
+            ctx.beginPath(); ctx.arc(30,  4, 2, 0, 7); ctx.fill();
+            ctx.beginPath(); ctx.arc(30, 28, 2, 0, 7); ctx.fill();
+            ctx.fillRect(0, 4, 32, 24);
+            ctx.fillRect(2, 2, 28, 28);
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 8, 32, 16);
+            for (let i = 0; i < 4; i++) {
+                ctx.drawImage(digits, number[i] * 8, 0, 8, 16, (i + 4 - (number.length)) * 8, 8, 8, 16);
+            }
+            favi.href = ico.toDataURL();
+        }
         
         function save() {
             let data = [];
@@ -107,9 +135,9 @@
 
             i1.onchange = save;
             i2.onchange = save;
-            i3.onchange = () => { i3.parentElement.style.backgroundColor = i3.value; save(); };
-            b1.onclick = () => { b1.nextElementSibling.value--; save(); };
-            b2.onclick = () => { b2.previousElementSibling.value++; save(); };
+            i3.onchange = () => { i3.parentElement.style.backgroundColor = i3.value; save(); updateFavicon(i3.parentElement); };
+            b1.onclick = () => { b1.nextElementSibling.value--; save(); updateFavicon(b1.parentElement); };
+            b2.onclick = () => { b2.previousElementSibling.value++; save(); updateFavicon(b2.parentElement); };
             b3.onclick = () => { b3.parentElement.remove(); save(); };
 
             d.appendChild(i1);
