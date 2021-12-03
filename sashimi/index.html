@@ -88,6 +88,7 @@
 
         #list {
             width: 690px;
+            max-width: 100%;
         }
 
         .track {
@@ -139,20 +140,26 @@
         .track p:nth-of-type(3) {
             width: 150px;
         }
+        @media only screen and (max-width: 720px) {
+            .onlypc {
+                display: none;
+            }
+
+        }
     </style>
 </head>
 
 <body onload="init()">
     <div id="stick">
     <div class="top labelwrap">
-        <p id="controlopen">Open files (Z)</p>
+        <p id="controlopen">Open<span class="onlypc"> files (Z)</span></p>
         <div class="controldivider"></div>
-        <p id="controlprev">Previous track (A)</p>
-        <p id="controlnext">Next track (D)</p>
+        <p id="controlprev">Previous<span class="onlypc"> track (A)</span></p>
+        <p id="controlnext">Next<span class="onlypc"> track (D)</span></p>
         <div class="controldivider"></div>
-        <p id="controlplay" style="width: 150px">Play (Space)</p>
-        <p id="controlpause">Pause (Space)</p>
-        <p id="controlstop">Stop (C)</p>
+        <p id="controlplay" style="width: 150px">Play<span class="onlypc"> (Space)</span></p>
+        <p id="controlpause">Pause<span class="onlypc"> (Space)</span></p>
+        <p id="controlstop">Stop<span class="onlypc"> (C)</span></p>
     </div>
     <div class="top buttonwrap">
         <button onclick="openFile()" aria-labelledby="controlopen"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M1 22h22v-6h-22v6zM0 13h24l-12-11l-12 11z" /></svg></button>
@@ -664,18 +671,19 @@
                 return null;
 
             let charcode = buffer.getUint8(pos);
-
+            let bom = false;
             let encoding = "utf-8";
             switch (charcode) {
                 case 0: encoding = "iso-8859-1"; break;
-                case 1: encoding = "utf-16be"; break;
+                case 1: encoding = buffer.getUint16(pos + 1) == 0xFFFE ? "utf-16le" : "utf-16be";
+                    bom = true; break;
                 case 2: encoding = "utf-16be"; break;
                 case 3: encoding = "utf-8"; break;
             }
 
             let td = new TextDecoder(encoding);
             let tt = td.decode(Uint8Array.from(buffer.getArray(pos + 1, size - 1)));
-            if (tt.indexOf("\0") > 0) tt = tt.substr(0, tt.indexOf("\0"));
+            if (tt.indexOf("\0") > 0) tt = tt.substring(bom ? 0 : 1, tt.indexOf("\0"));
             return tt;
         }
         function parseImageField(track, buffer, pos, size) {
