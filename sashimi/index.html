@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>sashimi</title>
+    <link rel="icon" href="favicon.png">
+    <style>
+        body {
+            background-color: #ebe5dc;
+            margin-top: 0px;
+        }
+
+        #stick {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0px;
+            padding-top: 8px;
+            background-color: #ebe5dc;
+        }
+
+        .controldivider {
+            display: inline-block;
+            width: 20px;
+        }
+
+        .labelwrap p {
+            width: 100px;
+            text-align: center;
+            font-size: 7pt;
+            text-transform: uppercase;
+            font-family: sans-serif;
+
+        }
+
+        .buttonwrap button {
+            top: 40px;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #7c5d56;
+            background: radial-gradient(#e6e0d840 20%, #b8a89540 60%, transparent 100%),
+                linear-gradient(to bottom, #f3efeb, #e6e0d8 10%, #d6ccb8 90%, #a89e8a);
+            box-shadow: 0 0 2px #7c5d56 inset;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        .buttonwrap button:hover,
+        .buttonwrap button:focus {
+            background: radial-gradient(#e6e0d820 20%, #b8a89520 60%, transparent 100%),
+                linear-gradient(to bottom, #f3efeb, #ece8e1 10%, #e4dccb 90%, #a89e8a);
+        }
+
+        .buttonwrap button:active, .buttonwrap button.down {
+            background: radial-gradient(#e6e0d810 40%, #b8a89540 60%, transparent 100%),
+                linear-gradient(to top, #cec6bd, #cac1b2 10%, #b8ae99 90%, #afa795);
+        }
+
+        .buttonwrap button svg {
+            position: relative;
+            top: 3px;
+            width: 30px;
+            height: 30px;
+            fill: #7c5d56;
+        }
+
+        .buttonwrap button:active svg, .buttonwrap button.down svg {
+            top: 6px;
+            fill: #63463f;
+        }
+
+        .top {
+            display: flex;
+            justify-content: center;
+        }
+
+        #scr {
+            background-color: #c5520f;
+            box-shadow: 0 0 2px #471606 inset, 0 0 2px #471606 inset, 0 0 3px #471606 inset;
+            margin-top: 15px;
+            width: 690px;
+            image-rendering: pixelated;
+            margin-bottom: 15px;
+            z-index: 2;
+            position: relative;
+        }
+
+        #list {
+            width: 690px;
+        }
+
+        .track {
+            margin-bottom: 15px;
+            width: 100%;
+            height: 60px;
+            background-color: #dfd2ccc0;
+            display: flex;
+            font-family: sans-serif;
+            justify-content: space-between;
+            background-image: var(--cover);
+            background-repeat: no-repeat;
+            background-size: contain;
+            padding-left: 80px;
+            padding-right: 20px;
+            box-sizing: border-box;
+            align-items: center;
+            cursor: pointer;
+            color: #63463f;
+            border: none;
+            font-size: 13pt;
+            text-align: left;
+            z-index: -1;
+            position: relative;
+        }
+        .track:disabled {
+            opacity: .5;
+            pointer-events: none;
+        }
+        .track:hover, .track:focus {
+            background-color: #cab6adc0;
+        }
+        .track.playing {
+            background-color: #f09971;
+        }
+        .track p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .track p:first-of-type {
+            flex-grow: 2;
+            width: 200px;
+        }
+        .track p:nth-of-type(2) {
+            width: 150px;
+        }
+        .track p:nth-of-type(3) {
+            width: 150px;
+        }
+    </style>
+</head>
+
+<body onload="init()">
+    <div id="stick">
+    <div class="top labelwrap">
+        <p id="controlopen">Open files (Z)</p>
+        <div class="controldivider"></div>
+        <p id="controlprev">Previous track (A)</p>
+        <p id="controlnext">Next track (D)</p>
+        <div class="controldivider"></div>
+        <p id="controlplay" style="width: 150px">Play (Space)</p>
+        <p id="controlpause">Pause (Space)</p>
+        <p id="controlstop">Stop (C)</p>
+    </div>
+    <div class="top buttonwrap">
+        <button onclick="openFile()" aria-labelledby="controlopen"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M1 22h22v-6h-22v6zM0 13h24l-12-11l-12 11z" /></svg></button>
+        <div class="controldivider"></div>
+        <button id="buttonprev" onclick="playOffsetTrack(-1)" aria-labelledby="controlprev"><svg aria-hidden="true" style="transform: scaleX(-1.3);" viewBox="0 0 24 24"><path d="M0 1v22l9-11l-9-11zM9 1v22l9-11l-9-11zM18 1h4v22h-4v-22z" /></svg></button>
+        <button id="buttonnext" onclick="playOffsetTrack(1)" aria-labelledby="controlnext"><svg aria-hidden="true" style="transform: scaleX(1.3);" viewBox="0 0 24 24"><path d="M0 1v22l9-11l-9-11zM9 1v22l9-11l-9-11zM18 1h4v22h-4v-22z" /></svg></button>
+        <div class="controldivider"></div>
+        <button id="buttonplay" onclick="playTrack()" style="width: 150px" aria-labelledby="controlplay"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 22v-20l18 10-18 10z" /></svg></button>
+        <button id="buttonpause" onclick="pauseTrack()" aria-labelledby="controlpause"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 1h6v22h-6v-22zM13 1h6v22h-6v-22z" /></svg></button>
+        <button id="buttonstop" onclick="stopTrack()" aria-labelledby="controlstop"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M2 2h20v20h-20v-20z" /></svg></button>
+    </div>
+    <div class="top">
+        <canvas id="scr" width="138" height="20"></canvas>
+    </div>
+</div>
+    <div class="top">
+        <div id="list">
+        </div>
+        <img id="bbb">
+    </div>
+
+
+    <script>
+        class Track {
+            title = null;
+            album = null;
+            artist = null;
+            cover = null;
+            audio = null;
+            number = null;
+            listItem = null;
+
+            setCover(src) {
+                this.cover = src;
+                if (this.listItem)
+                    this.listItem.style.setProperty("--cover", `url(${this.cover})`);
+            }
+            setAudio(a) {
+                this.audio = a;
+                if (this.listItem)
+                    this.listItem.disabled = false;
+            }
+        }
+        let currentTrack = -1;
+        let ctx, cw, ch;
+        let font = [];
+        function init() {
+            ctx = scr.getContext("2d");
+            ctx.imageSmoothingEnabled = false;
+            font[0] = new Image();
+
+            const fontfiles = 1;
+            let fontsloaded = 0;
+            
+            let go = () => {
+                fontsloaded++;
+                if (fontsloaded >= fontfiles)
+                    setInterval(() => {updateCanvas()}, 250);
+            };
+
+            font[0].onload = go;
+            font[0].src = "font00.png"
+
+            document.onkeydown = (e) => {
+                switch (e.code) {
+                    case "KeyZ": openFile(); break;
+                    case "KeyA": playOffsetTrack(-1); break;
+                    case "KeyD": playOffsetTrack(1); break;
+                    case "Space": e.preventDefault(); playTrack(); break;
+                    case "KeyC": stopTrack(); break;
+                }
+            }
+
+            function logKey(e) {
+            log.textContent += ` ${e.code}`;
+            }
+
+        }
+        let blinkWarningCounter = 0;
+        let bufferSource;
+        let startedAt = 0;
+        let elapsed = () => acx.currentTime - startedAt;
+
+        const STOPPED = 0;
+        const PLAYING = 1;
+        const PAUSED  = 2;
+        let playState = STOPPED;
+
+        function playFromList(track) {
+            let i = tracklist.indexOf(track);
+            if (i == currentTrack && playState != STOPPED) {
+                pauseTrack();
+                return;
+            }
+            stopTrack(true);
+            currentTrack = i;
+            setTimeout(() => {playTrack();},50);
+        }
+        function tracklistEmpty() {
+            if (tracklist.length == 0) {
+                blinkWarningCounter = 5;
+                return true;
+            }
+            return false;
+        }
+
+        function playTrack() {
+            if (tracklistEmpty())
+                return;
+
+            if (!tracklist[currentTrack].audio) {
+                let a = list.querySelector("button:not(:disabled)");
+                if (a)
+                    a.click();
+                return;
+            }
+
+            if (playState == PLAYING) {
+                pauseTrack();
+                return;
+            }
+
+            buttonplay.classList.add("down");
+            buttonpause.classList.remove("down");
+            playState = PLAYING;
+
+            if (acx.state == "suspended") {
+                acx.resume();
+                return;
+            }
+
+            bufferSource = acx.createBufferSource();
+            bufferSource.buffer = tracklist[currentTrack].audio;
+            bufferSource.connect(acx.destination);
+            bufferSource.start();
+            bufferSource.onended = endTrack;
+            startedAt = acx.currentTime;
+        }
+        function playOffsetTrack(offset = 1) {
+            if (tracklistEmpty())
+                return;
+
+            stopTrack(true);
+            currentTrack = Math.max((currentTrack + offset) % tracklist.length, 0);
+            playTrack();
+        }
+        function endTrack() {
+            playState = STOPPED;
+            currentTrack = (currentTrack + 1) % tracklist.length;
+            playTrack();
+        }
+
+        function pauseTrack() {
+            buttonplay.classList.remove("down");
+            buttonpause.classList.add("down");
+            if (playState == STOPPED) {
+                setTimeout(() => {buttonpause.classList.remove("down");},50);
+                return;
+            }
+            if (playState == PAUSED) {
+                playTrack();
+                return;
+            }
+            playState = PAUSED;
+            acx.suspend();
+        }
+        function stopTrack(invisible = false) {
+            playState = STOPPED;
+            if (bufferSource) {
+                bufferSource.onended = null;
+                bufferSource.stop();
+            }
+            acx.resume();
+            buttonplay.classList.remove("down");
+            buttonpause.classList.remove("down");
+            if (!invisible) {
+                buttonstop.classList.add("down");
+                setTimeout(() => {buttonstop.classList.remove("down");},50)
+            }
+        }
+
+        const acx = new AudioContext();
+        let tracklist = []
+        function openFile(folder) {
+            let input = document.createElement('input');
+            input.type = 'file';
+            input.accept = "audio/*";
+            input.multiple = true;
+            input.onchange = () => {
+                let files = Array.from(input.files);
+                console.log(files);
+                let tracks = [];
+                let num = files.length;
+                files.forEach(file => {
+                    let a = new FileReader();
+                    a.onload = () => {
+                        let track = readID3.call(a);
+                        tracks.push(track);
+                        if (tracks.length == files.length) {
+                            tracks.sort((a, b) => ((a.album.toLowerCase() == b.album.toLowerCase()) ? (a.number > b.number) : (a.album.toLowerCase() > b.album.toLowerCase())));
+                            console.log(tracks);
+                            tracklist.push(...tracks);
+                            tracks.forEach(t => addTrackListItem(t));
+                            currentTrack = 0;
+                        }
+                    };
+                    a.readAsArrayBuffer(file);
+                });
+            };
+            input.click();
+
+        }
+        let strSashimi  = "      SASHIMI          ";
+        let strInsert   = " * NO FILES INSERTED * ";
+        let strGetTime = function() {
+            let d = new Date();
+            let s = d.toLocaleTimeString(navigator.languages,{ timeStyle: "short"})
+            if (s.match(/\d{1,2}:\d{2}$/)) { //matches ...hh:mm" format
+                s = d.toLocaleTimeString("en-UK",{ timeStyle: "short"})
+            } else {
+                s = d.toLocaleTimeString("en-US",{ timeStyle: "short"}).replace(" P","\3").replace(" A","\5").replace("M","\4");
+            }
+            if (d.getSeconds() % 2)
+                s = s.replace(":"," ");
+            return s;
+        }
+        function setScreenAltText(str) {
+            scr.setAttribute("aria-label", str);
+        }
+
+        let strLoading = () => {
+            let s = "LOADING TRACKS";
+            let d = (new Date()).getSeconds() % 4;
+            for (let i = 0; i < d; i++) {
+                s += ".";
+            }
+            return s;
+        }
+
+        function updateCanvas() {
+            ctx.clearRect(0,0,scr.width,scr.height);
+            let loading = !!list.querySelector("button:disabled");
+
+            let t = tracklist[currentTrack];
+            switch (playState) {
+                case STOPPED: 
+                    if (tracklist.length == 0) {
+                        let s = strInsert;
+                        if (loading) {
+                            s = strLoading();
+                        }
+                        if (blinkWarningCounter) {
+                            if (blinkWarningCounter % 2)
+                                s = "";
+                            blinkWarningCounter--;
+                        }
+                        writeScreen(strSashimi, s, strGetTime());
+                        setScreenAltText("Sashimi – No files inserted");
+                    }
+                    else {
+                        writeScreen(strSashimi, loading ? strLoading() : "", strGetTime());
+                        setScreenAltText(loading ? "Sashimi" : "Loading tracks...");
+                    }
+                break;
+                case PLAYING:
+                    write("\1", 1, 0);
+                    writeScreen("", loading ? strLoading() : "", t.title.toUpperCase().substr(0,21));
+                    if (!loading)
+                        writeTrackProgress();
+                    setScreenAltText("Now playing: " + t.title + (loading? ". Loading tracks..." : ""));
+                break;
+                case PAUSED:
+                    //if ((new Date()).getSeconds() % 2)
+                    write("\2", 1, 0);
+                    writeScreen("", loading ? strLoading() : "", t.title.toUpperCase().substr(0,21));
+                    if (!loading)
+                        writeTrackProgress();
+                    setScreenAltText("Paused: " + t.title + (loading? ". Loading tracks..." : ""));
+                break;
+            }
+            
+            ctx.globalCompositeOperation = "source-in";
+            ctx.fillStyle = "#471606"
+            ctx.fillRect(0,0,scr.width,scr.height);
+            ctx.globalCompositeOperation = "source-over";
+        }
+
+        function toMMSS(n) {
+            let ss = Math.floor(n % 60);
+            let mm = Math.min(Math.floor(n / 60), 59);
+            return (mm < 10 ? " " : "") + mm + ":" + (ss < 10 ? "0" : "") + ss;
+        }
+
+        let progressBar = () => {
+            let str = "[", d = tracklist[currentTrack].audio.duration;
+            for (let i = 0; i < 11; i++) {
+                if (d < 11)
+                    str += (i < Math.round(elapsed() / d * 11)) ? "\0" : " ";
+                else
+                    str += (i < Math.round(Math.floor(elapsed()) / Math.floor(d) * 11)) ? "\0" : " ";
+            }
+            str += "]";
+            return str;
+        };
+
+        function addTrackListItem(track) {
+            let b = document.createElement("button");
+            let p1 = document.createElement("p"),
+                p2 = document.createElement("p"),
+                p3 = document.createElement("p");
+            
+            b.classList.add("track");
+            b.style.setProperty("--cover", `url(${track.cover})`);
+            p1.innerText = track.title;
+            p2.innerText = track.album;
+            p3.innerText = track.artist;
+            b.appendChild(p1);
+            b.appendChild(p2);
+            b.appendChild(p3);
+            if (!track.audio)
+                b.disabled = true;
+            b.onclick = () => {playFromList(track)};
+            list.appendChild(b);
+            track.listItem = b;
+        }
+
+        function writeScreen(line1, line2, line1R = "", line2R = "") {
+
+            write(line1, 0,  0, false);
+            write(line2, 0, 10, false);
+            write(line1R, scr.width,  0, true);
+            write(line2R, scr.width, 10, true);
+        }
+
+        function writeTrackProgress() {
+            write(toMMSS(elapsed()) + progressBar(), 1, 10);
+            write("                  " + toMMSS(tracklist[currentTrack].audio.duration), 0, 10);
+        }
+
+        function getTime() {
+            let d = new Date(),
+                t = d.toLocaleTimeString(navigator.languages,{ timeStyle: "short"})
+        }
+
+        function write(str,sx,sy, rtl = false) {
+            let x = sx, y = sy;
+            for (const i in str) {
+                x += drawLetter(str[rtl ? str.length - 1 - i : i], x, y, rtl);
+            }
+            return Math.abs(sx - x);
+        }
+
+        function drawLetter(c,x,y,rtl) {
+            let n = (c.charCodeAt(0) & 0xFF00) >> 8,
+                img = font[n];
+            if (!img) return drawLetter("\0", x, y, rtl);
+            let cw = img.width / 32,
+                ch = img.height / 8,
+                cx = c.charCodeAt(0) & 0x001F,
+                cy = (c.charCodeAt(0) & 0x00E0) >> 5;
+            
+            ctx.drawImage(font[n], cx * cw, cy * ch, cw, ch, rtl ? x - cw : x, y, cw, ch);
+            return rtl ? -cw : cw;
+        }
+
+        DataView.prototype.getChar = function (start) {
+            return String.fromCharCode(this.getUint8(start));
+        };
+        DataView.prototype.getString = function (start, length) {
+            for (var i = 0, v = ''; i < length; ++i) {
+                v += this.getChar(start + i);
+            }
+            return v;
+        };
+        DataView.prototype.getArray = function (start, length) {
+            for (var i = 0, v = []; i < length; ++i) {
+                v.push(this.getUint8(start + i));
+            }
+            return v;
+        };
+        DataView.prototype.getInt = function (start) {
+            return (this.getUint8(start) << 21) | (this.getUint8(start + 1) << 14) | (this.getUint8(start + 2) << 7) | this.getUint8(start + 3);
+        };
+
+        function readID3() {
+            let a = new DataView(this.result);
+            // Parse it quickly
+            if (a.getString(0, 3) != "ID3") {
+                return false;
+            }
+
+            // True if the tag is pre-V3 tag (shorter headers)
+            let TagVersion = a.getUint8(3);
+
+            // Check the version
+            if (TagVersion < 0 || TagVersion > 4) {
+                return false;
+            }
+
+            // Get the ID3 tag size and flags; see 3.1
+            let tagsize = a.getInt(6) + 10;
+            //(a.getUint8(9) & 0xFF) | ((a.getUint8(8) & 0xFF) << 7 ) | ((a.getUint8(7) & 0xFF) << 14 ) | ((a.getUint8(6) & 0xFF) << 21 ) + 10;
+            let uses_synch = (a.getUint8(5) & 0x80) != 0 ? true : false;
+            let has_extended_hdr = (a.getUint8(5) & 0x40) != 0 ? true : false;
+
+            let headersize = 0;
+            // Read the extended header length and skip it
+            if (has_extended_hdr) {
+                let headersize = a.getInt(10);
+                //(a.getUint8(10) << 21) | (a.getUint8(11) << 14) | (a.getUint8(12) << 7) | a.getUint8(13); 
+            }
+
+            // Read the whole tag
+            let buffer = new DataView(a.buffer.slice(10 + headersize, tagsize));
+
+            // Prepare to parse the tag
+            let length = buffer.byteLength;
+
+            // Recreate the tag if desynchronization is used inside; we need to replace 0xFF 0x00 with 0xFF
+            if (uses_synch) {
+                let newpos = 0;
+                let newbuffer = new DataView(new ArrayBuffer(tagsize));
+
+                for (let i = 0; i < tagsize; i++) {
+                    if (i < tagsize - 1 && (buffer.getUint8(i) & 0xFF) == 0xFF && buffer.getUint8(i + 1) == 0) {
+                        newbuffer.setUint8(newpos++, 0xFF);
+                        i++;
+                        continue;
+                    }
+
+                    newbuffer.setUint8(newpos++, buffer.getUint8(i));
+                }
+
+                length = newpos;
+                buffer = newbuffer;
+            }
+
+            // Set some params
+            let pos = 0;
+            let ID3FrameSize = TagVersion < 3 ? 6 : 10;
+            let track = new Track();
+
+            // Parse the tags
+            while (true) {
+                let rembytes = length - pos;
+
+                // Do we have the frame header?
+                if (rembytes < ID3FrameSize)
+                    break;
+
+                // Is there a frame?
+                if (buffer.getChar(pos) < 'A' || buffer.getChar(pos) > 'Z')
+                    break;
+
+                // Frame name is 3 chars in pre-ID3v3 and 4 chars after
+                let framename;
+                let framesize;
+
+                if (TagVersion < 3) {
+                    framename = buffer.getString(pos, 3);
+                    framesize = ((buffer.getUint8(pos + 5) & 0xFF) << 8) | ((buffer.getUint8(pos + 4) & 0xFF) << 16) | ((buffer.getUint8(pos + 3) & 0xFF) << 24);
+                }
+                else {
+                    framename = buffer.getString(pos, 4);
+                    framesize = buffer.getInt(pos + 4);
+                    //(buffer.getUint8(pos+7) & 0xFF) | ((buffer.getUint8(pos+6) & 0xFF) << 8 ) | ((buffer.getUint8(pos+5) & 0xFF) << 16 ) | ((buffer.getUint8(pos+4) & 0xFF) << 24 );
+                }
+
+                if (pos + framesize > length)
+                    break;
+
+                if (framename == "TPE1" || framename == "TPE2" || framename == "TPE3" || framename == "TPE") {
+                    if (track.artist == null)
+                        track.artist = parseTextField(buffer, pos + ID3FrameSize, framesize);
+                }
+
+                if (framename == "TIT2" || framename == "TIT") {
+                    if (track.title == null)
+                        track.title = parseTextField(buffer, pos + ID3FrameSize, framesize);
+                }
+
+                if (framename == "TALB") {
+                    if (track.album == null)
+                        track.album = parseTextField(buffer, pos + ID3FrameSize, framesize);
+                }
+
+                if (framename == "TRCK") {
+                    if (track.number == null)
+                        track.number = 1 * parseTextField(buffer, pos + ID3FrameSize, framesize);
+                }
+
+                if (framename == "APIC") {
+                    if (track.cover == null)
+                        parseImageField(track, buffer, pos + ID3FrameSize, framesize);
+                }
+
+                pos += framesize + ID3FrameSize;
+                continue;
+            }
+            console.log(track);
+            acx.decodeAudioData(this.result, e => { track.setAudio(e); }, () => { });
+            return track;
+        }
+
+        function parseTextField(buffer, pos, size) {
+            if (size < 2)
+                return null;
+
+            let charcode = buffer.getUint8(pos);
+
+            let encoding = "utf-8";
+            switch (charcode) {
+                case 0: encoding = "iso-8859-1"; break;
+                case 1: encoding = "utf-18be"; break;
+                case 2: encoding = "utf-18be"; break;
+                case 3: encoding = "utf-8"; break;
+            }
+
+            let td = new TextDecoder(encoding);
+            return td.decode(Uint8Array.from(buffer.getArray(pos + 1, size - 2)));
+        }
+        function parseImageField(track, buffer, pos, size) {
+            if (size < 2)
+                return null;
+
+            let charcode = buffer.getUint8(pos);
+
+            let encoding = "utf-8";
+            switch (charcode) {
+                case 0: encoding = "iso-8859-1"; break;
+                case 1: encoding = "utf-18be"; break;
+                case 2: encoding = "utf-18be"; break;
+                case 3: encoding = "utf-8"; break;
+            }
+            let tdiso = new TextDecoder("iso-8859-1");
+            let td = new TextDecoder(encoding);
+
+            let i = 1;
+            let bytes = [];
+            for (; buffer.getUint8(pos + i); i++) {
+                bytes.push(buffer.getUint8(pos + i));
+            }
+            let mimeType = tdiso.decode(Uint8Array.from(bytes));
+            i++;
+            let pictureType = buffer.getUint8(pos + i);
+            if (pictureType != 3)
+                return null;
+            i++;
+            bytes = [];
+            for (; buffer.getUint8(pos + i); i++) {
+                bytes.push(buffer.getUint8(pos + i));
+            }
+            let desc = td.decode(Uint8Array.from(bytes));
+            i++;
+            let data = Uint8Array.from(buffer.getArray(pos + i, size - i));
+            let blob = new Blob([data], { type: mimeType });
+            let im = new Image();
+            let c = document.createElement("canvas");
+            c.width = 200;
+            c.height = 200;
+            let ctx = c.getContext("2d");
+            im.onload = () => {
+                ctx.imageSmoothingEnabled = true;
+                ctx.drawImage(im, 0, 0, 200, 200);
+                URL.revokeObjectURL(blob);
+                track.setCover(c.toDataURL());
+            }
+            im.src = URL.createObjectURL(blob);
+        }
+
+    </script>
+</body>
+
+</html>
