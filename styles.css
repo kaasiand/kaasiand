@@ -226,7 +226,7 @@ h2 {
     }
     #nav li {
         list-style-image: url('assets/arrow.gif');
-        float: left;
+        float: none;
     }
     #nav li.new {
         list-style-image: url('assets/new.gif') !important;
