@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <title>Web apps &mdash; Kaasiand.cool </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="assets/favicon.gif">
   </head>
   <body onload="init()">
     <div id="top" class="wrapper">
-        <img src="assets/cheese.gif" alt="animated burning wedge of cheese" class="cheese" style="transform: scaleX(-1);">
+        <img src="assets/cheese.gif" alt="animated burning wedge of cheese" class="cheese flip">
         <h1 id="topshadow">&nbsp;<span style="text-decoration: underline solid darkorange 2px;">Kaasiand.cool</span>&nbsp;</h1><h1 id="topgradient">&nbsp;<span style="text-decoration: underline solid darkorange 2px;">Kaasiand.cool</span>&nbsp;</h1>
         <img src="assets/cheese.gif" alt="animated burning wedge of cheese" class="cheese">
         <br>
@@ -19,7 +20,7 @@
             <ul>
                 <li><a href="./">Home</a></li>
                 <li><p>Web apps</p></li>
-                <ul>
+                <ul class="pconly">
                     <li style="list-style-image: url('sashimi/favicon16.png');"><a href="sashimi/">Sashimi</a></li>
                     <li style="list-style-image: url('oven/favicon.png');"><a href="oven/">Oven</a></li>
                     <li style="list-style-image: url('assets/favicon_counter.png');"><a href="counter/">Counter</a></li>

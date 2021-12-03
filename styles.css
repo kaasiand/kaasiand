@@ -1,5 +1,6 @@
 body {
     margin: 10px;
+    padding-top: 30px;
     font-family: "Times New Roman", "FreeSerif", Times, serif;
     font-size: large;
     background: repeat url(assets/wood.bmp);
@@ -20,22 +21,49 @@ div {
     margin: 10px;
     background: url(assets/banana.bmp) repeat;
     box-sizing: border-box;
+    width: 30%;
+}
+.rightbar, .leftbar {
+    background: url(assets/wood.jpg);
+    min-height: 300px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: burlywood maroon maroon burlywood;
+    box-shadow: 2px 2px 5px black;
+    color:ivory;
 }
 .leftbar {
-    width: 200px;
+    /* max-width: 250px; */
+    position: fixed;
+    width: 100%;
+    left: -10px;
+    top: -10px;
+    min-height: 50px;
+    height: 50px;
 }
-.rightbar {
-    width: 300px;
+
+#cont {
+    position: relative;
+    min-height: 500px;
+    box-shadow: 2px 2px 5px black;
+    width: 70%;
 }
+.cheese {
+    background: 66% -14% / 50px 50px no-repeat url(assets/fire.gif);
+    width: 60px;
+    vertical-align: bottom;
+}
+#main {
+    display: flex;
+    align-items: flex-start;
+}
+
 .noborder {
     border: none;
     background: none;
 }
 #top {
     text-align: center;
-}
-#top img {
-    display: inline;
 }
 #topgradient {
     background-image: linear-gradient(to top, darkorange, gold);
@@ -56,25 +84,22 @@ div {
     font-weight: bold;
     text-shadow: 0 1px 2px black;
 }
+#top img {
+    display: inline;
+    transform: scale(0.7);
+    transform-origin: 50% 100%;
+    margin: 0 -10px 0;
+}
+#top img.flip {
+    transform: scale(-0.7,0.7);
+}
 h1 {
     display: inline;
     font-style: italic;
     font-weight: bold;
-    font-size: xxx-large;
+    font-size: 36px;
     padding: 0;
     margin: 0;
-}
-
-#cont {
-    width: calc(100vw - 580px);
-    position: relative;
-    min-height: 500px;
-    box-shadow: 2px 2px 5px black;
-}
-.cheese {
-    background: 66% -14% / 50px 50px no-repeat url(assets/fire.gif);
-    width: 60px;
-    vertical-align: bottom;
 }
 
 .left {
@@ -92,16 +117,19 @@ h1 {
     mask-image: linear-gradient(to left, rgba(0,0,0,1), 80%, rgba(0,0,0,0));
     border: none !important;
 }
+#nav {
+    z-index: 3;
+}
 #nav ul {
-    list-style-image: url('assets/arrow.gif');
-    margin-left: -10px;
+    margin-left: -48px;
+    margin-top: -6px;
 }
 #nav li {
-    list-style-image: url('assets/arrow.gif');
+    list-style: none;
     margin-bottom: 2px;
-}
-#nav li.new {
-    list-style-image: url('assets/new.gif');
+    margin-right: 10px;
+
+    float: left;
 }
 #nav li * {
     position: relative;
@@ -120,15 +148,6 @@ h1 {
     color: red;
 }
 
-.rightbar, .leftbar {
-    background: url(assets/wood.jpg);
-    min-height: 300px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: burlywood maroon maroon burlywood;
-    box-shadow: 2px 2px 5px black;
-    color:ivory;
-}
 
 #cont img {
     margin-bottom: 10px;
@@ -139,6 +158,10 @@ h1 {
 hr {
     clear: both;
     color: brown;
+}
+
+h2 {
+    margin-top: 10px;
 }
 
 .appbtn {
@@ -163,5 +186,59 @@ hr {
     background:crimson;
     color:white;
     border-color: black white white black;
+
+}
+.pconly {
+    display: none;
+}
+
+@media only screen and (min-width: 768px) {
+    body {
+        padding-top: 0;
+    }
+    h1 {
+        font-size: 48px;
+    }
+    #top img {
+        transform: scale(1);
+        margin: 0;
+    }
+    #top img.flip {
+        transform: scale(-1,1);
+    }
+    .pconly {
+        display: inherit;
+    }
+    .mobileonly {
+        display: none;
+    }
+
+    .leftbar {
+        /* max-width: 250px; */
+        position: unset;
+        width: 30%;
+        height: unset;
+    }
+    #nav ul {
+        list-style-image: url('assets/arrow.gif');
+        margin-left: -10px;
+        margin-top: 0;
+    }
+    #nav li {
+        list-style-image: url('assets/arrow.gif');
+        float: left;
+    }
+    #nav li.new {
+        list-style-image: url('assets/new.gif') !important;
+    }
+
+}
+@media only screen and (max-width: 480px) {
+    #main {
+        flex-wrap: wrap;
+    }
+    .container, #cont {
+        width: 100%;
+    }
 
 }

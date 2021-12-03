@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <title>Kaasiand.cool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="assets/favicon.gif">
   </head>
   <body onload="init()">
     <div id="top" class="wrapper">
-        <img src="assets/cheese.gif" alt="animated burning wedge of cheese" class="cheese" style="transform: scaleX(-1);">
+        <img src="assets/cheese.gif" alt="animated burning wedge of cheese" class="cheese flip">
         <h1 id="topshadow">&nbsp;<span style="text-decoration: underline solid darkorange 2px;">Kaasiand.cool</span>&nbsp;</h1><h1 id="topgradient">&nbsp;<span style="text-decoration: underline solid darkorange 2px;">Kaasiand.cool</span>&nbsp;</h1>
         <img src="assets/cheese.gif" alt="animated burning wedge of cheese" class="cheese">
         <br>
@@ -24,9 +25,9 @@
 
         </div>
         <div class="container" id="cont">
-            <img src="assets/amiga.jpg" alt="old Amiga computer" class="right fadeleft" style="width: 30%; margin-top: -20px; margin-right: -20px">
+            <img src="assets/amiga.jpg" alt="old Amiga computer" class="right fadeleft pconly" style="width: 30%; margin-top: -20px; margin-right: -20px; min-width: 150px;">
             <h2>Welcome to Kaasiand.cool!</h2>
-            <p>On this web site, you can find my creations. Simply navigate to the menu on the left to find what you&rsquo;re looking for, or just take a look around.</p>
+            <p>On this web site, you can find my creations. Simply navigate to the menu <span class="pconly">on the left </span><span class="mobileonly">at the top </span>to find what you&rsquo;re looking for, or just take a look around.</p>
             <br>
         </div>
         <div class="container rightbar">
