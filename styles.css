@@ -33,7 +33,6 @@ div {
     color:ivory;
 }
 .leftbar {
-    /* max-width: 250px; */
     position: fixed;
     width: 100%;
     left: -10px;
@@ -214,7 +213,7 @@ h2 {
     }
 
     .leftbar {
-        /* max-width: 250px; */
+        max-width: 250px;
         position: unset;
         width: 30%;
         height: unset;
