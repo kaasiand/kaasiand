@@ -688,16 +688,20 @@
                 case 2: encoding = "utf-16be"; break;
                 case 3: encoding = "utf-8"; break;
             }
-
             let td = new TextDecoder(encoding);
             let tt = td.decode(Uint8Array.from(buffer.getArray(pos + 1, size - 1)));
-            if (tt.indexOf("\0") > 0) tt = tt.substring(bom ? 0 : 1, tt.indexOf("\0"));
+            console.log(tt)
+            if (tt.indexOf("\0") > 0)
+                tt = tt.substring(bom ? 1 : 0, tt.indexOf("\0"));
+            else if (bom)
+                tt = tt.substr(1);
             return tt;
         }
         function parseImageField(track, buffer, pos, size) {
             if (size < 2)
                 return null;
 
+            console.log(size);
             let charcode = buffer.getUint8(pos);
 
             let encoding = "utf-8";
