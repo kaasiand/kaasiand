@@ -17,6 +17,7 @@
             top: 0px;
             padding-top: 8px;
             background-color: #ebe5dc;
+            z-index: 2;
         }
 
         .controldivider {
@@ -353,7 +354,7 @@
                         acx.decodeAudioData(a.result, e => { track.setAudio(e); }, () => { });
                         tracks.push(track);
                         if (tracks.length == files.length) {
-                            tracks.sort((a, b) => ((a.album.toLowerCase() == b.album.toLowerCase()) ? (a.number > b.number) : (a.album.toLowerCase() > b.album.toLowerCase())));
+                            tracks.sort((a, b) => (((a.album ?? "").toLowerCase() == (b.album ?? "").toLowerCase()) ? (a.number > b.number) : ((a.album ?? "").toLowerCase() > (b.album ?? "").toLowerCase())));
                             console.log(tracks);
                             tracklist.push(...tracks);
                             tracks.forEach(t => addTrackListItem(t));
@@ -667,13 +668,15 @@
             let encoding = "utf-8";
             switch (charcode) {
                 case 0: encoding = "iso-8859-1"; break;
-                case 1: encoding = "utf-18be"; break;
-                case 2: encoding = "utf-18be"; break;
+                case 1: encoding = "utf-16be"; break;
+                case 2: encoding = "utf-16be"; break;
                 case 3: encoding = "utf-8"; break;
             }
 
             let td = new TextDecoder(encoding);
-            return td.decode(Uint8Array.from(buffer.getArray(pos + 1, size - 2)));
+            let tt = td.decode(Uint8Array.from(buffer.getArray(pos + 1, size - 1)));
+            if (tt.indexOf("\0") > 0) tt = tt.substr(0, tt.indexOf("\0"));
+            return tt;
         }
         function parseImageField(track, buffer, pos, size) {
             if (size < 2)
@@ -684,8 +687,8 @@
             let encoding = "utf-8";
             switch (charcode) {
                 case 0: encoding = "iso-8859-1"; break;
-                case 1: encoding = "utf-18be"; break;
-                case 2: encoding = "utf-18be"; break;
+                case 1: encoding = "utf-16be"; break;
+                case 2: encoding = "utf-16be"; break;
                 case 3: encoding = "utf-8"; break;
             }
             let tdiso = new TextDecoder("iso-8859-1");
