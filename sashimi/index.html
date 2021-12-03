@@ -348,7 +348,9 @@
                 files.forEach(file => {
                     let a = new FileReader();
                     a.onload = () => {
-                        let track = readID3.call(a);
+                        let track = new Track();
+                        readID3.call(a, track, file.name);
+                        acx.decodeAudioData(a.result, e => { track.setAudio(e); }, () => { });
                         tracks.push(track);
                         if (tracks.length == files.length) {
                             tracks.sort((a, b) => ((a.album.toLowerCase() == b.album.toLowerCase()) ? (a.number > b.number) : (a.album.toLowerCase() > b.album.toLowerCase())));
@@ -536,10 +538,11 @@
             return (this.getUint8(start) << 21) | (this.getUint8(start + 1) << 14) | (this.getUint8(start + 2) << 7) | this.getUint8(start + 3);
         };
 
-        function readID3() {
+        function readID3(track, filename) {
             let a = new DataView(this.result);
             // Parse it quickly
             if (a.getString(0, 3) != "ID3") {
+                track.title = filename;
                 return false;
             }
 
@@ -548,6 +551,7 @@
 
             // Check the version
             if (TagVersion < 0 || TagVersion > 4) {
+                track.title = filename;
                 return false;
             }
 
@@ -592,7 +596,6 @@
             // Set some params
             let pos = 0;
             let ID3FrameSize = TagVersion < 3 ? 6 : 10;
-            let track = new Track();
 
             // Parse the tags
             while (true) {
@@ -651,9 +654,8 @@
                 pos += framesize + ID3FrameSize;
                 continue;
             }
-            console.log(track);
-            acx.decodeAudioData(this.result, e => { track.setAudio(e); }, () => { });
-            return track;
+            if (track.title == null)
+                track.title = filename;
         }
 
         function parseTextField(buffer, pos, size) {
