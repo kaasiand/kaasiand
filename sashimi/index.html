@@ -218,8 +218,9 @@
             ctx = scr.getContext("2d");
             ctx.imageSmoothingEnabled = false;
             font[0] = new Image();
+            font[32] = new Image();
 
-            const fontfiles = 1;
+            const fontfiles = 2;
             let fontsloaded = 0;
             
             let go = () => {
@@ -230,6 +231,8 @@
 
             font[0].onload = go;
             font[0].src = "font00.png"
+            font[32].onload = go;
+            font[32].src = "font32.png"
 
             document.onkeydown = (e) => {
                 switch (e.code) {
