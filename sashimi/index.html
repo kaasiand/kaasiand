@@ -219,8 +219,9 @@
             ctx.imageSmoothingEnabled = false;
             font[0] = new Image();
             font[32] = new Image();
+            font[48] = new Image();
 
-            const fontfiles = 2;
+            const fontfiles = 3;
             let fontsloaded = 0;
             
             let go = () => {
@@ -230,9 +231,11 @@
             };
 
             font[0].onload = go;
-            font[0].src = "font00.png"
             font[32].onload = go;
+            font[48].onload = go;
+            font[0].src = "font00.png"
             font[32].src = "font32.png"
+            font[48].src = "font48.png"
 
             document.onkeydown = (e) => {
                 switch (e.code) {
@@ -439,7 +442,10 @@
                 break;
                 case PLAYING:
                     write("\1", 1, 0);
-                    writeScreen("", loading ? strLoading() : "", t.title.toUpperCase().substr(0,21));
+                    if (write(t.title.toUpperCase()) > 126)
+                        writeScreen("  " + t.title.toUpperCase(), loading ? strLoading() : "");
+                    else
+                        writeScreen("", loading ? strLoading() : "", t.title.toUpperCase());
                     if (!loading)
                         writeTrackProgress();
                     setScreenAltText("Now playing: " + t.title + (loading? ". Loading tracks..." : ""));
