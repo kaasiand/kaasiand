@@ -217,12 +217,12 @@
         function init() {
             ctx = scr.getContext("2d");
             ctx.imageSmoothingEnabled = false;
+            let fontsloaded = 0;
+
             font[0] = new Image();
             font[32] = new Image();
             font[48] = new Image();
-
             const fontfiles = 3;
-            let fontsloaded = 0;
             
             let go = () => {
                 fontsloaded++;
@@ -357,10 +357,11 @@
 
         const acx = new AudioContext();
         let tracklist = []
+        
         function openFile(folder) {
             let input = document.createElement('input');
             input.type = 'file';
-            input.accept = "audio/*";
+            input.accept = "audio/mpeg,audio/mp4,audio/mp3,audio/wav,audio/flac,audio/ogg,audio/aac,audio/3gpp,audio/webm";
             input.multiple = true;
             input.onchange = () => {
                 let files = Array.from(input.files);
@@ -638,14 +639,18 @@
                 let framename;
                 let framesize;
 
-                if (TagVersion < 3) {
-                    framename = buffer.getString(pos, 3);
-                    framesize = ((buffer.getUint8(pos + 5) & 0xFF) << 8) | ((buffer.getUint8(pos + 4) & 0xFF) << 16) | ((buffer.getUint8(pos + 3) & 0xFF) << 24);
-                }
-                else {
-                    framename = buffer.getString(pos, 4);
-                    framesize = buffer.getInt(pos + 4);
-                    //(buffer.getUint8(pos+7) & 0xFF) | ((buffer.getUint8(pos+6) & 0xFF) << 8 ) | ((buffer.getUint8(pos+5) & 0xFF) << 16 ) | ((buffer.getUint8(pos+4) & 0xFF) << 24 );
+                switch (TagVersion) {
+                    case 4:
+                        framename = buffer.getString(pos, 4);
+                        framesize = buffer.getInt(pos + 4);
+                        break;
+                    case 3:
+                        framename = buffer.getString(pos, 4);
+                        framesize = buffer.getUint32(pos + 4);
+                        break;
+                    default: 
+                        framename = buffer.getString(pos, 3);
+                        framesize = ((buffer.getUint8(pos + 5) & 0xFF) << 8) | ((buffer.getUint8(pos + 4) & 0xFF) << 16) | ((buffer.getUint8(pos + 3) & 0xFF) << 24);
                 }
 
                 if (pos + framesize > length)
@@ -688,29 +693,23 @@
                 return null;
 
             let charcode = buffer.getUint8(pos);
-            let bom = false;
             let encoding = "utf-8";
             switch (charcode) {
                 case 0: encoding = "iso-8859-1"; break;
-                case 1: encoding = buffer.getUint16(pos + 1) == 0xFFFE ? "utf-16le" : "utf-16be";
-                    bom = true; break;
+                case 1: encoding = buffer.getUint16(pos + 1) == 0xFFFE ? "utf-16le" : "utf-16be"; break;
                 case 2: encoding = "utf-16be"; break;
                 case 3: encoding = "utf-8"; break;
             }
             let td = new TextDecoder(encoding);
             let tt = td.decode(Uint8Array.from(buffer.getArray(pos + 1, size - 1)));
-            console.log(tt)
             if (tt.indexOf("\0") > 0)
-                tt = tt.substring(bom ? 1 : 0, tt.indexOf("\0"));
-            else if (bom)
-                tt = tt.substr(1);
+                tt = tt.substr(0, tt.indexOf("\0"));
             return tt;
         }
         function parseImageField(track, buffer, pos, size) {
             if (size < 2)
                 return null;
 
-            console.log(size);
             let charcode = buffer.getUint8(pos);
 
             let encoding = "utf-8";
@@ -728,10 +727,11 @@
             for (; buffer.getUint8(pos + i); i++) {
                 bytes.push(buffer.getUint8(pos + i));
             }
+            
             let mimeType = tdiso.decode(Uint8Array.from(bytes));
             i++;
             let pictureType = buffer.getUint8(pos + i);
-            if (pictureType != 3)
+            if (pictureType != 3 && track.cover)
                 return null;
             i++;
             bytes = [];
