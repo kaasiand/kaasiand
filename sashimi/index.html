@@ -361,23 +361,27 @@
         function openFile(folder) {
             let input = document.createElement('input');
             input.type = 'file';
-            input.accept = "audio/mpeg,audio/mp4,audio/mp3,audio/wav,audio/flac,audio/ogg,audio/aac,audio/3gpp,audio/webm";
+            input.accept = "audio/*";
             input.multiple = true;
             input.onchange = () => {
                 let files = Array.from(input.files);
                 console.log(files);
                 let tracks = [];
-                let num = files.length;
+                let totalFileCount = files.length;
                 files.forEach(file => {
                     let a = new FileReader();
                     a.onload = () => {
                         let track = new Track();
-                        readID3.call(a, track, file.name);
+
+                        if (readFile(a.result, track, file.name))
+                            tracks.push(track);
+                        else
+                            totalFileCount--;
+
                         acx.decodeAudioData(a.result, e => { track.setAudio(e); }, () => { });
-                        tracks.push(track);
+
                         if (tracks.length == files.length) {
                             tracks.sort((a, b) => (((a.album ?? "").toLowerCase() == (b.album ?? "").toLowerCase()) ? (a.number > b.number) : ((a.album ?? "").toLowerCase() > (b.album ?? "").toLowerCase())));
-                            console.log(tracks);
                             tracklist.push(...tracks);
                             tracks.forEach(t => addTrackListItem(t));
                             currentTrack = 0;
@@ -554,30 +558,146 @@
             }
             return v;
         };
-        DataView.prototype.getArray = function (start, length) {
-            for (var i = 0, v = []; i < length; ++i) {
-                v.push(this.getUint8(start + i));
-            }
-            return v;
+        DataView.prototype.getUint8Array = function (start, length) {
+            return new Uint8Array(this.buffer.slice(start, start + length));
         };
         DataView.prototype.getInt = function (start) {
             return (this.getUint8(start) << 21) | (this.getUint8(start + 1) << 14) | (this.getUint8(start + 2) << 7) | this.getUint8(start + 3);
         };
+        DataView.prototype.getIntVorbis = function (start) {
+            return this.getUint8(start) | (this.getUint8(start+1) << 8) | (this.getUint8(start+2) << 16) | (this.getUint8(start+3) << 24);
+        };
 
-        function readID3(track, filename) {
-            let a = new DataView(this.result);
-            // Parse it quickly
-            if (a.getString(0, 3) != "ID3") {
-                track.title = filename;
-                return false;
+        function readFile(buffer, track, filename) {
+            let a = new DataView(buffer);
+
+            if (a.getString(0, 3) == "ID3") {
+                readID3(a, track);
             }
+            else if (a.getString(0, 4) == "fLaC") {
+                readFLAC(a, track);
+            }
+            else return false;
+
+
+            if (track.title == null)
+                track.title = filename;
+            return true;
+        }
+
+        function parseVorbis(buffer, track) {
+            let pos = 0;
+            let vendorLength = buffer.getIntVorbis(pos);
+            pos += 4;
+            let vendorString = buffer.getString(pos, vendorLength);
+            pos += vendorLength;
+            let tags = {};
+            let commentListLength = buffer.getIntVorbis(pos);
+            console.log(commentListLength);
+            pos += 4;
+            let td = new TextDecoder("utf-8");
+            for (let i = 0; i < commentListLength; i++) {
+                let length = buffer.getIntVorbis(pos);
+                pos += 4;
+                let userComment = td.decode(buffer.getUint8Array(pos, length));
+                let j = userComment.indexOf("=");
+                let commentField = userComment.substr(0, j).toLowerCase();
+                let commentValue = userComment.substr(j + 1);
+
+                if (!(commentField in tags))
+                    tags[commentField] = commentValue;
+
+                pos += length;
+            }
+            
+            if ("title" in tags)
+                track.title = tags.title;
+            if ("album" in tags)
+                track.album = tags.album;
+            if ("artist" in tags)
+                track.artist = tags.artist;
+            if ("tracknumber" in tags)
+                track.number = toTrackNumber(tags.tracknumber);
+        }
+        
+        function parseImageFLAC(buffer, track) {
+            let td = new TextDecoder("utf-8");
+
+            let pos = 0;
+
+            let pictureType = buffer.getUint32(pos);
+            pos += 4;
+
+            if (pictureType != 3 && track.cover)
+                return null;
+            
+            let mimeTypeLength = buffer.getUint32(pos);
+            pos += 4;
+            
+            console.log(td.decode());
+            let mimeType = buffer.getString(pos, mimeTypeLength);
+            pos += mimeTypeLength;
+
+            let descLength = buffer.getUint32(pos);
+            pos += 4;
+            //let desc = td.decode(buffer.getUint8Array(pos, descLength));
+            pos += descLength + 16;
+
+            let imgDataLength = buffer.getUint32(pos);
+            pos += 4;
+
+            let data = buffer.getUint8Array(pos, imgDataLength);
+            let blob = new Blob([data], { type: mimeType });
+            let im = new Image();
+            let c = document.createElement("canvas");
+            c.width = 200;
+            c.height = 200;
+            let ctx = c.getContext("2d");
+            im.onload = () => {
+                ctx.imageSmoothingEnabled = true;
+                ctx.drawImage(im, 0, 0, 200, 200);
+                URL.revokeObjectURL(blob);
+                track.setCover(c.toDataURL());
+            }
+            im.src = URL.createObjectURL(blob);
+        }
+
+        function readFLAC(dataview, track) {
+            let a = dataview;
+
+            console.log("This is a FLAC!")
+            let pos = 4;
+
+            while (true) {
+                let lastblock = a.getUint8(pos) & 0b10000000;
+                let blocktype = a.getUint8(pos) & 0b01111111;
+                let blocksize = (a.getUint8(pos + 1) << 16) + (a.getUint8(pos + 2) << 8) + a.getUint8(pos + 3);
+                pos += 4;
+                let buffer = new DataView(a.buffer.slice(pos, pos + blocksize));
+
+                switch (blocktype) {
+                    case 4: //vorbis comment
+                        parseVorbis(buffer, track);
+                        break;
+                    case 6: //image
+                        parseImageFLAC(buffer, track);
+                        break;
+                }
+                pos += blocksize;
+
+                if (lastblock)
+                    break;
+            }
+        }
+
+        function readID3(dataview, track) {
+            let a = dataview;
 
             // True if the tag is pre-V3 tag (shorter headers)
             let TagVersion = a.getUint8(3);
 
             // Check the version
             if (TagVersion < 0 || TagVersion > 4) {
-                track.title = filename;
                 return false;
             }
 
@@ -656,36 +776,45 @@
                 if (pos + framesize > length)
                     break;
 
-                if (framename == "TPE1" || framename == "TPE2" || framename == "TPE3" || framename == "TPE") {
-                    if (track.artist == null)
-                        track.artist = parseTextField(buffer, pos + ID3FrameSize, framesize);
-                }
+                switch (framename) {
+                    case "TPE1":
+                    case "TPE2":
+                    case "TPE3":
+                    case "TPE":
+                        if (track.artist == null)
+                            track.artist = parseTextField(buffer, pos + ID3FrameSize, framesize);
+                        break;
+                    
+                    case "TIT2":
+                    case "TIT":
+                        if (track.title == null)
+                            track.title = parseTextField(buffer, pos + ID3FrameSize, framesize);
+                        break;
 
-                if (framename == "TIT2" || framename == "TIT") {
-                    if (track.title == null)
-                        track.title = parseTextField(buffer, pos + ID3FrameSize, framesize);
-                }
+                    case "TALB":
+                        if (track.album == null)
+                            track.album = parseTextField(buffer, pos + ID3FrameSize, framesize);
+                        break;
 
-                if (framename == "TALB") {
-                    if (track.album == null)
-                        track.album = parseTextField(buffer, pos + ID3FrameSize, framesize);
-                }
+                    case "TRCK":
+                        if (track.number == null)
+                            track.number = toTrackNumber(parseTextField(buffer, pos + ID3FrameSize, framesize));
+                        break;
 
-                if (framename == "TRCK") {
-                    if (track.number == null)
-                        track.number = 1 * parseTextField(buffer, pos + ID3FrameSize, framesize);
-                }
-
-                if (framename == "APIC") {
-                    if (track.cover == null)
+                    case "APIC":
                         parseImageField(track, buffer, pos + ID3FrameSize, framesize);
+                        break;
                 }
 
                 pos += framesize + ID3FrameSize;
                 continue;
             }
-            if (track.title == null)
-                track.title = filename;
+        }
+
+        function toTrackNumber(str) {
+            if (str.includes("/"))
+                str = str.substr(0,str.indexOf("/"));
+            return 1 * str;
         }
 
         function parseTextField(buffer, pos, size) {
@@ -701,11 +830,12 @@
                 case 3: encoding = "utf-8"; break;
             }
             let td = new TextDecoder(encoding);
-            let tt = td.decode(Uint8Array.from(buffer.getArray(pos + 1, size - 1)));
+            let tt = td.decode(buffer.getUint8Array(pos + 1, size - 1));
             if (tt.indexOf("\0") > 0)
                 tt = tt.substr(0, tt.indexOf("\0"));
             return tt;
         }
+        
         function parseImageField(track, buffer, pos, size) {
             if (size < 2)
                 return null;
@@ -740,7 +870,7 @@
             }
             let desc = td.decode(Uint8Array.from(bytes));
             i++;
-            let data = Uint8Array.from(buffer.getArray(pos + i, size - i));
+            let data = buffer.getUint8Array(pos + i, size - i);
             let blob = new Blob([data], { type: mimeType });
             let im = new Image();
             let c = document.createElement("canvas");
