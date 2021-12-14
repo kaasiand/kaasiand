@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Web app Lingo demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="assets/favicon.gif">
+    <style>
+        @keyframes rot {
+               0% { color: #5c3c00; }
+            10.0% { color: #eeca7b; }
+            25.0% { color: white; }
+            40.0% { color: #eeca7b; }
+            50.0% { color: #5c3c00; }
+            60.0% { color: #eeca7b; }
+            75.0% { color: white; }
+            90.0% { color: #eeca7b; }
+             100% { color: #5c3c00; }
+        }
+        @keyframes rotFL {
+               0% { color: white; }
+            15.0% { color: #eeca7b; }
+            25.0% { color: #5c3c00; }
+            35.0% { color: #eeca7b; }
+            50.0% { color: white; }
+            65.0% { color: #eeca7b; }
+            75.0% { color: #5c3c00; }
+            85.0% { color: #eeca7b; }
+             100% { color: white; }
+        }
+
+        body {
+            padding: 150px;
+        }
+        .wrap {
+            background-image: linear-gradient(to bottom, #628EB6 0%, #0B476A 100%);
+            width: 200px;
+            --height: 200px;
+            font-size: 29px;
+            height: var(--height);
+            overflow: hidden;
+            transition: transform 1s ease;
+            --tilt: 0deg;
+            transform: perspective(800px) rotateY(var(--tilt)) scale(2);
+            --duration: .6s;
+        }
+        .wrap.blur {
+            filter: blur(0.5px);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            transition: margin-top .5s linear;
+        }
+        table:hovere {
+
+            margin-top: calc(var(--height) * -.2);
+        }
+        td {
+            padding: 0;
+            margin: 0;
+        }
+        .letterbox {
+            height: calc(var(--height) / 5);
+            overflow: hidden;
+            position: relative;
+            font-family: Tahoma, sans-serif;
+            text-align: center;
+            padding: 0;
+        }
+        .glow::after, .letterbg::after {
+            position: absolute;
+            content: "";
+            width: calc(100% + 10px);
+            height: calc(100% + 10px);
+            border: 6px solid #8D8D8D;
+            border-left-width: 6.5px;
+            border-right-width: 6.5px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            left: -5px;
+            top: -5px;
+        }
+        .glow::after {
+            background-color: white;
+            box-shadow: inset 0px -1px 1px black;
+            opacity: 0;
+        }
+        .letterbg::after {
+            box-shadow: inset 1.5px 2.5px 2px #000C;
+        }
+        .letters {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+        }
+        .letters div {
+            position: absolute;
+            width: 100%;
+            top: 2px;
+            /* text-shadow: 3px 3px 8px #0002, 1px 1px 4px #0001, 0 0 2px #0002; */
+        }
+        td:nth-child(1) { --delay: .00s }
+        td:nth-child(2) { --delay: .05s }
+        td:nth-child(3) { --delay: .10s }
+        td:nth-child(4) { --delay: .15s }
+        td:nth-child(5) { --delay: .20s }
+        td:nth-child(6) { --delay: .25s }
+        td:nth-child(7) { --delay: .30s }
+
+        .letters div { transition: transform var(--duration) steps(10) var(--delay); }
+
+        .letters div::after {
+            width: 100%;
+            height: 100%;
+            content: var(--letter);
+            color: white;
+        }
+        .sh1 div::after, .sh2 div::after, .sh3 div::after {
+            color: black;
+        }
+        /* 3px 3px 8px #0002, 1px 1px 4px #0001, 0 0 2px #0002; */
+        .sh1 {
+            filter: blur(4px);
+            transform: translate(4px, 4px);
+        }
+        .sh2 {
+            filter: blur(2px);
+            transform: translate(1px, 1px);
+        }
+        .sh3 {
+            filter: blur(1px);
+        }
+
+        .letters div:nth-child(1) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-2.6px) }
+        .letters div:nth-child(2) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-2.5px) }
+        .letters div:nth-child(3) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-2.5px) }
+        .letters div:nth-child(4) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-2.5px) }
+        .letters div:nth-child(5) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-2.0px) }
+        .letters div:nth-child(6) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-1.5px) }
+        .letters div:nth-child(7) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-1.0px) }
+        .letters div:nth-child(8) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-0.5px) }
+        .letters div:nth-child(9) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(   0px) }
+        .letters div:nth-child(10){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 0.5px) }
+        .letters div:nth-child(11){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 1.0px) }
+        .letters div:nth-child(12){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 1.5px) }
+        .letters div:nth-child(13){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 2.0px) }
+        .letters div:nth-child(14){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 2.5px) }
+        .letters div:nth-child(15){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 2.5px) }
+        .letters div:nth-child(16){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 2.5px) }
+        .letters div:nth-child(17){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 2.6px) }
+
+        td.rot .letters {
+            --rotate: 360deg;
+        }
+        .rot .letters.wh div::after             { animation: rot   var(--duration) steps(10, end) var(--delay); }
+        .rot .letters.wh div:last-child::after  { animation: rotFL var(--duration) steps(10, end) var(--delay); }
+        .rot .letters.wh div:first-child::after { animation: rotFL var(--duration) steps(10, end) var(--delay); }
+
+
+
+        .letterbox[data-bg="geel"] .letterbg::before {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 3px;
+            display: block;
+            width: calc(100% - 5px);
+            height: 100%;
+            background-color: #f9c418;
+            border-radius: 50%;
+            box-shadow: 0 0 5px black;
+        }
+        .letterbox[data-bg="rood"] .letterbg::before {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom, #9e2d1e, #f8533a);
+            box-shadow: inset 0 1px 7px black;
+        }
+
+    </style>
+  </head>
+  <body onload="init()">
+<div class="wrap blur">
+    <table>
+        <tr>
+            <td class="letterbox" data-bg="rood" style="--letter:'L'; --rotate:0deg;">
+                <div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </td>
+            <td class="letterbox" data-bg="rood" style="--letter:'E'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'Z'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="geel" style="--letter:'E'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'N'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'D'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+        </tr>
+        <tr>
+            <td class="letterbox" data-bg="rood" style="--letter:'L'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'IJ'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="rood" style="--letter:'K'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'J'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="rood" style="--letter:'E'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'S'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+        </tr>
+        <tr>
+            <td class="letterbox" data-bg="" style="--letter:'L'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'E'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'K'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'.'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'E'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'.'; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+        </tr>
+        <tr>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+        </tr>
+        <tr>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+        </tr>
+        <tr>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+        </tr>
+        <tr>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''; --rotate:0deg;"><div class="letterbg"></div><div class="glow"></div><div class="letters sh1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh2"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters sh3"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="letters wh"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></td>
+        </tr>
+      </table>
+</div>
+    <script>
+        function write(line, str) {
+            let c = document.querySelector("tbody").children;
+            if (line >= c.length) return;
+
+            let a = [...str];
+            console.log(c[line].children[1]);
+            for (let i = 0; i < c[line].children.length; i++) {
+                c[line].children[i].style.setProperty("--letter", `'${a[i] ?? "."}'`);
+            }
+        }
+
+    </script>
+  </body>
+</html>
