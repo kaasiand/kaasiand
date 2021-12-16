@@ -7,7 +7,8 @@
     <link rel="icon" href="assets/favicon.gif">
     <style>
         @keyframes rot {
-               0% { color: #5c3c00; visibility: visible; }
+               0% { color: #5c3c00; visibility: hidden; }
+               5% { visibility: visible; }
             10.0% { color: #eeca7b; }
             25.0% { color: white; }
             40.0% { color: #eeca7b; }
@@ -18,7 +19,8 @@
              100% { color: #5c3c00; visibility: hidden; }
         }
         @keyframes rotL {
-               0% { color: white; visibility: visible; }
+               0% { color: white; visibility: hidden; }
+               5% { visibility: visible; }
             15.0% { color: #eeca7b; }
             25.0% { color: #5c3c00; }
             35.0% { color: #eeca7b; }
@@ -44,10 +46,17 @@
             padding: 150px;
         }
         .wrap {
-            background-image: linear-gradient(to bottom, #628EB6 0%, #0B476A 100%);
-            width: 200px;
+            --width: 200px;
             --height: 200px;
-            font-size: 29px;
+
+            --min: min(var(--height), var(--width));
+            --htpx: calc(0.005 * var(--height));
+            --hhpx: calc(0.0025 * var(--height));
+            --minpx: calc(0.005 * var(--min));
+
+            background-image: linear-gradient(to bottom, #628EB6 0%, #0B476A 100%);
+            font-size: calc(0.145 * var(--height));
+            width: var(--width);
             height: var(--height);
             overflow: hidden;
             transition: transform 1s ease;
@@ -56,7 +65,7 @@
             --duration: .6s;
         }
         .wrap.blur {
-            filter: blur(0.5px);
+            filter: blur(calc(0.0025 * var(--min)));
         }
 
         table {
@@ -83,23 +92,23 @@
         .glow::after, .letterbg::after {
             position: absolute;
             content: "";
-            width: calc(100% + 10px);
-            height: calc(100% + 10px);
-            border: 6px solid #8D8D8D;
-            border-left-width: 6.5px;
-            border-right-width: 6.5px;
-            border-radius: 8px;
+            width: calc(100% + calc(10 * var(--minpx)));
+            height: calc(100% + calc(10 * var(--minpx)));
+            border: calc(6 * var(--minpx)) solid #8D8D8D;
+            border-left-width: calc(6.5 * var(--minpx));
+            border-right-width: calc(6.5 * var(--minpx));
+            border-radius: calc(8 * var(--minpx));
             box-sizing: border-box;
-            left: -5px;
-            top: -5px;
+            left: calc(-5 * var(--minpx));
+            top: calc(-5 * var(--minpx));
         }
         .glow::after {
             background-color: white;
-            box-shadow: inset 0px -1px 1px black;
+            box-shadow: inset 0px calc(-0.005 * var(--height)) calc(0.005 * var(--height)) black;
             opacity: 0;
         }
         .letterbg::after {
-            box-shadow: inset 1.5px 2.5px 2px #000C;
+            box-shadow: inset calc(0.0075 * var(--height)) calc(0.0125 * var(--height)) calc(0.01 * var(--height)) #000C;
         }
         .letters {
             position: absolute;
@@ -110,7 +119,7 @@
         .letters div {
             position: absolute;
             width: 100%;
-            top: 2px;
+            top: calc(0.01 * var(--height));
             /* text-shadow: 3px 3px 8px #0002, 1px 1px 4px #0001, 0 0 2px #0002; */
         }
         td:nth-child(1) { --delay: .00s }
@@ -131,34 +140,41 @@
         }
 
         .letters {
-            filter: drop-shadow(3px 3px 3px #000C) drop-shadow(1px 1px 2px #0008) drop-shadow(0 0 1px #000C)
+            filter: drop-shadow(calc(3 * var(--htpx)) calc(3 * var(--htpx)) calc(3 * var(--htpx)) #000C)
+                    drop-shadow(var(--htpx) var(--htpx) calc(2 * var(--htpx)) #0008)
+                    drop-shadow(0 0 var(--htpx) #000C)
+        }
+        @supports (-webkit-hyphens:none) { 
+            .letters {
+                filter: drop-shadow(calc(2 * var(--htpx)) calc(2 * var(--htpx)) calc(2 * var(--htpx)) black);
+            }
         }
 
         td:not(.rot) .letters div:not(:first-child)::after { visibility: hidden; }
-        .letters div:nth-child(1) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-2.6px) }
-        .letters div:nth-child(2) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-2.5px) }
-        .letters div:nth-child(3) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-2.5px) }
-        .letters div:nth-child(4) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-2.5px) }
-        .letters div:nth-child(5) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-2.0px) }
-        .letters div:nth-child(6) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-1.5px) }
-        .letters div:nth-child(7) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-1.0px) }
-        .letters div:nth-child(8) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(-0.5px) }
-        .letters div:nth-child(9) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(   0px) }
-        .letters div:nth-child(10){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 0.5px) }
-        .letters div:nth-child(11){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 1.0px) }
-        .letters div:nth-child(12){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 1.5px) }
-        .letters div:nth-child(13){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 2.0px) }
-        .letters div:nth-child(14){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 2.5px) }
-        .letters div:nth-child(15){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 2.5px) }
-        .letters div:nth-child(16){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 2.5px) }
-        .letters div:nth-child(17){ transform: perspective(500px) rotateY(var(--rotate)) translateZ( 2.6px) }
+        .letters div:nth-child(1) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(-5.1 * var(--hhpx))) }
+        .letters div:nth-child(2) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(-5 * var(--hhpx))) }
+        .letters div:nth-child(3) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(-5 * var(--hhpx))) }
+        .letters div:nth-child(4) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(-5 * var(--hhpx))) }
+        .letters div:nth-child(5) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(-4 * var(--hhpx))) }
+        .letters div:nth-child(6) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(-3 * var(--hhpx))) }
+        .letters div:nth-child(7) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(-2 * var(--hhpx))) }
+        .letters div:nth-child(8) { transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(-1 * var(--hhpx))) }
+        .letters div:nth-child(9) { transform: perspective(500px) rotateY(var(--rotate)) }
+        .letters div:nth-child(10){ transform: perspective(500px) rotateY(var(--rotate)) translateZ(var(--hhpx)) }
+        .letters div:nth-child(11){ transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(2 * var(--hhpx))) }
+        .letters div:nth-child(12){ transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(3 * var(--hhpx))) }
+        .letters div:nth-child(13){ transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(4 * var(--hhpx))) }
+        .letters div:nth-child(14){ transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(5 * var(--hhpx))) }
+        .letters div:nth-child(15){ transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(5 * var(--hhpx))) }
+        .letters div:nth-child(16){ transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(5 * var(--hhpx))) }
+        .letters div:nth-child(17){ transform: perspective(500px) rotateY(var(--rotate)) translateZ(calc(5.1 * var(--hhpx))) }
 
         td.rot .letters {
             --rotate: 360deg;
         }
-        .rot .letters div::after             { animation: rot  var(--duration) steps(10, end) var(--delay) forwards; }
-        .rot .letters div:last-child::after  { animation: rotF var(--duration) steps(10, end) var(--delay) forwards; }
-        .rot .letters div:first-child::after { animation: rotL var(--duration) steps(10, end) var(--delay) forwards; }
+        .rot .letters div::after             { animation: rot  var(--duration) steps(10, end) var(--delay) both; }
+        .rot .letters div:last-child::after  { animation: rotF var(--duration) steps(10, end) var(--delay) both; }
+        .rot .letters div:first-child::after { animation: rotL var(--duration) steps(10, end) var(--delay) both; }
 
 
 
@@ -166,13 +182,13 @@
             position: absolute;
             content: "";
             top: 0;
-            left: 3px;
+            left: calc(3 * var(--minpx));
             display: block;
-            width: calc(100% - 5px);
+            width: calc(100% - calc(5 * var(--minpx)));
             height: 100%;
             background-color: #f9c418;
             border-radius: 50%;
-            box-shadow: 0 0 5px black;
+            box-shadow: 0 0 calc(5 * var(--minpx)) black;
         }
         .letterbox[data-bg="rood"] .letterbg::before {
             position: absolute;
@@ -183,7 +199,7 @@
             width: 100%;
             height: 100%;
             background-image: linear-gradient(to bottom, #9e2d1e, #f8533a);
-            box-shadow: inset 0 1px 7px black;
+            box-shadow: inset 0 var(--minpx) calc(3.5 * var(--minpx)) black;
         }
 
     </style>
