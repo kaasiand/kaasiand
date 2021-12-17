@@ -43,7 +43,7 @@
         }
 
         body {
-            padding: 150px;
+            padding: 20px 150px 0px;
         }
         .wrap {
             --width: 200px;
@@ -202,6 +202,16 @@
             box-shadow: inset 0 var(--minpx) calc(3.5 * var(--minpx)) black;
         }
 
+        .mono {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        textarea {
+            font-family: 'Courier New', Courier, monospace;
+            min-height: 8em;
+        }
     </style>
   </head>
   <body onload="init()">
@@ -267,6 +277,52 @@
         </tr>
       </table>
 </div>
+<br>
+<label for="filein" style="font-weight: bold;">Upload woordenlijst om te filteren</label>
+<input name="filein" id="filein" type="file" accept="text/plain">
+<br>
+<label for="beginletter">Alleen woorden met beginletter</label>
+<select name="beginletter" id="beginletter">
+    <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+    <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+    <option value="G">G</option><option value="H">H</option><option value="I">I</option>
+    <option value="J">J</option><option value="K">K</option><option value="L">L</option>
+    <option value="M">M</option><option value="N">N</option><option value="O">O</option>
+    <option value="P">P</option><option value="Q">Q</option><option value="R">R</option>
+    <option value="S">S</option><option value="T">T</option><option value="U">U</option>
+    <option value="V">V</option><option value="W">W</option><option value="X">X</option>
+    <option value="Y">Y</option><option value="Z">Z</option><option value="IJ">IJ</option>
+</select>
+van lengte <input id="wordlength" type="number" min="3" max="13" value="6"  style="width: 50px">
+<br><br>
+<label for="accenten">Woorden met <b>hoofdletters</b></label><br>
+<input type="radio" onchange="capout.disabled = lowercase.checked;" name="cap" id="includecap" value="includecap"><label for="includecap">erin laten</label><br>
+<input type="radio" onchange="capout.disabled = lowercase.checked;" name="cap" id="lowercase" value="lowercase"><label for="lowercase">erin laten, maar dan in kleine letters</label><br>
+<input type="radio" onchange="capout.disabled = lowercase.checked;" name="cap" id="excludecap" value="excludecap" checked><label for="excludecap">niet in de lijst houden</label><br>
+<br>
+
+<label for="accenten">Woorden met <b>accenten</b></label><br>
+<input type="radio" name="acc" id="includeacc" value="includeacc"><label for="includeacc">erin laten</label><br>
+<input type="radio" name="acc" id="stripacc" value="stripacc"><label for="stripacc">zonder accent erin laten</label><br>
+<input type="radio" name="acc" id="excludeacc" value="excludeacc"checked><label for="excludeacc">niet in de lijst houden</label><br>
+<br>
+
+<label for="accenten">Wat te doen met <span class="mono">IJ</span></label><br>
+<input type="radio" name="langeij" id="nochange" value="nochange"><label for="nochange">als <span class="mono">IJ</span> laten</label><br>
+<input type="radio" name="langeij" id="ligature" value="ligature" checked><label for="ligature">vervangen door <span class="mono">Ĳ</span> (één teken)</label><br>
+<input type="radio" name="langeij" id="ijreplace" value="ijreplace"><label for="ijreplace">vervangen door <input type="text" id="ijvalue" style="width: 30px"></label><br>
+<span style="font-size: small; font-style: italic;">(let op: in woorden als <span style="font-style: normal;">bijou</span> en <span style="font-style: normal;">bijectie</span> is de "ij" geen digraaf en dienen de i en j apart te blijven.)</span>
+
+<br><br>
+<input type="checkbox" name="capout" id="capout"><label for="capout" id="aaa">Output in hoofdletters</label>
+<br><br>
+<span style="font-size: small; font-style: italic;">Woorden met koppeltekens, punten of cijfers komen niet in de lijst terecht.</span>
+<br><br>
+<button onclick="openFile()">Filter de geüploade woordenlijst</button>
+<br><textarea id="area"></textarea>
+<br>
+<button onclick="dl()">Download inhoud van tekstvak</button>
+<br>
     <script>
         function write(line, str) {
             let c = document.querySelector("tbody").children;
@@ -279,6 +335,81 @@
             }
         }
 
+        const regex = {
+            ij: /(?<!b(?=ijou|ijec)|d(?=ijon))ij/g,
+            IJ: /(?<!B(?=IJOU|IJEC)|D(?=IJON))IJ/g,
+            a: /[áàäâåã]/g,
+            A: /[ÁÀÄÂÅÃ]/g,
+            e: /[éèëê]/g,
+            E: /[ÉÈËÊ]/g,
+            i: /[íìîï]/g,
+            I: /[ÍÌÎÏ]/g,
+            o: /[óòôõöø]/g,
+            O: /[ÓÒÔÕÖØ]/g,
+            u: /[úùûü]/g,
+            U: /[ÚÙÛÜ]/g,
+            y: /[ÿý]/g,
+            Y: /[ŸÝ]/g,
+            n: /ñ/g,
+            N: /Ñ/g,
+            c: /ç/g,
+            C: /Ç/g,
+
+            yAyC: /^[a-záàäâåãéèëêíìîïñóòôõöøúùûüÿýçæ]+$/i,
+            nAyC: /^[a-z]+$/i,
+            yAnC: /^[a-záàäâåãéèëêíìîïñóòôõöøúùûüÿýçæ]+$/,
+            nAnC: /^[a-z]+$/,
+        }
+
+        function openFile() {
+            const reader = new FileReader();
+            reader.onload = filterList
+            reader.readAsText(filein.files[0]);
+        }
+
+        function filterList(e) {
+            let a = e.target.result.split("\n").filter(word => word.toUpperCase().startsWith(beginletter.value));
+            if (beginletter.value == "I")
+                a = a.filter(word => !word.toUpperCase().startsWith("IJ"));
+            
+            let reg = excludecap.checked? (excludeacc.checked? regex.nAnC : regex.yAnC) : (excludeacc.checked? regex.nAyC : regex.yAyC)
+            a = a.filter(word => reg.test(word));
+
+            if (stripacc.checked) a = a.map(word => stripAccents(word));
+            
+            if (ligature.checked || ijreplace.checked) {
+                let letter = ligature.checked? "ĳ" : ijvalue.value.toLowerCase();
+                a = a.map(word => word.replace(regex.ij, letter).replace(regex.IJ, letter.toUpperCase()));
+            }
+
+            a = a.filter(word => word.length == wordlength.value);
+
+            if (lowercase.checked) a = a.map(word => word.toLowerCase());
+            else if (capout.checked) a = a.map(word => word.toUpperCase());
+
+            console.log(a.length + " woorden met de " + beginletter.value + " van lengte " + wordlength.value);
+            area.value = a.join("\n");
+        }
+
+        function stripAccents(word) {
+            return word.replace(regex.a,"a").replace(regex.A,"A").replace(regex.e,"e").replace(regex.E,"E").
+                replace(regex.i,"i").replace(regex.I,"I").replace(regex.o,"o").replace(regex.O,"O").
+                replace(regex.u,"u").replace(regex.U,"U").replace(regex.y,"y").replace(regex.Y,"Y").
+                replace(regex.n,"n").replace(regex.N,"N").replace(regex.c,"c").replace(regex.C,"C");
+        }
+
+        function dl() {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(area.value));
+            element.setAttribute('download', wordlength.value + beginletter.value + ".txt");
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
     </script>
   </body>
 </html>
