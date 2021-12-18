@@ -208,6 +208,9 @@ h2 {
     .pconly {
         display: inherit;
     }
+    span.pconly {
+        display: inline;
+    }
     .mobileonly {
         display: none;
     }
