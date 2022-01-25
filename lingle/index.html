@@ -190,14 +190,14 @@
             color: white;
             border: none;
             border-radius: 3px;
-            box-shadow: 1px 1px 3px #fff3 inset, -1px -1px 3px #0003 inset;
+            box-shadow: 1px 1px 3px #fff3 inset, -1px -1px 3px #0003 inset, 1px 1px 2px #0004;
         }
 
         .keybline button:hover:not(:active) {
             filter: brightness(120%);
         }
         .keybline button:active {
-            box-shadow: -1px -1px 3px #fff3 inset, 1px 1px 3px #0003 inset;
+            box-shadow: -1px -1px 3px #fff3 inset, 1px 1px 3px #0003 inset, 1px 1px 2px #0004;
         }
 
         .keybline:nth-child(1) button {
@@ -216,13 +216,20 @@
             height: var(--hdrheight);
             position: fixed;
         }
+
+        .logo {
+            height:100%;
+            padding: 15px 0 5px; 
+            box-sizing: border-box;
+            filter: drop-shadow(1px 1px 3px #0008);
+        }
     </style>
 </head>
 
 <body onload="init()">        
 <div class="top">
     <div class="header">
-        
+        <img src="lingle.png" class="logo">
     </div>
     <div class="wrap blur">
     <table id="speelveld">
@@ -296,7 +303,7 @@
             <button>IJ</button>
         </div>
         <div class="keybline">
-            <button style="width:calc(100px + 1%);max-width:19%">enter</button>
+            <button style="width:calc(75px + 0.75%);max-width:14%"><span style="font-size: 80%;">enter</span></button>
             <button>Z</button>
             <button>X</button>
             <button>C</button>
@@ -304,7 +311,7 @@
             <button>B</button>
             <button>N</button>
             <button>M</button>
-            <button><span style='font-family: "wingdings";'></span></button>
+            <button style="width:calc(75px + 0.75%);max-width:14%"><span style='font-family: "wingdings";'>Õ</span></button>
         </div>
     </div>
 </div>
