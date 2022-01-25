@@ -56,7 +56,15 @@
             --duration: .6s;
         }
         .wrap.blur {
-            filter: blur(calc(0.0015 * var(--min)));
+            filter: blur(calc(0.0025 * var(--min)));
+        }
+
+        @media 
+        (-webkit-min-device-pixel-ratio: 2), 
+        (min-resolution: 192dpi) { 
+            .wrap.blur {
+                filter: blur(calc(0.001 * var(--min)));
+            }
         }
 
         #speelveld {
