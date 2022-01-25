@@ -31,6 +31,7 @@
             display: flex;
             justify-content: center;
             height: 100%;
+            overflow: hidden;
 
             --height: min(420px, 55vh);
             --hdrheight: 80px;
@@ -56,7 +57,7 @@
             --duration: .6s;
         }
         .wrap.blur {
-            filter: blur(calc(0.0025 * var(--min)));
+            filter: blur(calc(0.002 * var(--min)));
         }
 
         #speelveld {
@@ -180,11 +181,11 @@
         .keybline button {
             box-sizing: border-box;
             width: 50px;
-            max-width: 9%;
+            max-width: min(9%,9vw);
             height: 100%;
             text-align: center;
             font-size: min(min(36px, calc(calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 30px) / 9)), calc(var(--width) / 15));
-            margin: 0 0.5% 0;
+            margin: 0 min(0.5%,0.5vw) 0;
 
             font-family: "tahoma";
             color: white;
