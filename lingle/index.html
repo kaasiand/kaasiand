@@ -47,7 +47,7 @@
             --minpx: calc(0.005 * var(--min));
 
             background-image: linear-gradient(to bottom, #4c7aa5 0%, #1d557a 50%, #0c4363 100%);
-            font-size: calc(0.145 * var(--height));
+            font-size: min(calc(0.145 * var(--height)), calc(0.145 * var(--width)));
             width: var(--width);
             height: var(--height);
             overflow: hidden;
@@ -111,7 +111,8 @@
         .letters div {
             position: absolute;
             width: 100%;
-            top: calc(0.01 * var(--height));
+            top: 50%;
+            transform: translateY(-55%);
             /* text-shadow: 3px 3px 8px #0002, 1px 1px 4px #0001, 0 0 2px #0002; */
         }
         #speelveld td:nth-child(1) { --delay: .00s }
@@ -163,7 +164,7 @@
 
 
         .btmwrap {
-            max-width: calc(100vw - 10px);
+            width: min(calc(100vw - 10px), 500px);
             max-height: calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 30px);
             position: fixed;
             bottom: 8px;
@@ -180,12 +181,11 @@
 
         .keybline button {
             box-sizing: border-box;
-            width: 50px;
-            max-width: min(9%,9vw);
+            width: 9%;
             height: 100%;
             text-align: center;
             font-size: min(min(36px, calc(calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 30px) / 9)), calc(var(--width) / 15));
-            margin: 0 min(0.5%,0.5vw) 0;
+            margin: 0 0.5% 0;
 
             font-family: "tahoma";
             color: white;
