@@ -24,7 +24,6 @@
         body {
             margin: 0px;
             height: 100%;
-            overflow: hidden;
         }
 
         .top {
@@ -164,13 +163,13 @@
 
 
         .btmwrap {
-            max-height: calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 30px);
+            max-height: calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 40px);
             position: fixed;
             bottom: 8px;
         }
         .keybline {
             height: 70px;
-            max-height: calc(calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 30px) / 3);
+            max-height: calc(calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 40px) / 3);
             display: flex;
             justify-content: center;
             padding-top: 5px;
@@ -184,7 +183,7 @@
             height: 100%;
             padding: 0;
             text-align: center;
-            font-size: min(min(36px, calc(calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 30px) / 9)), calc(var(--width) / 15));
+            font-size: min(min(36px, calc(calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 40px) / 8)), calc(var(--width) / 15));
             margin: 0 calc(min(calc(100vw - 10px), 500px) * 0.005) 0;
 
             font-family: "tahoma";
