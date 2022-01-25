@@ -27,7 +27,7 @@ div {
     width: 30%;
 }
 .rightbar, .leftbar {
-    background: #ffe8b9 url(assets/wood.jpg);
+    background: #A3642A url(assets/wood.jpg);
     min-height: 300px;
     border-width: 5px;
     border-style: solid;
