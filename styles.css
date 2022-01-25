@@ -5,6 +5,7 @@ body {
     font-size: large;
     background: repeat url(assets/wood.bmp);
     overflow-x: hidden;
+    background-color: #5F2900;
 }
 div {
     display: block;
