@@ -1,11 +1,13 @@
+:root {
+    background: #5F2900 repeat url(assets/wood.bmp);
+}
+
 body {
     margin: 10px;
     padding-top: 30px;
     font-family: "Times New Roman", "FreeSerif", Times, serif;
     font-size: large;
-    background: repeat url(assets/wood.bmp);
     overflow-x: hidden;
-    background-color: #5F2900;
 }
 div {
     display: block;
