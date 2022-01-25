@@ -22,12 +22,12 @@ div {
     float: left;
     padding: 20px;
     margin: 10px;
-    background: url(assets/banana.bmp) repeat;
+    background: #ffe8b9 url(assets/banana.bmp) repeat;
     box-sizing: border-box;
     width: 30%;
 }
 .rightbar, .leftbar {
-    background: url(assets/wood.jpg);
+    background: #ffe8b9 url(assets/wood.jpg);
     min-height: 300px;
     border-width: 5px;
     border-style: solid;
