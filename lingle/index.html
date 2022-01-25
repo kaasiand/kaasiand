@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>sashimi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.png">
+    <style>
+        :root {
+            background: #3a3535;
+            height: 100%;
+        }
+        @font-face {
+            font-family: "tahoma";
+            src: url("/tahoma.ttf"),
+        }
+        @font-face {
+            font-family: "wingdings";
+            src: url("/wingdings.ttf"),
+        }
+
+
+        body {
+            margin: 0px;
+            height: 100%;
+            overflow-y: hidden;
+        }
+
+        .top {
+            display: flex;
+            justify-content: center;
+            height: 100%;
+
+            --height: min(420px, 55vh);
+            --hdrheight: 80px;
+            --width: min(400px, calc(100vw - 10px));
+        }
+
+        .wrap {
+            margin-top: calc(var(--hdrheight) + 10px);
+
+            --min: min(var(--height), var(--width));
+            --htpx: calc(0.005 * var(--height));
+            --hhpx: calc(0.0025 * var(--height));
+            --minpx: calc(0.005 * var(--min));
+
+            background-image: linear-gradient(to bottom, #4c7aa5 0%, #1d557a 50%, #0c4363 100%);
+            font-size: calc(0.145 * var(--height));
+            width: var(--width);
+            height: var(--height);
+            overflow: hidden;
+            transition: transform 1s ease;
+            /*--tilt: 0deg;
+            transform: perspective(800px) rotateY(var(--tilt));*/
+            --duration: .6s;
+        }
+        .wrap.blur {
+            filter: blur(calc(0.0025 * var(--min)));
+        }
+
+        #speelveld {
+            border-collapse: collapse;
+            width: 100%;
+            transition: margin-top .5s linear;
+        }
+        #speelveld.zesdebeurt, #speelveld:hover {
+
+            margin-top: calc(var(--height) * -.2);
+        }
+        #speelveld td {
+            padding: 0;
+            margin: 0;
+        }
+        .letterbox {
+            height: calc(var(--height) / 5);
+            overflow: hidden;
+            position: relative;
+            font-family: "tahoma";
+            text-align: center;
+            padding: 0;
+        }
+        .glow::after, .letterbg::after {
+            position: absolute;
+            content: "";
+            width: calc(100% + calc(10 * var(--minpx)));
+            height: calc(100% + calc(10 * var(--minpx)));
+            border: calc(6 * var(--minpx)) solid #8D8D8D;
+            border-left-width: calc(6.5 * var(--minpx));
+            border-right-width: calc(6.5 * var(--minpx));
+            border-radius: calc(8 * var(--minpx));
+            box-sizing: border-box;
+            left: calc(-5 * var(--minpx));
+            top: calc(-5 * var(--minpx));
+        }
+        .glow::after {
+            background-color: white;
+            box-shadow: inset 0px calc(-0.005 * var(--height)) calc(0.005 * var(--height)) black;
+            opacity: 0;
+        }
+        .letterbg::after {
+            box-shadow: inset calc(0.0075 * var(--height)) calc(0.0125 * var(--height)) calc(0.01 * var(--height)) #000C;
+        }
+        .letters {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+        }
+        .letters div {
+            position: absolute;
+            width: 100%;
+            top: calc(0.01 * var(--height));
+            /* text-shadow: 3px 3px 8px #0002, 1px 1px 4px #0001, 0 0 2px #0002; */
+        }
+        #speelveld td:nth-child(1) { --delay: .00s }
+        #speelveld td:nth-child(2) { --delay: .05s }
+        #speelveld td:nth-child(3) { --delay: .10s }
+        #speelveld td:nth-child(4) { --delay: .15s }
+        #speelveld td:nth-child(5) { --delay: .20s }
+        #speelveld td:nth-child(6) { --delay: .25s }
+        #speelveld td:nth-child(7) { --delay: .30s }
+
+        .letters div::after {
+            width: 100%;
+            height: 100%;
+            content: var(--letter);
+            color: white;
+        }
+
+        .letters {
+            filter: drop-shadow(calc(3 * var(--htpx)) calc(3 * var(--htpx)) calc(3 * var(--htpx)) #000C)
+                    drop-shadow(var(--htpx) var(--htpx) calc(2 * var(--htpx)) #0008)
+                    drop-shadow(0 0 var(--htpx) #0007)
+                    drop-shadow(0 0 calc(0.2 * var(--htpx)) #0007)
+        }
+
+        .letterbox[data-bg="geel"] .letterbg::before {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: calc(3 * var(--minpx));
+            display: block;
+            width: calc(100% - calc(5 * var(--minpx)));
+            height: 100%;
+            background-color: #f9c418;
+            border-radius: 50%;
+            box-shadow: 0 0 calc(5 * var(--minpx)) black;
+        }
+        .letterbox[data-bg="rood"] .letterbg::before {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom, #922618, #dd523c);
+            box-shadow: inset 0 var(--minpx) calc(3.5 * var(--minpx)) black;
+        }
+
+
+
+        .btmwrap {
+            max-width: calc(100vw - 10px);
+            max-height: calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 30px);
+            position: fixed;
+            bottom: 8px;
+        }
+        .keybline {
+            width: 100%;
+            height: 70px;
+            max-height: calc(calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 30px) / 3);
+            display: flex;
+            justify-content: center;
+            padding-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .keybline button {
+            box-sizing: border-box;
+            width: 50px;
+            max-width: 9%;
+            height: 100%;
+            text-align: center;
+            font-size: min(min(36px, calc(calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 30px) / 9)), calc(var(--width) / 15));
+            margin: 0 0.5% 0;
+
+            font-family: "tahoma";
+            color: white;
+            border: none;
+            border-radius: 3px;
+            box-shadow: 1px 1px 3px #fff3 inset, -1px -1px 3px #0003 inset;
+        }
+
+        .keybline button:hover:not(:active) {
+            filter: brightness(120%);
+        }
+        .keybline button:active {
+            box-shadow: -1px -1px 3px #fff3 inset, 1px 1px 3px #0003 inset;
+        }
+
+        .keybline:nth-child(1) button {
+            background: linear-gradient(to top, #255e85, #4c7aa5);
+        }
+        .keybline:nth-child(2) button {
+            background: linear-gradient(to top, #1d5377, #255e85);
+        }
+        .keybline:nth-child(3) button {
+            background: linear-gradient(to top, #0c4363, #1d5377);
+        }
+
+
+        .header {
+            max-width: calc(100vw - 10px);
+            height: var(--hdrheight);
+            position: fixed;
+        }
+    </style>
+</head>
+
+<body onload="init()">        
+<div class="top">
+    <div class="header">
+        
+    </div>
+    <div class="wrap blur">
+    <table id="speelveld">
+        <tr>
+            <td class="letterbox" data-bg="" style="--letter:'B'"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="rood" style="--letter:'E'"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'T'"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'E'"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'R'"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+        </tr>
+        <tr>
+            <td class="letterbox" data-bg="" style="--letter:'G'"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'E'"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'L'"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="geel" style="--letter:'IJ'"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:'K'"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+        </tr>
+        <tr>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+        </tr>
+        <tr>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+        </tr>
+        <tr>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+        </tr>
+        <tr>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+            <td class="letterbox" data-bg="" style="--letter:''"><div class="letterbg"></div><div class="glow"></div><div class="letters"><div></div></div></td>
+        </tr>
+    </table>
+    </div>
+    <div class="btmwrap">
+        <div class="keybline">
+            <button>Q</button>
+            <button>W</button>
+            <button>E</button>
+            <button>R</button>
+            <button>T</button>
+            <button>Y</button>
+            <button>U</button>
+            <button>I</button>
+            <button>O</button>
+            <button>P</button>
+        </div>
+        <div class="keybline">
+            <button>A</button>
+            <button>S</button>
+            <button>D</button>
+            <button>F</button>
+            <button>G</button>
+            <button>H</button>
+            <button>J</button>
+            <button>K</button>
+            <button>L</button>
+            <button>IJ</button>
+        </div>
+        <div class="keybline">
+            <button style="width:calc(100px + 1%);max-width:19%">enter</button>
+            <button>Z</button>
+            <button>X</button>
+            <button>C</button>
+            <button>V</button>
+            <button>B</button>
+            <button>N</button>
+            <button>M</button>
+            <button><span style='font-family: "wingdings";'></span></button>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
