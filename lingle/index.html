@@ -145,7 +145,7 @@
             top: 50%;
             transform: translateY(-55%);
             opacity: 0;
-            transition: opacity 0.1s ease;
+            transition: opacity 0.05s ease;
         }
         .dotreveal .letter {
             transition: opacity 0.3s ease;
@@ -198,10 +198,20 @@
             max-height: calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 40px);
             position: absolute;
             bottom: 8px;
-            transition: transform 1s ease;
+            opacity: 1;
+            pointer-events: all;
+            transition: transform 1s ease-in-out,
+                        opacity 0.5s step-end;
         }
-        .btmwrap:hoveer {
+        .kbwrap.flip, .wincardwrap:not(.flip), .btmwrap:hover {
             transform: rotateY(180deg);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .wincardwrap.flip {
+            transform: rotateY(360deg);
+            opacity: 1;
+            pointer-events: all;
         }
         .keybline {
             height: 70px;
@@ -273,6 +283,9 @@
             .keybline button[data-bg="zwart"]:hover {
                 filter: brightness(0.7);
             }
+            #notifbox button:hover {
+                background: #0002;
+            }
         }
         .keybline button:active {
             filter: brightness(90%) saturate(110%);
@@ -334,7 +347,7 @@
             box-sizing: border-box;
             box-shadow: 1px 2px 5px #000C;
             font-family: "tahoma";
-            font-size: 18px;
+            font-size: 16px;
             opacity: 0;
             transition: opacity 0.2s ease;
         }
@@ -362,6 +375,9 @@
             left: 50%;
             transform: translate(-50%,-50%) rotate(45deg);
         }
+        #notiftext {
+            pointer-events: none;
+        }
         #notifbox button::before {
             width: 2px;
             height: 15px;
@@ -369,9 +385,6 @@
         #notifbox button::after {
             width: 15px;
             height: 2px;
-        }
-        #notifbox button:hover {
-            background: #0002;
         }
         #notifbox button:active {
             background: #0004;
@@ -438,7 +451,7 @@
         </tr>
     </table>
     </div>
-    <div class="btmwrap">
+    <div class="btmwrap kbwrap">
         <div class="keybline">
             <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'q'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
             <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'w'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
@@ -475,8 +488,9 @@
             <button onclick="doBackspace()" class="wide bsp" style="--letter:'Õ';font-family: 'wingdings'"><div class="btnletter"></div></button>
         </div>
     </div>
-    <div class="btmwrap">
-        aajajja
+    <div class="btmwrap wincardwrap">
+
+        <button class="sharebtn" onclick="copyresults()">Deel resultaten</button>
     </div>
     <div id="notifbox">
         <span id="notiftext"></span>
@@ -490,6 +504,7 @@ let mwlen;
 let refuseInput = true;
 let keyb = {};
 let notifIdx = -1;
+let sessiondate, sessionmonth;
 
 let gamedata = {
     datum: 0,
@@ -509,7 +524,7 @@ let gamedata = {
     vervangĲ: true,
 }
 
-function newNotif(txt) {
+function newNotif(txt, dur = 3000) {
     notifIdx++;
     notifbox.style.opacity = 1;
     notiftext.innerHTML = txt;
@@ -517,7 +532,11 @@ function newNotif(txt) {
     setTimeout(() => {
         if (a == notifIdx)
             notifbox.style.opacity = 0;
-    }, 3000);
+    }, dur);
+}
+
+function doaflip() {
+    [...document.querySelectorAll(".btmwrap")].forEach(e => e.classList.add("flip"));
 }
 
 function getIdx(seed) {
@@ -525,6 +544,7 @@ function getIdx(seed) {
 }
 
 function handleWin() {
+    gamedata.voltooid = true;
     console.log("win");
 }
 
@@ -555,7 +575,8 @@ function checkWoord() {
 
 function tryEnter() {
     if (gamedata.typwoord.length < maxlen) {
-        newNotif("Dit woord is te kort.")
+        if (gamedata.typwoord.length)
+            newNotif("Dit woord is te kort.")
         return;
     }
 
@@ -599,16 +620,7 @@ function tryEnter() {
 
                 |  |_
             */
-                let wrd = mogelĳkewoorden[getIdx(gamedata.datum)];
-                setTimeout(() => {
-                    speelveld.classList.add("revealantwoord");
-                }, 250 * maxlen + 100);
-                [...document.querySelectorAll("#speelveld tr")[6].children].forEach((el,m) => {
-                    setTimeout(() => {
-                        el.style.setProperty("--letter",`'${wrd[m]}'`);
-                        el.querySelector(".letter").style.opacity = 1;
-                    }, 250 * maxlen + 250 * m + 700);
-                });
+                revealOplossing();
 
             } else {
                 setTimeout(() => {
@@ -621,10 +633,21 @@ function tryEnter() {
     else {
         newNotif(`&quot;${gamedata.typwoord}&quot; is geen geldig woord.`);
     }
-
-
-
 }
+
+function revealOplossing() {
+    let wrd = mogelĳkewoorden[getIdx(gamedata.datum)];
+    setTimeout(() => {
+        speelveld.classList.add("revealantwoord");
+    }, 250 * maxlen + 100);
+    [...document.querySelectorAll("#speelveld tr")[6].children].forEach((el,m) => {
+        setTimeout(() => {
+            el.style.setProperty("--letter",`'${wrd[m]}'`);
+            el.querySelector(".letter").style.opacity = 1;
+        }, 250 * maxlen + 250 * m + 800);
+    });
+}
+
 function doBackspace() {
     gamedata.typwoord = gamedata.typwoord.slice(0, gamedata.typwoord.length - 1);
     updateWoord();
@@ -648,6 +671,7 @@ function updateWoord() {
     let i;
     if (gamedata.typwoord.length >= gamedata.typwoordLast.length) {
         i = gamedata.typwoord.length - 1;
+        if (!gamedata.typwoord.length) return;
     }
     else if (gamedata.typwoord.length < gamedata.typwoordLast.length) {
         i = gamedata.typwoordLast.length - 1;
@@ -661,7 +685,7 @@ function updateWoord() {
     setTimeout(() => {
         write(n,s);
         el.querySelector(".letter").style.opacity = 1;
-    }, 100);
+    }, 50);
     
     gamedata.typwoordLast = gamedata.typwoord;
 }
@@ -675,15 +699,33 @@ function populateKeybObject() {
     }
 }
 
+const maanden = ["januari","februari","maart","april","mei","juni",
+    "juli","augustus","september","oktober","november","december"];
+
+function checkDatum() {
+    let d = new Date();
+    let dt = Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());
+
+    if (dt != gamedata.datum) {
+        newNotif(`Let op! Dit is de Lingle van ${sessiondate} ${maanden[sessionmonth]}.`, 10000)
+    }
+}
+
 function init() {
     mwlen = mogelĳkewoorden.length;
 
-    let d = new Date(2022,0,24);
-    gamedata.datum = Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());
+    let d = new Date(2022,0,23);
+    sessiondate  = d.getDate();
+    sessionmonth = d.getMonth();
+    gamedata.datum = Date.UTC(d.getFullYear(),sessionmonth,sessiondate);
 
     revealStart();
 
     populateKeybObject();
+
+    document.onfocus = () => {
+        checkDatum();
+    };
 
     document.onkeydown = e => {
         if (refuseInput)
