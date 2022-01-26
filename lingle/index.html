@@ -554,6 +554,7 @@ function copyresults() {
 
     navigator.clipboard.writeText(str).then(() => {
         console.log("navigator.clipboard.writeText success");
+        document.querySelector("sharebtn").innerHTML = "Gekopieerd!";
     }, () => {
         console.log("navigator.clipboard.writeText failure!");
 
@@ -571,6 +572,7 @@ function copyresults() {
         try {
             document.execCommand('copy');
             console.log('document.execCommand copy success');
+            document.querySelector("sharebtn").innerHTML = "Gekopieerd!";
         } catch (e) {
             console.log('document.execCommand copy failure!');
         }
