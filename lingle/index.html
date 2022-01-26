@@ -639,6 +639,7 @@ function handleWin() {
     gamedata.verdeling[gamedata.regel]++;
     gamedata.wins++;
     if (gamedata.streak > gamedata.maxstreak) gamedata.maxstreak = gamedata.streak;
+    save();
 }
 
 function checkWoord(poging) {
@@ -675,7 +676,6 @@ function tryEnter() {
     if (allewoorden[firstletter].includes(typwoord)) {
         refuseInput = true;
         gamedata.veld[gamedata.regel] = typwoord;
-        save();
         let res = checkWoord(typwoord);
 
         let c = document.querySelector("#speelveld tbody").children[gamedata.regel].children;
@@ -723,6 +723,7 @@ function tryEnter() {
                 }, 250 * maxlen + 100)
             }
         }
+        save();
     }
     else {
         newNotif(`&quot;${typwoord}&quot; is geen geldig woord.`, 3000);
