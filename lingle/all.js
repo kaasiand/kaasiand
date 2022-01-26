@@ -27,14 +27,14 @@ let mogelĳkewoorden = [
 "ether","etter","exact","extra","fabel","falen","farao","fauna","faxen","feest",
 "fiets","filet","fixen","fjord","flank","flard","flauw","flink","flirt","flits",
 "flora","fluit","fluor","flyer","fobie","focus","folie","fonds","forel","foton",
-"foyer","fraai","frank","frase","frats","friet","frons","front","fruit","funky",
+"foyer","fraai","frank","frase","frats","friet","frons","front","fruit",
 "fusie","fysio","galop","gamba","gamen","gamer","gamma","gapen","garde","garen",
 "gazon","gebak","gebed","gebit","gebod","gedag","gedoe","geest","geeuw","gekko",
 "gekte","gelei","gelig","gelĳk","geluk","gemak","gemis","genen","genie","genot",
 "genre","gerei","gerst","getal","geval","gevel","geven","gewas","gewei","gewin",
 "gezag","gezin","gilet","ginds","giraf","glans","gleuf","globe","gloed","gnoom",
 "godin","gozer","graad","graaf","graag","graan","grauw","greep","grens","griep",
-"grĳns","grill","grind","grint","groen","groep","groet","grond","groot","guave",
+"grĳns","grill","grind","grint","groen","groep","groet","grond","groot",
 "gunst","guppy","gyros","haard","haast","hagel","haiku","haken","halen","hallo",
 "halte","hamer","hapje","harem","harig","haten","hater","haven","haver","havik",
 "hecht","heden","heide","heien","heisa","hekel","hekje","helft","helix",
@@ -113,7 +113,7 @@ let mogelĳkewoorden = [
 "wiens","wĳden","wĳken","wĳsje","wĳzen","wĳzer","wikke","winst","woede","woest",
 "wonen","woord","worst","wraak","wreed","wreef","zacht","zadel","zagen","zakje",
 "zalig","zebra","zegel","zegen","zeker","zelfs","zenuw","zetel","zetje","zicht",
-"ziezo","zĳlĳn","zĳweg","zoals","zodra","zomer","zonde","zowel","zucht","zusje",
+"ziezo","zĳlĳn","zoals","zodra","zomer","zonde","zowel","zucht","zusje",
 "zwaai","zwaan","zwaar","zwart","zweep","zweer","zweet","zwerm","zwier","zwoel"]
 
 let allewoorden = {
