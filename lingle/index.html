@@ -10,10 +10,11 @@
     <meta property="og:description" content="Raad het woord in 6 pogingen, nu met de nostalgische look die je gewend bent.">
     <meta property="og:url" content="https://kaasiand.cool/">
     <meta property="og:image" content="https://kaasiand.cool/lingle/banner.png">
+    <meta property="twitter:domain" content="kaasiand.cool">
     <meta property="twitter:site" content="@kaasIand">
     <meta property="twitter:creator" content="@kaasIand">
 
-    <meta name="theme-color" content="#ee361a">
+    <meta name="theme-color" content="#f9c418">
     <meta name="twitter:card" content="summary_large_image">
 
 
@@ -197,6 +198,10 @@
             max-height: calc(calc(calc(100vh - var(--height)) - var(--hdrheight)) - 40px);
             position: absolute;
             bottom: 8px;
+            transition: transform 1s ease;
+        }
+        .btmwrap:hoveer {
+            transform: rotateY(180deg);
         }
         .keybline {
             height: 70px;
@@ -261,9 +266,15 @@
             left: 50%;
             transform: translate(-50%,-55%);
         }
+        .keybline button[data-bg="zwart"] {
+            filter: brightness(0.6);
+        }
         @media (any-hover: hover) {
             .keybline button:hover:not(:active) {
                 filter: brightness(120%);
+            }
+            .keybline button[data-bg="zwart"]:hover {
+                filter: brightness(0.7);
             }
         }
         .keybline button:active {
@@ -413,12 +424,16 @@
             <button onclick="doBackspace()" class="wide bsp" style="--letter:'Õ';font-family: 'wingdings'"><div class="btnletter"></div></button>
         </div>
     </div>
+    <div class="btmwrap">
+        aajajja
+    </div>
 </div>
 <script src="all.js"></script>
 <script>
 const maxlen = 5;
 let mwlen;
 let refuseInput = true;
+let keyb = {};
 
 let gamedata = {
     datum: 0,
@@ -500,10 +515,20 @@ function tryEnter() {
         for (let i = 0; i < maxlen; i++) {
             setTimeout(() => {
                 c[i].dataset.bg = res[i];
+                if (res[i] == "rood") {
+                    keyb[gamedata.typwoord[i]].dataset.bg = "rood";
+                } else if (res[i] == "geel") {
+                    if (keyb[gamedata.typwoord[i]].dataset.bg == "")
+                        keyb[gamedata.typwoord[i]].dataset.bg = "geel";
+                } else {
+                    if (keyb[gamedata.typwoord[i]].dataset.bg == "")
+                        keyb[gamedata.typwoord[i]].dataset.bg = "zwart";
+                }
             }, 250 * i + 100)
         }
 
         if (res.every(a => a == "rood")) {
+            // if win
             setTimeout(() => {
                 document.querySelectorAll("#speelveld tr")[gamedata.regel].classList.add("winanim");
                 setTimeout(() => {
@@ -512,11 +537,14 @@ function tryEnter() {
             }, 250 * maxlen + 100);
         }
         else {
-            console.log(gamedata.regel);
-            setTimeout(() => {
-                gamedata.regel++;
-                revealDots(gamedata.regel);
-            }, 250 * maxlen + 100)
+            if (gamedata.regel == 5) { // handle loss
+
+            } else {
+                setTimeout(() => {
+                    gamedata.regel++;
+                    revealDots(gamedata.regel);
+                }, 250 * maxlen + 100)
+            }
         }
     }
     else {
@@ -561,6 +589,15 @@ function updateWoord() {
     gamedata.typwoordLast = gamedata.typwoord;
 }
 
+function populateKeybObject() {
+    let ltrs = [...document.querySelectorAll(".keybline")].flatMap(a => [...a.children]);
+
+    for (let i = 0; i < ltrs.length; i++) {
+        if (ltrs[i].classList.contains("wide")) continue;
+        keyb[ltrs[i].style.getPropertyValue("--letter")[1]] = ltrs[i];
+    }
+}
+
 function init() {
     mwlen = mogelĳkewoorden.length;
 
@@ -568,6 +605,8 @@ function init() {
     gamedata.datum = Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());
 
     revealStart();
+
+    populateKeybObject();
 
     document.onkeydown = e => {
         if (refuseInput)
@@ -608,7 +647,7 @@ function revealStart() {
 }
 
 function revealDots(n) {
-    [].forEach.call(document.querySelectorAll("#speelveld tr")[n].children, (el,m) => {
+    [...document.querySelectorAll("#speelveld tr")[n].children].forEach((el,m) => {
         setTimeout(() => {
             el.querySelector(".letter").style.opacity = 1;
         }, m * 50 + ((gamedata.regel == 5) ? 500 : 0));
