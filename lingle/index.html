@@ -37,7 +37,7 @@
             height: 100%;
             overflow: hidden;
 
-            --height: min(420px, 55vh);
+            --height: min(450px, 55vh);
             --hdrheight: 75px;
             --width: min(400px, calc(100vw - 10px));
         }
@@ -52,7 +52,10 @@
 
             background-image: linear-gradient(to bottom, #4c7aa5 0%, #1d557a 50%, #0c4363 100%);
             font-size: min(calc(0.145 * var(--height)), calc(0.145 * var(--width)));
-            width: min(var(--width), calc(100vw - 40px));
+
+            --width: min(min(400px, calc(100vw - 10px)), calc(100vw - 60px));
+            --height: min(420px, 50vh);
+            width: var(--width);
             height: var(--height);
             overflow: hidden;
             transition: transform 1s ease;
@@ -198,7 +201,7 @@
             border: none;
             border-radius: 3px;
             box-shadow: 1px 1px 3px #fff3 inset, -1px -1px 3px #0003 inset, 1px 1px 2px #0004;
-            overflow: hidden;
+            touch-action: manipulation;
         }
 
         .keybline button[data-bg="geel"] .btncircle {
@@ -456,7 +459,6 @@ function init() {
             tryEnter();
             return;
         }
-        console.log(e.keyCode)
 
         let ch = e.key.toLowerCase();
         
