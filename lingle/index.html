@@ -3,9 +3,21 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Lingle — Een dagelĳks woord op z&lsquo;n Nederlands</title>
+    <title>Lingle</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="favicon.png">
+
+    <meta property="og:title" content="Lingle – Iedere dag een nieuw woord">
+    <meta property="og:description" content="Raad het woord in 6 pogingen, nu met de nostalgische look die je gewend bent.">
+    <meta property="og:url" content="https://kaasiand.cool/">
+    <meta property="og:image" content="https://kaasiand.cool/lingle/banner.png">
+    <meta property="twitter:site" content="@kaasIand">
+    <meta property="twitter:creator" content="@kaasIand">
+
+    <meta name="theme-color" content="#ee361a">
+    <meta name="twitter:card" content="summary_large_image">
+
+
+    <link rel="icon" href="favicon.png" sizes="16x16">
     <style>
         :root {
             height: 100%;
@@ -25,6 +37,19 @@
             src: url("wingdings.woff") format('woff');
         }
 
+        @keyframes win {
+               0% { opacity: 0; }
+             0.1% { opacity: 1; }
+            50.0% { opacity: 0; }
+            75.0% { opacity: 1; }
+             100% { opacity: 0; }
+        }
+
+        .winanim td:nth-child(1) .glow::after { animation: win 1.00s ease 0.20s both; }
+        .winanim td:nth-child(2) .glow::after { animation: win 1.05s ease 0.15s both; }
+        .winanim td:nth-child(3) .glow::after { animation: win 1.10s ease 0.10s both; }
+        .winanim td:nth-child(4) .glow::after { animation: win 1.15s ease 0.05s both; }
+        .winanim td:nth-child(5) .glow::after { animation: win 1.20s ease 0.00s both; }
 
         body {
             margin: 0px;
@@ -123,6 +148,9 @@
         }
         .dotreveal .letter {
             transition: opacity 0.3s ease;
+        }
+        #speelveld tr:nth-child(7) .letter {
+            transition: opacity 0s ease;
         }
 
         .letter::after {
@@ -224,7 +252,7 @@
             filter: drop-shadow(1px 1px 3px #0009)
                     drop-shadow(2px 2px 2px #0009)
                     drop-shadow(0 0 1px #000F)
-                    blur(0.25px);
+                    /* blur(0.25px); */
         }
         .btnletter::after {
             content: var(--letter);
@@ -233,9 +261,10 @@
             left: 50%;
             transform: translate(-50%,-55%);
         }
-
-        .keybline button:hover:not(:active) {
-            filter: brightness(120%);
+        @media (any-hover: hover) {
+            .keybline button:hover:not(:active) {
+                filter: brightness(120%);
+            }
         }
         .keybline button:active {
             filter: brightness(90%) saturate(110%);
@@ -292,7 +321,7 @@
 <body onload="init()">
 <div class="top">
     <div class="header">
-        <img src="lingle.png" class="logo">
+        <img src="lingle.png" alt="Lingle logo" class="logo">
     </div>
     <div class="wrap blur">
     <table id="speelveld">
@@ -389,9 +418,10 @@
 <script>
 const maxlen = 5;
 let mwlen;
+let refuseInput = true;
 
 let gamedata = {
-    datum: new Date(),
+    datum: 0,
     voltooid: false,
     veld: ["","","","","",""],
     regel: 0,
@@ -405,12 +435,97 @@ function getIdx(seed) {
     return ((((214013 * seed + 2531011) % 2147483648) >> 16) % 32768) % mwlen;
 }
 
-function thing(lim) {
-    a = mogelĳkewoorden[getIdx(gamedata.datum)]
+function handleWin() {
+    console.log("win");
+}
+
+function aa() {
+    let line = 0;
+    let c = document.querySelector("#speelveld tbody").children;
+    if (line >= c.length) return;
+
+    let a = [..."klaar"];
+    for (let i = 0; i < c[line].children.length; i++) {
+        let ltr = a[i] ?? ".";
+        if (ltr == "ĳ") ltr = "ij";
+        c[line].children[i].style.setProperty("--letter", `'${ltr}'`);
+        c[line].children[i].dataset.bg = "rood"
+    }
+    setTimeout(() => {
+        document.querySelectorAll("#speelveld tr")[0].classList.add("winanim");
+    }, 250);
+}
+
+function checkWoord() {
+    let wrd = [...mogelĳkewoorden[getIdx(gamedata.datum)]];
+    let poging = gamedata.typwoord;
+    let result = Array(maxlen).fill("");
+
+    // pass 1: rood
+    for (let i = 0; i < maxlen; i++) {
+        if (wrd[i] == poging[i]) {
+            result[i] = "rood";
+            wrd[i] = "";
+        }
+    }
+
+    // pass 2: geel
+    for (let i = 0; i < maxlen; i++) {
+        if (result[i]) continue; //skip if rode letter
+        let a = wrd.indexOf(poging[i])
+        if (a != -1) {
+            result[i] = "geel";
+            wrd[a] = "";
+        }
+    }
+    return result;
 }
 
 function tryEnter() {
-    console.log("try enter")
+    if (gamedata.typwoord.length < maxlen) {
+
+        console.log("woord te kort")
+        return;
+    }
+
+    let firstletter = gamedata.typwoord[0];
+    if (allewoorden[firstletter].includes(gamedata.typwoord)) {
+        refuseInput = true;
+        gamedata.veld[gamedata.regel] = gamedata.typwoord;
+        let res = checkWoord();
+
+        let c = document.querySelector("#speelveld tbody").children[gamedata.regel].children;
+
+
+        for (let i = 0; i < maxlen; i++) {
+            setTimeout(() => {
+                c[i].dataset.bg = res[i];
+            }, 250 * i + 100)
+        }
+
+        if (res.every(a => a == "rood")) {
+            setTimeout(() => {
+                document.querySelectorAll("#speelveld tr")[gamedata.regel].classList.add("winanim");
+                setTimeout(() => {
+                    handleWin();
+                }, 1200);
+            }, 250 * maxlen + 100);
+        }
+        else {
+            console.log(gamedata.regel);
+            setTimeout(() => {
+                gamedata.regel++;
+                revealDots(gamedata.regel);
+            }, 250 * maxlen + 100)
+        }
+    }
+    else {
+
+        console.log("invalide woord")
+    }
+
+
+
 }
 function doBackspace() {
     gamedata.typwoord = gamedata.typwoord.slice(0, gamedata.typwoord.length - 1);
@@ -448,9 +563,18 @@ function updateWoord() {
 
 function init() {
     mwlen = mogelĳkewoorden.length;
+
+    let d = new Date(2022,0,24);
+    gamedata.datum = Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());
+
     revealStart();
 
     document.onkeydown = e => {
+        if (refuseInput)
+            return;
+        if (document.querySelectorAll("#speelveld tr")[gamedata.regel].classList.contains("dotreveal"))
+            return;
+
         if (e.keyCode == 8) { // backspace
             doBackspace();
             return;
@@ -487,11 +611,17 @@ function revealDots(n) {
     [].forEach.call(document.querySelectorAll("#speelveld tr")[n].children, (el,m) => {
         setTimeout(() => {
             el.querySelector(".letter").style.opacity = 1;
-        }, m * 50);
+        }, m * 50 + ((gamedata.regel == 5) ? 500 : 0));
     });
+    if (gamedata.regel == 5)
+        speelveld.classList.add("zesdebeurt");
+    
     setTimeout(() => {
         document.querySelectorAll("#speelveld tr")[n].classList.remove("dotreveal");
-    }, (maxlen-1) * 50 + 300);
+        gamedata.typwoord = "";
+        gamedata.typwoordLast = "";
+        refuseInput = false;
+    }, (maxlen-1) * 50 + ((gamedata.regel == 5) ? 600 : 100));
 }
 
 function write(line, str) {
