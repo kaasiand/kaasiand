@@ -861,7 +861,7 @@ daarmee alleen maar voor jezelf en anderen.");
 
 function revealStart() {
     let trs = document.querySelectorAll("#speelveld tr");
-    let haswon = false;
+    let hasended = false, haswon = false;
     for (let i = 0; i < gamedata.veld.length; i++) {
         if (!gamedata.veld[i]) {
             gamedata.regel = i;
@@ -889,14 +889,16 @@ function revealStart() {
 
         if (res.every(a => a == "rood")) {
             doaflip();
+            hasended = true;
             haswon = true;
         }
         else if (i == 5 && res.some(a => a != "rood")) {
             speelveld.classList.add("revealantwoord");
+            hasended = true;
             revealOplossing(true);
         }
     }
-    if (!haswon) {
+    if (!hasended) {
         revealDots(gamedata.regel);
     }
     else {
