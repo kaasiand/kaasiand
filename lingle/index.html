@@ -531,8 +531,7 @@ let typwoordLast = "", typwoord = "";
 let gamedata = {};
 
 function copyresults() {
-    let str = `Lingle ${(sessionseed - Date.UTC(2022,0,-29)) / 86400000
-    } ${gamedata.voltooid ? gamedata.regel + 1 : 'X'}/6\nhttps://kaasiand.cool/lingle/\n`
+    let str = `Lingle ${(sessionseed - Date.UTC(2022,0,-29)) / 86400000} ${gamedata.voltooid ? gamedata.regel + 1 : 'X'}/6\nhttps://kaasiand.cool/lingle/\n`
     
     let trs = document.querySelectorAll("#speelveld tr");
 
@@ -545,17 +544,12 @@ function copyresults() {
 
         [...trs[i].children].forEach((el,m) => {
             if (el.dataset.bg == "rood")
-                str += "🟧"
+                str += "🟧";
             else if (el.dataset.bg == "geel")
-                str += "🟡"
+                str += "🟡";
             else
-                str += "🟦"
+                str += "🟦";
         });
-
-        if (res.every(a => a == "rood")) {
-            doaflip();
-            haswon = true;
-        }
     }
 
     navigator.clipboard.writeText(str).then(() => {
