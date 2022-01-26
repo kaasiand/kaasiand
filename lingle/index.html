@@ -550,6 +550,8 @@ function copyresults() {
             else
                 str += "🟦";
         });
+
+        if (str.endsWith("🟧🟧🟧🟧🟧")) break;
     }
 
     navigator.clipboard.writeText(str).then(() => {
