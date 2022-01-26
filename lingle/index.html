@@ -685,6 +685,9 @@ function checkWoord(poging) {
 }
 
 function tryEnter() {
+    if (refuseInput)
+        return;
+
     if (typwoord.length < maxlen) {
         if (typwoord.length)
             newNotif("Dit woord is te kort.", 3000)
@@ -767,11 +770,15 @@ function revealOplossing(fast = false) {
 }
 
 function doBackspace() {
+    if (refuseInput)
+        return;
     typwoord = typwoord.slice(0, typwoord.length - 1);
     updateWoord();
 }
 
 function typLetter(ltr, echttoetsenbord = false) {
+    if (refuseInput)
+        return;
     if (typwoord[typwoord.length - 1] == "i" &&
         gamedata.vervangĲ && ltr == "j" && echttoetsenbord) {
         
@@ -915,6 +922,7 @@ function revealStart() {
             speelveld.classList.add("revealantwoord");
             hasended = true;
             revealOplossing(true);
+            refuseInput = true;
         }
     }
     if (!hasended) {
