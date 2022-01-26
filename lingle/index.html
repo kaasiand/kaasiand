@@ -598,6 +598,7 @@ function makeFirstGameData() {
         gespeeld: 0,
         streak: 0,
         maxstreak: 0,
+        wins: 0,
 
         thema: "dark",
         stĳl: "00s",
@@ -633,6 +634,11 @@ function handleWin() {
     doaflip();
     console.log("win");
 
+    gamedata.gespeeld++;
+    gamedata.streak++;
+    gamedata.verdeling[gamedata.regel]++;
+    gamedata.wins++;
+    if (gamedata.streak > gamedata.maxstreak) gamedata.maxstreak = gamedata.streak;
 }
 
 function checkWoord(poging) {
@@ -704,7 +710,10 @@ function tryEnter() {
                 |  ||
 
                 |  |_
-            */
+            */  
+                gamedata.streak = 0;
+                gamedata.gespeeld++;
+                gamedata.verdeling[6]++;
                 revealOplossing();
 
             } else {
