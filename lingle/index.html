@@ -558,7 +558,30 @@ function copyresults() {
         }
     }
 
-    navigator.clipboard.writeText(str);
+    navigator.clipboard.writeText(str).then(() => {
+        console.log("navigator.clipboard.writeText success");
+    }, () => {
+        console.log("navigator.clipboard.writeText failure!");
+
+        var textArea = document.createElement("textarea");
+        textArea.value = str;
+        textArea.style.top = "0";
+        textArea.style.right = "0";
+        textArea.style.position = "fixed";
+        textArea.style.opacity = 0;
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+            console.log('document.execCommand copy success');
+        } catch (e) {
+            console.log('document.execCommand copy failure!');
+        }
+        document.body.removeChild(textArea);
+    });
 }
 
 function save() {
