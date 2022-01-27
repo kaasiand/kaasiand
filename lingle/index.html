@@ -453,6 +453,9 @@
             background: linear-gradient(to bottom, #922618, #dd523c);
         }
 
+        .hidden {
+            display: none !important;
+        }
         #helpscreen {
             position: absolute;
             margin-top: 50vh;
@@ -467,15 +470,10 @@
             font-family: "tahoma";
             text-shadow: 2px 2px 2px #0004;
             box-shadow: 2px 6px 20px #0006;
-            transition: opacity 0.1s ease;
-            user-select: auto;
 
             /* no firefox */
             -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
-        }
-        #helpscreen.hidden {
-            display: none;
         }
         :root[data-theme="dark"] #helpscreen {
             color: #f1eaea;
@@ -493,9 +491,9 @@
             top: 0;
             left: 0;
             z-index: -1;
-            opacity: 0.8;
             border-radius: 30px;
             background: #A3642A url(../assets/wood.jpg);
+            filter: opacity(0.8) brightness(0.9);
         }
         :root[data-theme="light"] #helpscreen {
             color: #d7c9c9;
@@ -597,7 +595,7 @@
         Na iedere beurt krĳg je te zien of de letters correct zĳn of niet.
         <hr>
         <h2>Voorbeeld</h2>
-        <img src="example.png" alt="Voorbeeld van een gespeeld Linglewoord." class="example">
+        <img src="example.png" alt='Voorbeeld van een beurt met het woord "vijzel". De V is geel omcirkeld, de L heeft een rode achtergrond, en de andere letters hebben een blauwe achtergrond.' class="example">
         <p>De <span class="boxred">L</span> zit in het woord, en staat op de juiste plek.</p>
         <p>De <span class="boxyellow">V</span> zit in het woord, maar staat niet op de juiste plek.</p>
         <p>De <span class="boxblue">IJ</span> zit niet in het woord.</p>
@@ -607,7 +605,7 @@
         <hr>
         Er is iedere dag een nieuwe Lingle!
         <br><br>
-        <button class="redbtn" onclick="helpscreen.classList.add('hidden')">Begrepen!</button>
+        <button class="redbtn" onclick="hideHelp()">Begrepen!</button>
     </div>
     
     <div class="header">
@@ -783,7 +781,7 @@ function save() {
 function tryRetrieveData() {
     if (!localStorage || localStorage.length == 0) {
         makeFirstGameData();
-        helpscreen.classList.remove('hidden');
+        showHelp();
     }
     else {
         gamedata = JSON.parse(localStorage.getItem("data"));
@@ -795,8 +793,17 @@ function tryRetrieveData() {
     save();
 }
 function toggleHelpScreen() {
-    helpscreen.classList.toggle('hidden');
+    if (helpscreen.classList.contains('hidden'))
+        showHelp();
+    else
+        hideHelp();
     helpbtn.blur();
+}
+function hideHelp() {
+    helpscreen.classList.add('hidden');
+}
+function showHelp() {
+    helpscreen.classList.remove('hidden');
 }
 
 function resetData() {
@@ -1057,7 +1064,7 @@ function init() {
     };
     document.onclick = e => {
         if (e.target != helpbtn && e.target != helpscreen)
-            helpscreen.classList.add('hidden');
+            hideHelp();
     };
 
     document.onkeydown = e => {
@@ -1068,12 +1075,12 @@ function init() {
 
         if (e.keyCode == 8) { // backspace
             doBackspace();
-            helpscreen.classList.add('hidden');
+            hideHelp();
             return;
         }
         if (e.keyCode == 13) { // enter
             tryEnter();
-            helpscreen.classList.add('hidden');
+            hideHelp();
             return;
         }
 
@@ -1081,11 +1088,11 @@ function init() {
         
         if (e.keyCode >= 65 && e.keyCode <= 90 || ch == "ĳ") {
             typLetter(ch, true);
-            helpscreen.classList.add('hidden');
+            hideHelp();
         }
         else if (ch == ";" || ch == ":") {
-            typLetter("ĳ", true)
-            helpscreen.classList.add('hidden');
+            typLetter("ĳ", true);
+            hideHelp();
         }
 
     };
