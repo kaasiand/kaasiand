@@ -329,7 +329,7 @@
 
         .header {
             width: 450px;
-            max-width: calc(100vw - 10px);
+            max-width: calc(100vw - 20px);
             height: var(--hdrheight);
             position: absolute;
         }
@@ -471,9 +471,7 @@
             user-select: auto;
         }
         #helpscreen.hidden {
-            opacity: 0;
-            pointer-events: none;
-            user-select: none;
+            display: none;
         }
         :root[data-theme="dark"] #helpscreen {
             color: #f1eaea;
