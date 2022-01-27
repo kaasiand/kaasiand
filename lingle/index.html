@@ -605,7 +605,7 @@
     </div>
     
     <div class="header">
-        <button id="helpbtn" onclick="helpscreen.classList.toggle('hidden')"></button>
+        <button id="helpbtn" onclick="toggleHelpScreen()"></button>
         <img src="lingle.png" alt="Lingle logo" class="logo">
     </div>
     <div class="wrap blur">
@@ -695,7 +695,7 @@
             <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'b'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
             <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'n'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
             <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'m'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="doBackspace()" class="wide bsp" style="--letter:'Õ';font-family: 'wingdings'"><div class="btnletter"></div></button>
+            <button onclick="doBackspace()" aria-label="backspace" class="wide bsp" style="--letter:'Õ';font-family: 'wingdings'"><div class="btnletter"></div></button>
         </div>
     </div>
     <div class="btmwrap wincardwrap">
@@ -787,6 +787,10 @@ function tryRetrieveData() {
         }
     }
     save();
+}
+function toggleHelpScreen() {
+    helpscreen.classList.toggle('hidden');
+    helpbtn.blur();
 }
 
 function resetData() {
@@ -1045,6 +1049,10 @@ function init() {
     document.onfocus = () => {
         checkDatum();
     };
+    document.onclick = e => {
+        if (e.target != helpbtn && e.target != helpscreen)
+            helpscreen.classList.add('hidden');
+    };
 
     document.onkeydown = e => {
         if (refuseInput)
@@ -1054,10 +1062,12 @@ function init() {
 
         if (e.keyCode == 8) { // backspace
             doBackspace();
+            helpscreen.classList.add('hidden');
             return;
         }
         if (e.keyCode == 13) { // enter
             tryEnter();
+            helpscreen.classList.add('hidden');
             return;
         }
 
@@ -1065,9 +1075,11 @@ function init() {
         
         if (e.keyCode >= 65 && e.keyCode <= 90 || ch == "ĳ") {
             typLetter(ch, true);
+            helpscreen.classList.add('hidden');
         }
         else if (ch == ";" || ch == ":") {
             typLetter("ĳ", true)
+            helpscreen.classList.add('hidden');
         }
 
     };
