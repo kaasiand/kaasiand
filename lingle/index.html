@@ -281,7 +281,7 @@
             filter: brightness(0.6);
         }
         @media (any-hover: hover) {
-            .keybline button:hover, .sharebtn:hover {
+            .keybline button:hover, .redbtn:hover {
                 filter: brightness(120%);
             }
             .keybline button[data-bg="zwart"]:hover {
@@ -433,7 +433,7 @@
             background: #0004;
         }
 
-        .sharebtn {
+        .redbtn {
             width: min(95vw, 250px);
             height: min(60px,calc(var(--mh) / 2));
             
@@ -449,7 +449,7 @@
             cursor: pointer;
             text-shadow: 1px 1px 2px #000C;
         }
-        .sharebtn:active {
+        .redbtn:active {
             background: linear-gradient(to bottom, #922618, #dd523c);
         }
 
@@ -603,7 +603,7 @@
         <hr>
         Er is iedere dag een nieuwe Lingle!
         <br><br>
-        <button class="sharebtn" onclick="helpscreen.classList.add('hidden')">Begrepen!</button>
+        <button class="redbtn" onclick="helpscreen.classList.add('hidden')">Begrepen!</button>
     </div>
     
     <div class="header">
@@ -702,7 +702,7 @@
     </div>
     <div class="btmwrap wincardwrap">
 
-        <button class="sharebtn" onclick="copyresults()">Deel resultaten</button>
+        <button class="redbtn sharebtn" onclick="copyresults()">Deel resultaten</button>
     </div>
     <div id="notifbox">
         <span id="notiftext"></span>
