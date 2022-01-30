@@ -88,7 +88,7 @@
             background-image: linear-gradient(to bottom, #4c7aa5 0%, #1d557a 50%, #0c4363 100%);
             font-size: min(calc(0.145 * var(--height)), calc(0.16 * var(--width)));
 
-            --width: min(min(400px, calc(100vw - 10px)), calc(100vw - 60px));
+            --width: min(min(min(400px, calc(100vw - 10px)), calc(100vw - 60px)), min(420px, 50vh));
             --height: min(420px, 50vh);
             width: var(--width);
             height: var(--height);
@@ -661,11 +661,6 @@
             font-weight: bold;
             box-shadow: 1px 2px 3px #0008;
         }
-        .linglebal.test {
-            background: radial-gradient(50% 50% at 40% 30%, #5673F1 30%, transparent 100%),
-                        radial-gradient(50% 50% at 40% 40%, #173DA6 30%, transparent 100%),
-                        radial-gradient(50% 50% at 30% 60%, #0a2a83 30%, #081e6e 100%);
-        }
         .linglebal::after {
             content: attr(data-lbl);
             position: absolute;
@@ -1103,10 +1098,6 @@ function doaflip() {
 
 function getIdx(seed) {
     return ((((214013 * seed + 2531011) % 2147483648) >> 16) % 32768) % mwlen;
-}
-
-function abc() {
-    btnthemadark.classList.toggle("test");
 }
 
 function handleWin() {
