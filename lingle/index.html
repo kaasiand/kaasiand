@@ -1044,8 +1044,18 @@ function makeGameDataNewDay() {
     if (!("donkerblauw" in gamedata)) {
         gamedata.donkerblauw = false;
     }
+    if (!("blur" in gamedata)) {
+        gamedata.blur = true;
+    }
 }
 function makeFirstGameData() {
+    let redanim = false;
+    let matchmedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    if (!matchmedia || matchmedia.matches) {
+        redanim = true;
+    }
+
     gamedata = {
         datum: sessionseed,
         voltooid: false,
@@ -1061,8 +1071,9 @@ function makeFirstGameData() {
         thema: "dark",
         stĳl: "00s",
         vervangĲ: true,
-        reduceanim: false,
+        reduceanim: redanim,
         donkerblauw: false,
+        blur: true,
     };
 }
 
