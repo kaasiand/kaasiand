@@ -25,12 +25,18 @@
         }
         :root[data-theme="dark"] {
             background: #3a3535;
+            --btncolor: #cfc6c6e0;
+            --btncolorsolid: #cfc6c6;
         }
         :root[data-theme="light"] {
             background: #cfc6c6;
+            --btncolor: #3a3535e0;
+            --btncolorsolid: #3a3535;
         }
         :root[data-theme="kaasiand"] {
             background: #5F2900 repeat url(../assets/wood.bmp);
+            --btncolor: #cfc6c6e0;
+            --btncolorsolid: #cfc6c6;
         }
         @font-face {
             font-family: "tahoma";
@@ -293,6 +299,9 @@
             #helpbtn:hover {
                 background: #88888840;
             }
+            #helpbtn:hover, #settbtn:hover {
+                filter: brightness(120%) drop-shadow(2px 2px 2px #0004);
+            }
         }
         .keybline button:active {
             filter: brightness(90%) saturate(110%);
@@ -339,8 +348,9 @@
             border-radius: 50%;
             position: absolute;
             top: 50%;
+            left: 0;
             transform: translateY(-50%);
-            border: 2px solid #cfc6c6e0;
+            border: 2px solid var(--btncolor);
             background: transparent;
             cursor: pointer;
             filter: drop-shadow(2px 2px 2px #0004);
@@ -351,17 +361,49 @@
             top: 50%;
             transform: translate(-50%,-53%);
             content: "?";
-            color: #cfc6c6e0;
+            color: var(--btncolor);
             font-size: 25px;
             font-family: "tahoma";
         }
-        :root[data-theme="light"] #helpbtn {
-            border: 2px solid #3a3535e0;
-            filter: none;
+
+        #settbtn {
+            width: 30px;
+            height: 30px;
+            box-sizing: border-box;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            right: 3px;
+            transform: translateY(-50%);
+            border: 4px solid var(--btncolorsolid);
+            background: transparent;
+            
+            cursor: pointer;
+            filter: drop-shadow(2px 2px 2px #0004) opacity(0.9);
         }
-        :root[data-theme="light"] #helpbtn::after {
-            color: #3a3535e0;
+        #settbtn div {
+            position: absolute;
+            width: 6px;
+            top: -8px;
+            left: 50%;
+            height: 38px;
+            transform: translateX(-50%);
         }
+        #settbtn div::after, #settbtn div::before {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 100%;
+            height: 7px;
+            background: var(--btncolorsolid);
+        }
+        #settbtn div::before {
+            bottom: 0;
+        }
+        #settbtn div:nth-child(2) { transform: translateX(-50%) rotate( 45deg) ; }
+        #settbtn div:nth-child(3) { transform: translateX(-50%) rotate( 90deg); }
+        #settbtn div:nth-child(4) { transform: translateX(-50%) rotate(135deg); }
+
 
         .header .logo {
             position: absolute;
@@ -456,7 +498,7 @@
         .hidden {
             display: none !important;
         }
-        #helpscreen {
+        .overlayscreen {
             position: absolute;
             margin-top: 50vh;
             transform: translateY(-50%);
@@ -475,14 +517,14 @@
             -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
         }
-        :root[data-theme="dark"] #helpscreen {
+        :root[data-theme="dark"] .overlayscreen {
             color: #f1eaea;
             background-color: #4e4444e0;
         }
-        :root[data-theme="kaasiand"] #helpscreen {
+        :root[data-theme="kaasiand"] .overlayscreen {
             color: #fdf7f7;
         }
-        :root[data-theme="kaasiand"] #helpscreen::after {
+        :root[data-theme="kaasiand"] .overlayscreen::after {
             content: "";
             display: block;
             width: 100%;
@@ -495,36 +537,36 @@
             background: #A3642A url(../assets/wood.jpg);
             filter: opacity(0.8) brightness(0.9);
         }
-        :root[data-theme="light"] #helpscreen {
+        :root[data-theme="light"] .overlayscreen {
             color: #d7c9c9;
             background-color: #443c3ce0;
         }
-        #helpscreen .logo {
+        .overlayscreen .logo {
             height: 40px;
             vertical-align: -9px;
             margin: 0px -6px;
             padding: 0;
             filter: drop-shadow(2px 2px 2px #0004);
         }
-        :root[data-theme="kaasiand"] #helpscreen .logo {
+        :root[data-theme="kaasiand"] .overlayscreen .logo {
             filter: brightness(1.2) drop-shadow(2px 2px 2px #0004);
         }
-        #helpscreen h1 {
+        .overlayscreen h1 {
             text-align: center;
             font-weight: normal;
         }
-        #helpscreen h2 {
+        .overlayscreen h2 {
             font-size: 20px;
             font-weight: normal;
         }
-        #helpscreen .example {
+        .overlayscreen .example {
             height: 4em;
             display: block;
             margin-left: auto;
             margin-right: auto;
             max-width: 100%;
         }
-        #helpscreen button {
+        .overlayscreen .redbtn {
             height: 2em;
             width: auto;
             padding: 0px 30px;
@@ -580,13 +622,89 @@
             margin: 20px 0;
         }
 
+        .settitem {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0 5px;
+        }
+        .settitemdesc p {
+            padding: 0;
+            margin: 0;
+        }
+        .settitemright ul {
+            padding: 0;
+            margin: 0;
+        }
 
+
+        .linglebal {
+            display: inline-block;
+            vertical-align: middle;
+            
+            min-width: 30px;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(50% 50% at 40% 30%, #5673F1 30%, transparent 100%),
+                        radial-gradient(50% 50% at 40% 40%, #173DA6 30%, transparent 100%),
+                        radial-gradient(50% 50% at 30% 60%, #0a2a83 30%, transparent 100%),
+                      #091B5E;
+            border-radius: 50%;
+            color: rgb(230, 230, 230);
+            user-select: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            margin: 0 0 5px 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            box-shadow: 1px 2px 3px #0008;
+        }
+        .linglebal::after {
+            content: attr(data-lbl);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-51%) scaleX(var(--squish));
+            font-size: 20px;
+        }
+        .linglebal[aria-checked="true"]::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-52%);
+            width: 0;
+            height: 17px;
+            border-top: 5px solid #dfca63;
+            border-bottom: 5px solid #dfca63;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            z-index: 1;
+        }
+        .linglebal + label {
+            padding-left: 10px;
+        }
+
+        a {
+            color: #f9c418;
+        }
+        a:visited {
+            color: #f99018;
+        }
+        :root[data-theme="kaasiand"] a {
+            color: #ffff0b;
+        }
+        :root[data-theme="kaasiand"] a:visited {
+            color: #f9c418;
+        }
     </style>
 </head>
 
 <body onload="init()">
 <div class="top">
-    <div id="helpscreen" class="hidden">
+    <div id="helpscreen" class="overlayscreen hidden">
         <h1>Hoe werkt <img src="lingle.png" alt="Lingle" class="logo">?</h1>
 
         <p>Raad het woord in 6 pogingen.
@@ -596,23 +714,83 @@
         <hr>
 
         <h2>Voorbeeld</h2>
-        
+
         <img src="example.png" alt='Voorbeeld van een beurt met het woord "vijzel". De V is geel omcirkeld, de L heeft een rode achtergrond, en de andere letters hebben een blauwe achtergrond.' class="example">
 
         <p>De <span class="boxred">L</span> zit in het woord, en staat op de juiste plek.</p>
         <p>De <span class="boxyellow">V</span> zit in het woord, maar staat niet op de juiste plek.</p>
         <p>De <span class="boxblue">IJ</span> zit niet in het woord.</p>
 
-        <p>Met een fysiek toetsenbord kun je de IJ typen als een I gevolgd door een J, of met de <span class="keycap">;</span>&#x2011;toets.</p>
+        <p>Met een fysiek toetsenbord kun je de IJ typen als een I gevolgd door een J, of met <span style="white-space: nowrap;">de <span class="keycap">;</span>&#x2011;toets.</span></p>
         
         <hr>
 
         Er is iedere dag een nieuwe Lingle!
         <button class="redbtn" onclick="hideHelp()">Begrepen!</button>
     </div>
+
+
+    <div id="settscreen" class="overlayscreen hidden">
+        <h1>Instellingen</h1>
+
+        <div class="settitem">
+            <div class="settitemdesc">Verminderde beweging</div>
+            <div class="settitemright" role="radiogroup">
+                <!-- <span role="radio" tabindex="0" class="linglebal" style="--squish: 0.6" data-lbl="Aan" aria-checked="true"></span
+                ><span role="radio" tabindex="0" class="linglebal" style="--squish: 0.8" data-lbl="Uit" aria-checked="false"></span> -->
+                Binnenkort!
+            </div>
+        </div>
+
+        <div class="settitem">
+            <div class="settitemdesc">Donkerdere blauwe vakjes voor beter contrast</div>
+            <div class="settitemright" role="radiogroup">
+                <!-- <span role="radio" tabindex="0" class="linglebal" style="--squish: 0.6" data-lbl="Aan" aria-checked="true"></span
+                ><span role="radio" tabindex="0" class="linglebal" style="--squish: 0.8" data-lbl="Uit" aria-checked="false"></span> -->
+                Binnenkort!
+            </div>
+        </div>
+
+
+        <div class="settitem">
+            <div class="settitemdesc">
+                Vervang <span style="white-space: nowrap;"><span class="boxblue">I</span><span class="boxblue">J</span> door <span class="boxblue">IJ</span></span> (alleen fysiek toetsenbord)
+            </div>
+            <div class="settitemright" role="radiogroup">
+                 <button id="vervangĳbtn"     role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.vervangĲ = true;  save()" class="linglebal" style="--squish: 0.6" data-lbl="Aan" aria-checked="false"></button
+                ><button id="vervangĳnietbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.vervangĲ = false; save()" class="linglebal" style="--squish: 0.8" data-lbl="Uit" aria-checked="false"></button>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="settitem">
+            <div class="settitemdesc">
+                Achtergrond&shy;thema
+            </div>
+            <div class="settitemright" role="radiogroup">
+                <ul style="list-style-type:none">
+                    <li><button id="btnthemadark"     role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save()" class="linglebal" style="--squish: 1" data-lbl="1" data-value="dark"     aria-labelledby="lbl_thema_dnkr" aria-checked="false"></button><label id="lbl_thema_dnkr">Donker</label></li>
+                    <li><button id="btnthemalight"    role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save()" class="linglebal" style="--squish: 1" data-lbl="2" data-value="light"    aria-labelledby="lbl_thema_lcht" aria-checked="false"></button><label id="lbl_thema_lcht">Licht</label></li>
+                    <li><button id="btnthemakaasiand" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save()" class="linglebal" style="--squish: 1" data-lbl="3" data-value="kaasiand" aria-labelledby="lbl_thema_ksnd" aria-checked="false"></button><label id="lbl_thema_ksnd">Kaasiand</label></li>
+                </ul>
+            </div>
+        </div>
+
+        <hr>
+        
+        <button class="redbtn" onclick="hideSett()">Terug</button>
+        <p style="font-size: small; opacity: 0.8; margin: 20px 0 -10px">Gemaakt door Daniël (<a href="https://twitter.com/kaasIand">@kaasIand</a> op Twitter)<br>
+            Met dank aan <a href="https://twitter.com/Aspharon">Aspharon</a> voor de naam<br>
+            Geïnspireerd door (maar op geen enkele wĳze verbonden met) <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> en Lingo.<br><br>
+            Bug gevonden? Stuur me een DM op Twitter (ik heb meldingen uitstaan voor niet-volgers)
+        </p>
+    </div>
+
     
     <div class="header">
         <button id="helpbtn" aria-label="Uitleg" title="Uitleg" onclick="toggleHelpScreen()"></button>
+        <button id="settbtn" aria-label="Instellingen" title="Instellingen" onclick="toggleSettScreen()"><div></div><div></div><div></div><div></div></button>
         <img src="lingle.png" alt="Lingle logo" class="logo">
     </div>
     <div class="wrap blur">
@@ -795,6 +973,7 @@ function tryRetrieveData() {
     }
     save();
 }
+
 function toggleHelpScreen() {
     if (helpscreen.classList.contains('hidden'))
         showHelp();
@@ -806,7 +985,42 @@ function hideHelp() {
     helpscreen.classList.add('hidden');
 }
 function showHelp() {
+    if (!settscreen.classList.contains('hidden'))
+        hideSett();
     helpscreen.classList.remove('hidden');
+}
+
+function toggleSettScreen() {
+    if (settscreen.classList.contains('hidden'))
+        showSett();
+    else
+        hideSett();
+    settbtn.blur();
+}
+function hideSett() {
+    settscreen.classList.add('hidden');
+}
+function showSett() {
+    if (!helpscreen.classList.contains('hidden'))
+        hideHelp();
+    settscreen.classList.remove('hidden');
+}
+
+function uncheckAll(el) {
+    [...el.querySelectorAll('button[role="radio"')].forEach(e => e.setAttribute("aria-checked", "false"));
+}
+function initSett() {
+    // update IJ dinges
+    document.getElementById(gamedata.vervangĲ ? "vervangĳbtn" : "vervangĳnietbtn").setAttribute("aria-checked", "true");
+
+    let el = document.getElementById("btnthema" + gamedata.thema);
+    if (!el) el = document.getElementById("btnthemadark");
+    el.setAttribute("aria-checked", "true");
+
+    setTheme();
+}
+function setTheme() {
+    document.documentElement.dataset.theme = gamedata.thema;
 }
 
 function resetData() {
@@ -817,6 +1031,19 @@ function makeGameDataNewDay() {
     gamedata.voltooid = false;
     gamedata.veld = ["","","","","",""];
     gamedata.regel = 0;
+
+    if (!("reduceanim" in gamedata)) {
+        let matchmedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        if (!matchmedia || matchmedia.matches) {
+            gamedata.reduceanim = true;
+        } else {
+            gamedata.reduceanim = false;
+        }
+    }
+    if (!("donkerblauw" in gamedata)) {
+        gamedata.donkerblauw = false;
+    }
 }
 function makeFirstGameData() {
     gamedata = {
@@ -834,6 +1061,8 @@ function makeFirstGameData() {
         thema: "dark",
         stĳl: "00s",
         vervangĲ: true,
+        reduceanim: false,
+        donkerblauw: false,
     };
 }
 
@@ -960,7 +1189,10 @@ function tryEnter() {
         save();
     }
     else {
-        newNotif(`&quot;${typwoord}&quot; is geen geldig woord.`, 3000);
+        if (typwoord.includes("ij"))
+            newNotif(`&quot;${typwoord}&quot; is geen geldig vijfletterwoord. Vergeet niet dat de IJ als één letter moet!`, 3000);
+        else
+            newNotif(`&quot;${typwoord}&quot; is geen geldig woord.`, 3000);
     }
 }
 
@@ -1057,8 +1289,9 @@ function init() {
     sessionseed = Date.UTC(d.getFullYear(),sessionmonth,sessiondate);
 
     tryRetrieveData();
-
     populateKeybObject();
+
+    initSett();
 
     revealStart();
 

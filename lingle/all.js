@@ -659,8 +659,8 @@ let allewoorden = {
 "urine","urmde","urmen","urnen","uwent","uzelf"],
     'v': [
 "vaags","vaagt","vaalt","vaars","vaart","vaats","vacht","vacua","vadem","vader",
-"vagen","vager","vaker","vakje","valer","valig","valse","valst","vamen","vamps",
-"vanaf","vanen","vangt","vanop","varen","varia","vaste","vaten","vatte","vazal",
+"vagen","vager","vagĳn","vaker","vakje","valer","valig","valse","valst","vamen","vamps",
+"vanaf","vanen","vange","vangt","vanop","varen","varia","vaste","vaten","vatte","vazal",
 "vazen","vecht","vedel","veder","veegt","veelt","veert","veest","vegen","veger",
 "veile","veils","veilt","veine","veins","velde","velen","veler","velĳn","velum",
 "vemen","venae","vendu","venen","venig","venĳn","vents","veraf","veras","verba",
