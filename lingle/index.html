@@ -646,10 +646,9 @@
             min-width: 30px;
             width: 30px;
             height: 30px;
-            background: radial-gradient(50% 50% at 40% 30%, #5673F1 30%, transparent 100%),
-                        radial-gradient(50% 50% at 40% 40%, #173DA6 30%, transparent 100%),
-                        radial-gradient(50% 50% at 30% 60%, #0a2a83 30%, transparent 100%),
-                      #091B5E;
+            background: radial-gradient(50% 50% at 40% 30%, #5673F1 30%, #5673F101 100%),
+                        radial-gradient(50% 50% at 40% 40%, #173DA6 30%, #173DA601 100%),
+                        radial-gradient(50% 50% at 30% 60%, #0a2a83 30%, #091B5E 100%);
             border-radius: 50%;
             color: rgb(230, 230, 230);
             user-select: none;
@@ -660,11 +659,6 @@
             font-family: Arial, Helvetica, sans-serif;
             font-weight: bold;
             box-shadow: 1px 2px 3px #0008;
-        }
-        .linglebal.test {
-            background: radial-gradient(50% 50% at 40% 30%, #5673F1 30%, #5673F101 100%),
-                        radial-gradient(50% 50% at 40% 40%, #173DA6 30%, #173DA601 100%),
-                        radial-gradient(50% 50% at 30% 60%, #0a2a83 30%, #091B5E 100%);
         }
         .linglebal::after {
             content: attr(data-lbl);
