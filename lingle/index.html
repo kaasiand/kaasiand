@@ -661,6 +661,11 @@
             font-weight: bold;
             box-shadow: 1px 2px 3px #0008;
         }
+        .linglebal.test {
+            background: radial-gradient(50% 50% at 40% 30%, #5673F1 30%, #5673F101 100%),
+                        radial-gradient(50% 50% at 40% 40%, #173DA6 30%, #173DA601 100%),
+                        radial-gradient(50% 50% at 30% 60%, #0a2a83 30%, #091B5E 100%);
+        }
         .linglebal::after {
             content: attr(data-lbl);
             position: absolute;
@@ -1004,6 +1009,9 @@ function showSett() {
     if (!helpscreen.classList.contains('hidden'))
         hideHelp();
     settscreen.classList.remove('hidden');
+}
+function abc() {
+    btnthemadark.classList.toggle("test");
 }
 
 function uncheckAll(el) {
