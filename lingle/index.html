@@ -915,10 +915,10 @@ function copyresults() {
         str += "\n";
         let res = checkWoord(gamedata.veld[i]);
 
-        [...trs[i].children].forEach((el,m) => {
-            if (el.dataset.bg == "rood")
+        res.forEach(r => {
+            if (r == "rood")
                 str += "🟧";
-            else if (el.dataset.bg == "geel")
+            else if (r == "geel")
                 str += "🟡";
             else
                 str += "🟦";
@@ -1049,6 +1049,9 @@ function makeGameDataNewDay() {
     if (!("blur" in gamedata)) {
         gamedata.blur = true;
     }
+    if (!("transp" in gamedata)) {
+        gamedata.transp = true;
+    }
 }
 function makeFirstGameData() {
     let redanim = false;
@@ -1059,10 +1062,15 @@ function makeFirstGameData() {
     }
 
     gamedata = {
+
+        // today's
+
         datum: sessionseed,
         voltooid: false,
         veld: ["","","","","",""],
         regel: 0,
+
+        // stats
 
         verdeling: [0,0,0,0,0,0,0],
         gespeeld: 0,
@@ -1070,12 +1078,15 @@ function makeFirstGameData() {
         maxstreak: 0,
         wins: 0,
 
+        // settings / preferences
+
         thema: "dark",
         stĳl: "00s",
         vervangĲ: true,
         reduceanim: redanim,
         donkerblauw: false,
         blur: true,
+        transp: true,
     };
 }
 
