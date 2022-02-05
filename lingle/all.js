@@ -663,7 +663,7 @@ let allewoorden = {
 "vanaf","vanen","vange","vangt","vanop","varen","varia","vaste","vaten","vatte","vazal",
 "vazen","vecht","vedel","veder","veegt","veelt","veert","veest","vegen","veger",
 "veile","veils","veilt","veine","veins","velde","velen","veler","velĳn","velum",
-"vemen","venae","vendu","venen","venig","venĳn","vents","veraf","veras","verba",
+"vemen","venae","vendu","venen","venig","venĳn","vents","venus","veraf","veras","verba",
 "verdĳ","veren","verft","verga","vergt","verĳs","verre","versa","verse","verso",
 "verst","verte","verve","veste","veten","veter","vetes","vetst","vette","vezel",
 "vezen","video","vides","viert","viest","vieux","vieve","views","vieze","vĳand",
