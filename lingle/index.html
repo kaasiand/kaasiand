@@ -1391,7 +1391,15 @@ function revealStart() {
         });
 
         if (res.every(a => a == "rood")) {
-            doaflip();
+            let delay = 0;
+            if (i == 5) {
+                speelveld.classList.add("zesdebeurt");
+                delay = 600;
+            }
+            setTimeout(() => {
+                doaflip();
+            }, delay);
+            
             hasended = true;
             haswon = true;
         }
