@@ -193,7 +193,7 @@ let allewoorden = {
 "brĳen","brĳig","brilt","brink","brits","brode","brodt","broed","broei","broek",
 "broer","broes","broge","brokt","bromt","bronk","brons","brood","broom","broos",
 "brost","brouw","broze","bruid","bruin","bruis","bruls","brult","brute","bruto",
-"bruut","bucht","buddy","bufen","bugel","buggy","buide","buien","buigt","buiig",
+"bruut","bucht","buddy","bufen","bugel","buggy","bugje","buide","buien","buigt","buiig",
 "built","buist","bukte","bulkt","bully","bunny","buren","buret","burĳn","burin",
 "busbo","busje","buste","buten","butst","buurt","buxus","bytes"],
     'c': [
