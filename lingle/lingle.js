@@ -130,13 +130,25 @@ function initSett() {
     document.getElementById(gamedata.reduceanim  ? "reduceanimbtn"  : "noreduceanimbtn").setAttribute("aria-checked", "true");
     document.getElementById(gamedata.transp      ? "transpbtn"      : "opaquebtn"      ).setAttribute("aria-checked", "true");
 
+    let dosave = false;
     let el = document.getElementById("btnthema" + gamedata.thema);
-    if (!el) el = document.getElementById("btnthemadark");
+    if (!el) {
+        el = document.getElementById("btnthemadark");
+        gamedata.thema = "dark";
+        dosave = true;
+    }
     el.setAttribute("aria-checked", "true");
 
     let el2 = document.getElementById("btnstyle" + gamedata.stĳl);
-    if (!el2) el2 = document.getElementById("btnstyle00s");
+    if (!el2) {
+        el2 = document.getElementById("btnstyle00s");
+        gamedata.stĳl = "00s";
+        dosave = true;
+    }
     el2.setAttribute("aria-checked", "true");
+
+    // save if theme/style data fucked up
+    if (dosave) save();
 
     setTheme();
     setStyleInit();
