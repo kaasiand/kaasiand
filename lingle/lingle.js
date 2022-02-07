@@ -370,7 +370,9 @@ function revealOplossing(fast = false) {
     }, (250 * maxlen + 100 - faster) * animFactor);
     [...document.querySelectorAll("#speelveld tr")[6].children].forEach((el,m) => {
         setTimeout(() => {
-            el.style.setProperty("--letter",`'${wrd[m]}'`);
+            let ltr = wrd[m];
+            if (wrd[m] == "ĳ") ltr = "ij";
+            el.style.setProperty("--letter",`'${ltr}'`);
             el.querySelector(".letter").style.opacity = 1;
         }, (250 * maxlen + 250 * m + 800 - faster) * animFactor);
     });
@@ -520,10 +522,11 @@ function revealStart() {
         trs[i].classList.remove("dotreveal");
         let res = checkWoord(gamedata.veld[i]);
 
+        write(i, gamedata.veld[i]);
+
         [...trs[i].children].forEach((el,m) => {
             let ltr = gamedata.veld[i][m];
             el.dataset.bg = res[m];
-            el.style.setProperty("--letter", `'${ltr}'`);
             el.querySelector(".letter").style.opacity = 1;
 
             if (res[m] == "rood") {

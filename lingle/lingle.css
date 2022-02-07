@@ -62,7 +62,7 @@ body {
 }
 
 .wrap {
-    margin-top: var(--hdrheight);
+    margin-top: calc(var(--hdrheight) + 10px);
 
     --min: min(var(--height), var(--width));
     --htpx: calc(0.005 * var(--height));
@@ -73,7 +73,7 @@ body {
     font-size: min(calc(0.145 * var(--height)), calc(0.16 * var(--width)));
 
     --width: min(min(min(400px, calc(100vw - 10px)), calc(100vw - 60px)), min(420px, 50vh));
-    --height: min(420px, 50vh);
+    --height: calc(min(450px, 55vh) * 0.92);
     width: var(--width);
     height: var(--height);
     overflow: hidden;
