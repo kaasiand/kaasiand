@@ -310,6 +310,9 @@
             .keybline button[data-bg="zwart"]:hover {
                 filter: brightness(0.7);
             }
+            :root[data-donkerblauw="true"] .keybline button[data-bg="zwart"]:hover {
+                filter: brightness(0.7);
+            }
             #notifbox button:hover {
                 background: #0002;
             }
@@ -642,6 +645,13 @@
                         linear-gradient(to top, #1d5377, #255e85);
             text-shadow: 0px 0px 2px #000F, 1px 1px 2px #000F, 1px 1px 3px #000F, 1px 1px 3px #000F;
         }
+        :root[data-donkerblauw="true"] .boxblue {
+            background: linear-gradient(to top, #0e2c40, #143244);
+        }
+        :root[data-donkerblauw="true"] .boxyellow {
+            background: radial-gradient(48% 60% at 50% 48%, #f9c418 90%, #0008 99%, transparent 102%),
+                        linear-gradient(to top, #0e2c40, #143244);
+        }
 
         .boxred::selection,    .boxblue::selection,
         .boxyellow::selection, .keycap::selection { --e: 0; } /* to prevent vscode warning lol */
@@ -747,7 +757,7 @@
 
         <h2>Voorbeeld</h2>
 
-        <img src="example.png" alt='Voorbeeld van een beurt met het woord "vijzel". De V is geel omcirkeld, de L heeft een rode achtergrond, en de andere letters hebben een blauwe achtergrond.' class="example">
+        <img id="examplepic" src="example.png" alt='Voorbeeld van een beurt met het woord "vijzel". De V is geel omcirkeld, de L heeft een rode achtergrond, en de andere letters hebben een blauwe achtergrond.' class="example">
 
         <p>De <span class="boxred">L</span> zit in het woord, en staat op de juiste plek.</p>
         <p>De <span class="boxyellow">V</span> zit in het woord, maar staat niet op de juiste plek.</p>
@@ -1087,9 +1097,22 @@ function initSett() {
 }
 function setTheme()             { document.documentElement.dataset.theme       = gamedata.thema; }
 function setBlur()              { document.documentElement.dataset.blur        = gamedata.blur; }
-function setDonkerblauw()       { document.documentElement.dataset.donkerblauw = gamedata.donkerblauw; }
 function setReducedAnimation()  { document.documentElement.dataset.redanim     = gamedata.reduceanim; }
 function setOpaque()            { document.documentElement.dataset.opaque      =!gamedata.transp; }
+function setDonkerblauw()       {
+    document.documentElement.dataset.donkerblauw = gamedata.donkerblauw;
+    updateExamplePicture();
+}
+
+function updateExamplePicture() {
+    let filename = "example.png";
+    switch (gamedata.stĳl) {
+        case "00s": default:
+            filename = gamedata.donkerblauw ? "exampledark.png" : "example.png";
+            break;
+    }
+    examplepic.src = filename;
+}
 
 function resetData() {
     localStorage.removeItem("data");
