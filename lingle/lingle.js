@@ -562,6 +562,8 @@ function revealStart() {
     for (let i = 0; i < gamedata.veld.length; i++) {
         if (!gamedata.veld[i]) {
             gamedata.regel = i;
+            if (haswon)
+                gamedata.regel--;
             break;
         }
         trs[i].classList.remove("dotreveal");
