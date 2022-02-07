@@ -1251,12 +1251,17 @@ function tryEnter() {
 
         if (res.every(a => a == "rood")) {
             // if win
-            setTimeout(() => {
-                document.querySelectorAll("#speelveld tr")[gamedata.regel].classList.add("winanim");
+            if (gamedata.reduceanim) {
+                handleWin();
+            }
+            else {
                 setTimeout(() => {
-                    handleWin();
-                }, 1200 * animFactor);
-            }, (250 * maxlen + 100) * animFactor);
+                    document.querySelectorAll("#speelveld tr")[gamedata.regel].classList.add("winanim");
+                    setTimeout(() => {
+                        handleWin();
+                    }, 1200);
+                }, 250 * maxlen + 100);
+            }
         }
         else {
             if (gamedata.regel == 5) { /* handle loss
