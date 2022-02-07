@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme="dark" data-style="00s">
+<html data-theme="dark" data-style="90s">
 <head>
     <meta charset="UTF-8">
     <title>Lingle</title>
@@ -52,14 +52,14 @@
 
         <div class="settitem">
             <div class="settitemdesc">Verminderde beweging</div>
-            <div class="settitemright" role="radiogroup">
+            <div class="settitemright" role="radiogroup" style="min-width:70px">
                  <button   id="reduceanimbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.reduceanim = true;  setReducedAnimation(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
                 ><button id="noreduceanimbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.reduceanim = false; setReducedAnimation(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
             </div>
         </div>
         <div class="settitem">
             <div class="settitemdesc">Donkerdere blauwe vakjes (hoger contrast)</div>
-            <div class="settitemright" role="radiogroup">
+            <div class="settitemright" role="radiogroup" style="min-width:70px">
                  <button id="donkerblauwbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.donkerblauw = true;  setDonkerblauw(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
                 ><button id="gewoonblauwbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.donkerblauw = false; setDonkerblauw(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
             </div>
@@ -68,21 +68,21 @@
             <div class="settitemdesc">
                 Vervang <span style="white-space: nowrap;"><span class="boxblue">I</span><span class="boxblue">J</span> door <span class="boxblue">IJ</span></span> (alleen fysiek toetsenbord)
             </div>
-            <div class="settitemright" role="radiogroup">
+            <div class="settitemright" role="radiogroup" style="min-width:70px">
                  <button id="vervangĳbtn"     role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.vervangĲ = true;  save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
                 ><button id="vervangĳnietbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.vervangĲ = false; save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
             </div>
         </div>
         <div class="settitem">
             <div class="settitemdesc">Letterbord blurren</div>
-            <div class="settitemright" role="radiogroup">
+            <div class="settitemright" role="radiogroup" style="min-width:70px">
                  <button id="blurbtn"     role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.blur = true;  setBlur(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
                 ><button id="blurnietbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.blur = false; setBlur(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
             </div>
         </div>
         <div class="settitem">
             <div class="settitemdesc">Dit scherm ietwat doorzichtig maken</div>
-            <div class="settitemright" role="radiogroup">
+            <div class="settitemright" role="radiogroup" style="min-width:70px">
                  <button id="transpbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.transp = true;  setOpaque(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
                 ><button id="opaquebtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.transp = false; setOpaque(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
             </div>
@@ -100,6 +100,20 @@
                     <li><button id="btnthemadarker"   role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="2" data-value="darker"   aria-labelledby="lbl_thema_dkdr" aria-checked="false"></button><label id="lbl_thema_dkdr">Donkerder</label></li>
                     <li><button id="btnthemalight"    role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="3" data-value="light"    aria-labelledby="lbl_thema_lcht" aria-checked="false"></button><label id="lbl_thema_lcht">Licht</label></li>
                     <li><button id="btnthemakaasiand" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="4" data-value="kaasiand" aria-labelledby="lbl_thema_ksnd" aria-checked="false"></button><label id="lbl_thema_ksnd">Kaasiand</label></li>
+                </ul>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="settitem">
+            <div class="settitemdesc">
+                Linglestĳl
+            </div>
+            <div class="settitemright" role="radiogroup">
+                <ul style="list-style-type:none">
+                    <li><button id="btnstyle00s" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.stĳl = this.dataset.value; setStyle(); save();" class="linglebal" style="--squish: 1" data-lbl="1" data-value="00s" aria-labelledby="lbl_style_00s" aria-checked="false"></button><label id="lbl_style_00s">Standaard</label></li>
+                    <li><button id="btnstyle90s" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.stĳl = this.dataset.value; setStyle(); save();" class="linglebal" style="--squish: 1" data-lbl="2" data-value="90s" aria-labelledby="lbl_style_90s" aria-checked="false"></button><label id="lbl_style_90s">Nineties</label></li>
                 </ul>
             </div>
         </div>

@@ -134,13 +134,19 @@ function initSett() {
     if (!el) el = document.getElementById("btnthemadark");
     el.setAttribute("aria-checked", "true");
 
+    let el2 = document.getElementById("btnstyle" + gamedata.stĳl);
+    if (!el2) el2 = document.getElementById("btnstyle00s");
+    el2.setAttribute("aria-checked", "true");
+
     setTheme();
+    setStyleInit();
     setBlur();
     setDonkerblauw();
     setReducedAnimation();
     setOpaque();
 }
 function setTheme()             { document.documentElement.dataset.theme       = gamedata.thema; }
+function setStyleInit()         { document.documentElement.dataset.style       = gamedata.stĳl; }
 function setBlur()              { document.documentElement.dataset.blur        = gamedata.blur; }
 function setReducedAnimation()  { document.documentElement.dataset.redanim     = gamedata.reduceanim; }
 function setOpaque()            { document.documentElement.dataset.opaque      =!gamedata.transp; }
@@ -148,10 +154,26 @@ function setDonkerblauw()       {
     document.documentElement.dataset.donkerblauw = gamedata.donkerblauw;
     updateExamplePicture();
 }
+function setStyle() {
+    // to avoid weird graphical stuff when switching styles
+    let orig = gamedata.reduceanim;
+    document.documentElement.dataset.redanim = "true";
+
+    document.documentElement.dataset.style = gamedata.stĳl;
+    updateExamplePicture();
+
+    setTimeout(() => {
+        document.documentElement.dataset.redanim = orig;
+    }, 50);
+}
+
 
 function updateExamplePicture() {
     let filename = "example.png";
     switch (gamedata.stĳl) {
+        case "90s":
+            filename = gamedata.donkerblauw ? "example90sdark.png" : "example90s.png";
+            break;
         case "00s": default:
             filename = gamedata.donkerblauw ? "exampledark.png" : "example.png";
             break;
@@ -364,10 +386,14 @@ function revealOplossing(fast = false) {
     let animFactor = gamedata.reduceanim ? 0 : 1;
 
     let wrd = mogelĳkewoorden[getIdx(gamedata.datum)];
-    let faster = fast * 1200;
+    let faster = fast ? 1200 : 0;
+
     setTimeout(() => {
         speelveld.classList.add("revealantwoord");
     }, (250 * maxlen + 100 - faster) * animFactor);
+
+    if (gamedata.stĳl == "90s") faster -= 1000;
+
     [...document.querySelectorAll("#speelveld tr")[6].children].forEach((el,m) => {
         setTimeout(() => {
             let ltr = wrd[m];
@@ -418,7 +444,7 @@ function updateWoord() {
     let s = typwoord;
     let n = gamedata.regel;
     let el = document.querySelectorAll("#speelveld tr")[n].children[i];
-    if (gamedata.reduceanim) {
+    if (gamedata.reduceanim || gamedata.stĳl == "90s") {
         el.querySelector(".letter").style.opacity = 1;
         write(n,s);
     } else {
@@ -512,8 +538,15 @@ daarmee alleen maar voor jezelf en anderen.");
 }
 
 function revealStart() {
+    let orig = gamedata.reduceanim;
+    document.documentElement.dataset.redanim = "true";
+
     let trs = document.querySelectorAll("#speelveld tr");
-    let hasended = false, haswon = false;
+    let hasended = false,
+        haswon = false,
+        addzesdebeurt = false,
+        addrevealantw = false;
+    
     for (let i = 0; i < gamedata.veld.length; i++) {
         if (!gamedata.veld[i]) {
             gamedata.regel = i;
@@ -543,7 +576,7 @@ function revealStart() {
         if (res.every(a => a == "rood")) {
             let delay = 0;
             if (i == 5) {
-                speelveld.classList.add("zesdebeurt");
+                addzesdebeurt = true;
                 delay = gamedata.reduceanim ? 0 : 600;
             }
             setTimeout(() => {
@@ -554,38 +587,70 @@ function revealStart() {
             haswon = true;
         }
         else if (i == 5 && res.some(a => a != "rood")) {
-            speelveld.classList.add("revealantwoord");
+            addrevealantw = true;
             hasended = true;
             revealOplossing(true);
             refuseInput = true;
         }
     }
-    if (!hasended) {
-        revealDots(gamedata.regel);
+    gamedata.voltooid = haswon;
+
+    if (gamedata.reduceanim) {
+        if (!hasended)
+            revealDots(gamedata.regel);
+        if (addzesdebeurt)
+            speelveld.classList.add("zesdebeurt");
+        if (addrevealantw)
+            speelveld.classList.add("revealantwoord");
     }
     else {
-        gamedata.regel--;
+        setTimeout(() => {
+            document.documentElement.dataset.redanim = orig;
+            if (!hasended)
+                revealDots(gamedata.regel);
+            if (addzesdebeurt)
+                speelveld.classList.add("zesdebeurt");
+            if (addrevealantw)
+                speelveld.classList.add("revealantwoord");
+        }, 50);
     }
-    gamedata.voltooid = haswon;
+}
+
+function delayVerschuifBord() {
+    if (gamedata.reduceanim) return 0;
+
+    switch (gamedata.stĳl) {
+        case "90s":
+            return 1400;
+        case "00s": default:
+            return 500;
+    }
 }
 
 function revealDots(n) {
     let animFactor = gamedata.reduceanim ? 0 : 1;
+    let delay = 0;
+    if (gamedata.regel == 5) {
+        delay = delayVerschuifBord();
+    }
 
     [...document.querySelectorAll("#speelveld tr")[n].children].forEach((el,m) => {
         setTimeout(() => {
             el.querySelector(".letter").style.opacity = 1;
-        }, (m * 50 + ((gamedata.regel == 5) ? 500 : 0)) * animFactor);
+        }, (m * 50 + delay) * animFactor);
     });
     if (gamedata.regel == 5)
         speelveld.classList.add("zesdebeurt");
     
+    let a = (maxlen-1) * 50 + delay + 100;
+    if (gamedata.stĳl == "90s") a -= (maxlen-1) * 50;
+
     setTimeout(() => {
         document.querySelectorAll("#speelveld tr")[n].classList.remove("dotreveal");
         typwoord = "";
         typwoordLast = "";
         refuseInput = false;
-    }, ((maxlen-1) * 50 + ((gamedata.regel == 5) ? 600 : 100)) * animFactor);
+    }, a * animFactor);
 }
 
 function write(line, str) {
