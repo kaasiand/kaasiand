@@ -197,7 +197,6 @@ body {
 
 .btmwrap {
     max-height: var(--btmheight);
-    height: var(--btmheight);
     position: absolute;
     bottom: 8px;
     opacity: 1;
