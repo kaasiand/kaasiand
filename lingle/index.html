@@ -28,6 +28,11 @@
             --btncolor: #cfc6c6e0;
             --btncolorsolid: #cfc6c6;
         }
+        :root[data-theme="darker"] {
+            background: #1f1f20;
+            --btncolor: #cfc6c6e0;
+            --btncolorsolid: #cfc6c6;
+        }
         :root[data-theme="light"] {
             background: #cfc6c6;
             --btncolor: #3a3535e0;
@@ -93,13 +98,12 @@
             width: var(--width);
             height: var(--height);
             overflow: hidden;
-            transition: transform 1s ease;
-            /*--tilt: 0deg;
-            transform: perspective(800px) rotateY(var(--tilt));*/
-            --duration: .6s;
         }
-        .wrap.blur {
+        :root[data-blur="true"] .wrap {
             filter: blur(calc(0.0025 * var(--min)));
+        }
+        :root[data-donkerblauw="true"] .wrap {
+            background-image: linear-gradient(to bottom, #1e374e 0%, #0c344e 50%, #042438 100%);
         }
 
         #speelveld {
@@ -109,6 +113,15 @@
             overflow: hidden;
             text-transform: uppercase;
         }
+        :root[data-redanim="true"] #speelveld,
+        :root[data-redanim="true"] .letter,
+        :root[data-redanim="true"] .btmwrap,
+        :root[data-redanim="true"] #notifbox,
+        :root[data-redanim="true"] #notifbox button {
+            transition-duration: 0s !important;
+            transition-delay:    0s !important;
+        }
+
         #speelveld.zesdebeurt {
             margin-top: calc(var(--height) * -.2);
         }
@@ -213,6 +226,7 @@
             transition: transform 2s cubic-bezier(.25,.1,.25,1),
                         opacity 0.6s step-end;
         }
+
         .kbwrap.flip, .wincardwrap:not(.flip) {
             transform: rotateY(180deg);
             opacity: 0;
@@ -286,6 +300,9 @@
         .keybline button[data-bg="zwart"] {
             filter: brightness(0.6);
         }
+        :root[data-donkerblauw="true"] .keybline button[data-bg="zwart"] {
+            filter: brightness(0.5);
+        }
         @media (any-hover: hover) {
             .keybline button:hover, .redbtn:hover {
                 filter: brightness(120%);
@@ -308,15 +325,13 @@
             box-shadow: -1px -1px 3px #fff3 inset, 1px 1px 3px #0003 inset, 1px 1px 2px #0004;
         }
 
-        .keybline:nth-child(1) button {
-            background: linear-gradient(to top, #255e85, #4c7aa5);
-        }
-        .keybline:nth-child(2) button {
-            background: linear-gradient(to top, #1d5377, #255e85);
-        }
-        .keybline:nth-child(3) button {
-            background: linear-gradient(to top, #0c4363, #1d5377);
-        }
+        .keybline:nth-child(1) button { background: linear-gradient(to top, #255e85, #4c7aa5); }
+        .keybline:nth-child(2) button { background: linear-gradient(to top, #1d5377, #255e85); }
+        .keybline:nth-child(3) button { background: linear-gradient(to top, #0c4363, #1d5377); }
+
+        :root[data-donkerblauw="true"] .keybline:nth-child(1) button:not([data-bg="rood"]) { background: linear-gradient(to top, #143244, #1e374e); }
+        :root[data-donkerblauw="true"] .keybline:nth-child(2) button:not([data-bg="rood"]) { background: linear-gradient(to top, #0e2c40, #143244); }
+        :root[data-donkerblauw="true"] .keybline:nth-child(3) button:not([data-bg="rood"]) { background: linear-gradient(to top, #042438, #0e2c40); }
 
         .keybline button[data-bg="rood"] {
             background: linear-gradient(to bottom, #922618, #dd523c);
@@ -521,6 +536,16 @@
             color: #f1eaea;
             background-color: #4e4444e0;
         }
+        :root[data-opaque="true"][data-theme="dark"] .overlayscreen  {
+            background-color: #4e4444;
+        }
+        :root[data-theme="darker"] .overlayscreen {
+            color: #f1eaea;
+            background-color: #312a2ae0;
+        }
+        :root[data-opaque="true"][data-theme="darker"] .overlayscreen  {
+            background-color: #312a2a;
+        }
         :root[data-theme="kaasiand"] .overlayscreen {
             color: #fdf7f7;
         }
@@ -537,9 +562,15 @@
             background: #A3642A url(../assets/wood.jpg);
             filter: opacity(0.8) brightness(0.9);
         }
+        :root[data-opaque="true"][data-theme="kaasiand"] .overlayscreen::after  {
+            filter: brightness(0.9);
+        }
         :root[data-theme="light"] .overlayscreen {
             color: #d7c9c9;
             background-color: #443c3ce0;
+        }
+        :root[data-opaque="true"][data-theme="light"] .overlayscreen  {
+            background-color: #443c3c;
         }
         .overlayscreen .logo {
             height: 40px;
@@ -686,13 +717,15 @@
             padding-left: 10px;
         }
 
-        a {
+        a, #resetdatalabel {
             color: #f9c418;
+            text-decoration: underline;
+            cursor: pointer;
         }
         a:visited {
             color: #f99018;
         }
-        :root[data-theme="kaasiand"] a {
+        :root[data-theme="kaasiand"] a, :root[data-theme="kaasiand"] #resetdatalabel {
             color: #ffff0b;
         }
         :root[data-theme="kaasiand"] a:visited {
@@ -735,29 +768,42 @@
         <div class="settitem">
             <div class="settitemdesc">Verminderde beweging</div>
             <div class="settitemright" role="radiogroup">
-                <!-- <span role="radio" tabindex="0" class="linglebal" style="--squish: 0.6" data-lbl="Aan" aria-checked="true"></span
-                ><span role="radio" tabindex="0" class="linglebal" style="--squish: 0.8" data-lbl="Uit" aria-checked="false"></span> -->
-                Binnenkort!
+                 <button   id="reduceanimbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.reduceanim = true;  setReducedAnimation(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
+                ><button id="noreduceanimbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.reduceanim = false; setReducedAnimation(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
             </div>
         </div>
 
         <div class="settitem">
-            <div class="settitemdesc">Donkerdere blauwe vakjes voor beter contrast</div>
+            <div class="settitemdesc">Donkerdere blauwe vakjes (hoger contrast)</div>
             <div class="settitemright" role="radiogroup">
-                <!-- <span role="radio" tabindex="0" class="linglebal" style="--squish: 0.6" data-lbl="Aan" aria-checked="true"></span
-                ><span role="radio" tabindex="0" class="linglebal" style="--squish: 0.8" data-lbl="Uit" aria-checked="false"></span> -->
-                Binnenkort!
+                 <button id="donkerblauwbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.donkerblauw = true;  setDonkerblauw(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
+                ><button id="gewoonblauwbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.donkerblauw = false; setDonkerblauw(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
             </div>
         </div>
-
 
         <div class="settitem">
             <div class="settitemdesc">
                 Vervang <span style="white-space: nowrap;"><span class="boxblue">I</span><span class="boxblue">J</span> door <span class="boxblue">IJ</span></span> (alleen fysiek toetsenbord)
             </div>
             <div class="settitemright" role="radiogroup">
-                 <button id="vervangĳbtn"     role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.vervangĲ = true;  save()" class="linglebal" style="--squish: 0.6" data-lbl="Aan" aria-checked="false"></button
-                ><button id="vervangĳnietbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.vervangĲ = false; save()" class="linglebal" style="--squish: 0.8" data-lbl="Uit" aria-checked="false"></button>
+                 <button id="vervangĳbtn"     role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.vervangĲ = true;  save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
+                ><button id="vervangĳnietbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.vervangĲ = false; save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
+            </div>
+        </div>
+
+        <div class="settitem">
+            <div class="settitemdesc">Letterbord blurren</div>
+            <div class="settitemright" role="radiogroup">
+                 <button id="blurbtn"     role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.blur = true;  setBlur(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
+                ><button id="blurnietbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.blur = false; setBlur(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
+            </div>
+        </div>
+
+        <div class="settitem">
+            <div class="settitemdesc">Dit scherm ietwat doorzichtig maken</div>
+            <div class="settitemright" role="radiogroup">
+                 <button id="transpbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.transp = true;  setOpaque(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
+                ><button id="opaquebtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.transp = false; setOpaque(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
             </div>
         </div>
 
@@ -769,14 +815,17 @@
             </div>
             <div class="settitemright" role="radiogroup">
                 <ul style="list-style-type:none">
-                    <li><button id="btnthemadark"     role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save()" class="linglebal" style="--squish: 1" data-lbl="1" data-value="dark"     aria-labelledby="lbl_thema_dnkr" aria-checked="false"></button><label id="lbl_thema_dnkr">Donker</label></li>
-                    <li><button id="btnthemalight"    role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save()" class="linglebal" style="--squish: 1" data-lbl="2" data-value="light"    aria-labelledby="lbl_thema_lcht" aria-checked="false"></button><label id="lbl_thema_lcht">Licht</label></li>
-                    <li><button id="btnthemakaasiand" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save()" class="linglebal" style="--squish: 1" data-lbl="3" data-value="kaasiand" aria-labelledby="lbl_thema_ksnd" aria-checked="false"></button><label id="lbl_thema_ksnd">Kaasiand</label></li>
+                    <li><button id="btnthemadark"     role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="1" data-value="dark"     aria-labelledby="lbl_thema_dnkr" aria-checked="false"></button><label id="lbl_thema_dnkr">Donker</label></li>
+                    <li><button id="btnthemadarker"   role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="2" data-value="darker"   aria-labelledby="lbl_thema_dkdr" aria-checked="false"></button><label id="lbl_thema_dkdr">Donkerder</label></li>
+                    <li><button id="btnthemalight"    role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="3" data-value="light"    aria-labelledby="lbl_thema_lcht" aria-checked="false"></button><label id="lbl_thema_lcht">Licht</label></li>
+                    <li><button id="btnthemakaasiand" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="4" data-value="kaasiand" aria-labelledby="lbl_thema_ksnd" aria-checked="false"></button><label id="lbl_thema_ksnd">Kaasiand</label></li>
                 </ul>
             </div>
         </div>
 
-        <hr>
+        <hr style="margin-bottom: 10px;">
+
+        <span tabindex="0" id="resetdatalabel" style="font-size: small;" onclick="promptResetData()">Alle opgeslagen data verwijderen...</span>
         
         <button class="redbtn" onclick="hideSett()">Terug</button>
         <p style="font-size: small; opacity: 0.8; margin: 20px 0 -10px">Gemaakt door Daniël (<a href="https://twitter.com/kaasIand">@kaasIand</a> op Twitter)<br>
@@ -989,6 +1038,13 @@ function showHelp() {
     helpscreen.classList.remove('hidden');
 }
 
+function promptResetData() {
+    if (window.confirm("Weet je zeker dat je alle opgeslagen gegevens (records, voortgang en voorkeuren) wil wissen?")) {
+        resetData();
+        location.reload();
+    }
+}
+
 function toggleSettScreen() {
     if (settscreen.classList.contains('hidden'))
         showSett();
@@ -1013,17 +1069,27 @@ function uncheckAll(el) {
 }
 function initSett() {
     // update IJ dinges
-    document.getElementById(gamedata.vervangĲ ? "vervangĳbtn" : "vervangĳnietbtn").setAttribute("aria-checked", "true");
+    document.getElementById(gamedata.vervangĲ    ? "vervangĳbtn"    : "vervangĳnietbtn").setAttribute("aria-checked", "true");
+    document.getElementById(gamedata.blur        ? "blurbtn"        : "blurnietbtn"    ).setAttribute("aria-checked", "true");
+    document.getElementById(gamedata.donkerblauw ? "donkerblauwbtn" : "gewoonblauwbtn" ).setAttribute("aria-checked", "true");
+    document.getElementById(gamedata.reduceanim  ? "reduceanimbtn"  : "noreduceanimbtn").setAttribute("aria-checked", "true");
+    document.getElementById(gamedata.transp      ? "transpbtn"      : "opaquebtn"      ).setAttribute("aria-checked", "true");
 
     let el = document.getElementById("btnthema" + gamedata.thema);
     if (!el) el = document.getElementById("btnthemadark");
     el.setAttribute("aria-checked", "true");
 
     setTheme();
+    setBlur();
+    setDonkerblauw();
+    setReducedAnimation();
+    setOpaque();
 }
-function setTheme() {
-    document.documentElement.dataset.theme = gamedata.thema;
-}
+function setTheme()             { document.documentElement.dataset.theme       = gamedata.thema; }
+function setBlur()              { document.documentElement.dataset.blur        = gamedata.blur; }
+function setDonkerblauw()       { document.documentElement.dataset.donkerblauw = gamedata.donkerblauw; }
+function setReducedAnimation()  { document.documentElement.dataset.redanim     = gamedata.reduceanim; }
+function setOpaque()            { document.documentElement.dataset.opaque      =!gamedata.transp; }
 
 function resetData() {
     localStorage.removeItem("data");
@@ -1155,10 +1221,11 @@ function tryEnter() {
 
     if (typwoord.length < maxlen) {
         if (typwoord.length)
-            newNotif("Dit woord is te kort.", 3000)
+            newNotif("Dit woord is te kort.", 3000);
         return;
     }
 
+    let animFactor = gamedata.reduceanim ? 0 : 1;
     let firstletter = typwoord[0];
     if (allewoorden[firstletter].includes(typwoord)) {
         refuseInput = true;
@@ -1179,7 +1246,7 @@ function tryEnter() {
                     if (keyb[typwoord[i]].dataset.bg == "")
                         keyb[typwoord[i]].dataset.bg = "zwart";
                 }
-            }, 250 * i + 100)
+            }, (250 * i + 100) * animFactor);
         }
 
         if (res.every(a => a == "rood")) {
@@ -1188,8 +1255,8 @@ function tryEnter() {
                 document.querySelectorAll("#speelveld tr")[gamedata.regel].classList.add("winanim");
                 setTimeout(() => {
                     handleWin();
-                }, 1200);
-            }, 250 * maxlen + 100);
+                }, 1200 * animFactor);
+            }, (250 * maxlen + 100) * animFactor);
         }
         else {
             if (gamedata.regel == 5) { /* handle loss
@@ -1207,7 +1274,7 @@ function tryEnter() {
                 setTimeout(() => {
                     gamedata.regel++;
                     revealDots(gamedata.regel);
-                }, 250 * maxlen + 100)
+                }, (250 * maxlen + 100) * animFactor);
             }
         }
         save();
@@ -1221,20 +1288,22 @@ function tryEnter() {
 }
 
 function revealOplossing(fast = false) {
+    let animFactor = gamedata.reduceanim ? 0 : 1;
+
     let wrd = mogelĳkewoorden[getIdx(gamedata.datum)];
     let faster = fast * 1200;
     setTimeout(() => {
         speelveld.classList.add("revealantwoord");
-    }, 250 * maxlen + 100 - faster);
+    }, (250 * maxlen + 100 - faster) * animFactor);
     [...document.querySelectorAll("#speelveld tr")[6].children].forEach((el,m) => {
         setTimeout(() => {
             el.style.setProperty("--letter",`'${wrd[m]}'`);
             el.querySelector(".letter").style.opacity = 1;
-        }, 250 * maxlen + 250 * m + 800 - faster);
+        }, (250 * maxlen + 250 * m + 800 - faster) * animFactor);
     });
     setTimeout(() => {
         doaflip();
-    }, 500 * maxlen + 1000 - faster * 1.2);
+    }, (500 * maxlen + 1000 - faster * 1.2) * animFactor);
 }
 
 function doBackspace() {
@@ -1274,11 +1343,16 @@ function updateWoord() {
     let s = typwoord;
     let n = gamedata.regel;
     let el = document.querySelectorAll("#speelveld tr")[n].children[i];
-    el.querySelector(".letter").style.opacity = 0;
-    setTimeout(() => {
-        write(n,s);
+    if (gamedata.reduceanim) {
         el.querySelector(".letter").style.opacity = 1;
-    }, 50);
+        write(n,s);
+    } else {
+        el.querySelector(".letter").style.opacity = 0;
+        setTimeout(() => {
+            write(n,s);
+            el.querySelector(".letter").style.opacity = 1;
+        }, 50);
+    }
     
     typwoordLast = typwoord;
 }
@@ -1323,7 +1397,7 @@ function init() {
         checkDatum();
     };
     document.onclick = e => {
-        if (e.target != helpbtn && e.target != helpscreen)
+        if (e.target != helpbtn)
             hideHelp();
     };
 
@@ -1394,12 +1468,12 @@ function revealStart() {
             let delay = 0;
             if (i == 5) {
                 speelveld.classList.add("zesdebeurt");
-                delay = 600;
+                delay = gamedata.reduceanim ? 0 : 600;
             }
             setTimeout(() => {
                 doaflip();
             }, delay);
-            
+
             hasended = true;
             haswon = true;
         }
@@ -1420,10 +1494,12 @@ function revealStart() {
 }
 
 function revealDots(n) {
+    let animFactor = gamedata.reduceanim ? 0 : 1;
+
     [...document.querySelectorAll("#speelveld tr")[n].children].forEach((el,m) => {
         setTimeout(() => {
             el.querySelector(".letter").style.opacity = 1;
-        }, m * 50 + ((gamedata.regel == 5) ? 500 : 0));
+        }, (m * 50 + ((gamedata.regel == 5) ? 500 : 0)) * animFactor);
     });
     if (gamedata.regel == 5)
         speelveld.classList.add("zesdebeurt");
@@ -1433,7 +1509,7 @@ function revealDots(n) {
         typwoord = "";
         typwoordLast = "";
         refuseInput = false;
-    }, (maxlen-1) * 50 + ((gamedata.regel == 5) ? 600 : 100));
+    }, ((maxlen-1) * 50 + ((gamedata.regel == 5) ? 600 : 100)) * animFactor);
 }
 
 function write(line, str) {
