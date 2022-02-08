@@ -312,11 +312,11 @@ body {
     transition: transform 0.6s ease-in-out;
     transform: translate(-50%, -40%);
 }
-:root[data-style="90s"] td:nth-child(1) .letter::after { transition: transform 0.3s ease 0.10s both; }
-:root[data-style="90s"] td:nth-child(2) .letter::after { transition: transform 0.3s ease 0.15s both; }
-:root[data-style="90s"] td:nth-child(3) .letter::after { transition: transform 0.3s ease 0.20s both; }
-:root[data-style="90s"] td:nth-child(4) .letter::after { transition: transform 0.3s ease 0.25s both; }
-:root[data-style="90s"] td:nth-child(5) .letter::after { transition: transform 0.3s ease 0.30s both; }
+:root[data-style="90s"] td:nth-child(1) .letter::after { transition: transform 0.3s ease; }
+:root[data-style="90s"] td:nth-child(2) .letter::after { transition: transform 0.3s ease 0.05s; }
+:root[data-style="90s"] td:nth-child(3) .letter::after { transition: transform 0.3s ease 0.10s; }
+:root[data-style="90s"] td:nth-child(4) .letter::after { transition: transform 0.3s ease 0.15s; }
+:root[data-style="90s"] td:nth-child(5) .letter::after { transition: transform 0.3s ease 0.20s; }
 
 
 :root[data-style="90s"] .letterbox[data-bg="rood"] .letter::after {
@@ -369,11 +369,11 @@ body {
     opacity: 1;
 }
 
-:root[data-style="90s"] .winanim td:nth-child(1) .letterbg::before { animation: win90s 1.20s ease both; }
-:root[data-style="90s"] .winanim td:nth-child(2) .letterbg::before { animation: win90s 1.20s ease 0.05s both; }
-:root[data-style="90s"] .winanim td:nth-child(3) .letterbg::before { animation: win90s 1.20s ease 0.10s both; }
-:root[data-style="90s"] .winanim td:nth-child(4) .letterbg::before { animation: win90s 1.20s ease 0.15s both; }
-:root[data-style="90s"] .winanim td:nth-child(5) .letterbg::before { animation: win90s 1.20s ease 0.20s both; }
+:root[data-style="90s"] .winanim td:nth-child(1) .letterbg::before { animation: win90s 1.20s ease 0.10s both; }
+:root[data-style="90s"] .winanim td:nth-child(2) .letterbg::before { animation: win90s 1.20s ease 0.15s both; }
+:root[data-style="90s"] .winanim td:nth-child(3) .letterbg::before { animation: win90s 1.20s ease 0.20s both; }
+:root[data-style="90s"] .winanim td:nth-child(4) .letterbg::before { animation: win90s 1.20s ease 0.25s both; }
+:root[data-style="90s"] .winanim td:nth-child(5) .letterbg::before { animation: win90s 1.20s ease 0.30s both; }
 
 
 /* **************************************************************
