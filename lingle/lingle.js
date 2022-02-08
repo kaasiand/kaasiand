@@ -9,7 +9,7 @@ let gamedata = {};
 
 function copyresults() {
     let nr = (sessionseed - Date.UTC(2022,0,-29)) / 86400000;
-    let str = `Lingle ${nr + (nr % 100 == 69? " (nice)" : "")} ${gamedata.voltooid ? gamedata.regel + 1 : 'X'}/6\n`
+    let str = `Lingle ${nr + (nr % 100 == 69? " (nice)" : "")} ${gamedata.voltooid ? gamedata.regel + 1 : 'X'}/6\n`;
     if (true)
         str += "https://kaasiand.cool/lingle/\n";
 
