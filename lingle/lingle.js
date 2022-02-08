@@ -8,8 +8,11 @@ let typwoordLast = "", typwoord = "";
 let gamedata = {};
 
 function copyresults() {
-    let str = `Lingle ${(sessionseed - Date.UTC(2022,0,-29)) / 86400000} ${gamedata.voltooid ? gamedata.regel + 1 : 'X'}/6\nhttps://kaasiand.cool/lingle/\n`
-    
+    let nr = (sessionseed - Date.UTC(2022,0,-29)) / 86400000;
+    let str = `Lingle ${nr + (nr % 100 == 69? " (nice)" : "")} ${gamedata.voltooid ? gamedata.regel + 1 : 'X'}/6\n`
+    if (true)
+        str += "https://kaasiand.cool/lingle/\n";
+
     let trs = document.querySelectorAll("#speelveld tr");
 
     for (let i = 0; i < gamedata.veld.length; i++) {
