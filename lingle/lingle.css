@@ -312,11 +312,11 @@ body {
     transition: transform 0.6s ease-in-out;
     transform: translate(-50%, -40%);
 }
-:root[data-style="90s"] td:nth-child(1) .letter::after { transition: transform 0.3s ease; }
-:root[data-style="90s"] td:nth-child(2) .letter::after { transition: transform 0.3s ease 0.05s; }
-:root[data-style="90s"] td:nth-child(3) .letter::after { transition: transform 0.3s ease 0.10s; }
-:root[data-style="90s"] td:nth-child(4) .letter::after { transition: transform 0.3s ease 0.15s; }
-:root[data-style="90s"] td:nth-child(5) .letter::after { transition: transform 0.3s ease 0.20s; }
+:root[data-style="90s"] td:nth-child(1) .letter::after { transition: transform 0.3s ease 0.10s; }
+:root[data-style="90s"] td:nth-child(2) .letter::after { transition: transform 0.3s ease 0.15s; }
+:root[data-style="90s"] td:nth-child(3) .letter::after { transition: transform 0.3s ease 0.20s; }
+:root[data-style="90s"] td:nth-child(4) .letter::after { transition: transform 0.3s ease 0.25s; }
+:root[data-style="90s"] td:nth-child(5) .letter::after { transition: transform 0.3s ease 0.30s; }
 
 
 :root[data-style="90s"] .letterbox[data-bg="rood"] .letter::after {
