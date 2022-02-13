@@ -66,7 +66,7 @@ function save() {
     localStorage.setItem("data", JSON.stringify(gamedata));
 }
 function tryRetrieveData() {
-    if (!localStorage || localStorage.length == 0) {
+    if (!localStorage || !localStorage.getItem("data")) {
         makeFirstGameData();
         showHelp();
     }
