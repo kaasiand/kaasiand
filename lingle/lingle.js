@@ -537,7 +537,8 @@ function init() {
         let ch = e.key.toLowerCase();
         
         if (e.keyCode >= 65 && e.keyCode <= 90 || ch == "ĳ") {
-            typLetter(ch, true);
+            if ("ABCDEFGHIJKLMNOPQRSTUVWXYZĲabcdefghijklmnopqrstuvwxyzĳ".includes(ch))
+                typLetter(ch, true);
             hideHelp();
         }
         else if (ch == ";" || ch == ":") {
