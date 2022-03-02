@@ -945,24 +945,10 @@ ratio + L + dont care + didnt ask + youre british {
     white-space: nowrap;
 }
 /* ************ WHITESPACE CHARACTERS ************ */
-:not(.compact) > .glyph[data-ch=" "]::before {
-    content: var(--spacestr);
-    font-size: 9px;
-    padding: 1px 0 0;
-    font-style: italic;
-}
-:not(.compact) > .glyph[data-ch=" "]::before {
-    content: "NBSP";
-    font-size: 9px;
-    padding: 1px 0 0;
-    font-style: italic;
-}
-:not(.compact) > .glyph[data-ch="　"]::before {
-    content: "IDSP";
-    font-size: 9px;
-    padding: 1px 0 0;
-    font-style: italic;
-}
+:not(.compact) > .glyph[data-ch=" "]::before { content: var(--spacestr); font-size: 9px; padding: 1px 0 0; font-style: italic; }
+:not(.compact) > .glyph[data-ch=" "]::before { content: "NBSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+:not(.compact) > .glyph[data-ch=" "]::before { content: "FSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+:not(.compact) > .glyph[data-ch="　"]::before { content: "IDSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
 
 .compact .glyph {
     margin: 0px;
