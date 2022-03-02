@@ -2057,6 +2057,7 @@ function importFnt(str,fn, obj) {
     let tr = 1;
     let charorder = [];
     let imgdata = obj.imgdata;
+    let kerningPairCount = 0;
 
     for (let i = 0; i < data.length; i++) {
         let eqidx = data[i].indexOf("=");
@@ -2089,10 +2090,14 @@ function importFnt(str,fn, obj) {
                     charorder.push({ ch: real, adv: afterWs * 1 || 0 });
                 } else if (real.length == 2) {
                     makeKerningPair(real, afterWs * 1 || 0, false);
+                    kerningPairCount++;
                 }
             break;
         }
     }
+    if (kerningPairCount > 32) settings.kerncurrent = true;
+    loadKernPairList();
+    updateKernCurrentCSS();
 
     let img = new Image();
     img.onload = () => {
@@ -2118,7 +2123,6 @@ function importFnt(str,fn, obj) {
         }
 
         loadElemGroup(currentGroup.elem);
-        loadKernPairList();
         closeModal();
         reloadCurrentGlyph();
         updateGuideCSS();
