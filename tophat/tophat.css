@@ -1,0 +1,1258 @@
+:root {
+    --bgcol:  #806a6a;
+    --barcol: #a59191;
+    --glcol:  #725c5c;
+
+    --btncol: #9c8484;
+    --btncolh:#ac9999;
+    --active: #b9a6a6;
+
+    --lbarbtn:#b6a7a7;
+    --lbarbth:#c4b2b2;
+    --lbarbtt:#504646;
+    
+    --txtcol: #dad0d0;
+    --txtinpc:#382d2d;
+    --lbartxt:#382d2d;
+    --btntxtc:#dad0d0;
+
+    --advbar: #382d2d;
+    --advbar2:#4d3b3b;
+    --advslid:#c55252;
+
+    --guidel: #a5a5a5;
+    --guidebl:#c55252;
+    --guidmix: overlay;
+    
+    --bordcol:#bbb3b3;
+    --gridcol:#c5b4b4;
+    --lboxcol:#887272;
+    --tboxcol:#cec8c8;
+    --blcol:  #f05a5a;
+
+    --redbtn: #c55252;
+    --redbtnh:#dd6d6d;
+    --deletec:#e0d8d8;
+
+    
+    --glyphw: #806a6a;
+    --glyphwl:#dad0d0;
+    --glyphal:#dad0d0;
+
+    --glyphr: #b63030;
+    --glyphrl:#fff3f3;
+    --glyphtr:#f49797;
+
+    --glyphy: #d78216;
+    --glyphyl:#fffff3;
+    --glyphty:#e3c378;
+
+    --glyphg: #469530;
+    --glyphgl:#f3fff3;
+    --glyphtg:#78d05f;
+
+    --glyphb: #3b43bb;
+    --glyphbl:#f3f3ff;
+    --glyphtb:#89c4d7;
+
+    --notag:  #e0d8d8;
+
+    --pencil: #f0e79d;
+    --syringe:#fdc0d6;
+    --spill:  #e3e3e3;
+    --move:   #aad3eb;
+    --seltool:#a8daa6;
+
+    --wspcol: #ffaf04a9;
+}
+:root[data-theme="stationery"] {
+    --bgcol:  #e9e9e9;
+    --barcol: #ffffff;
+    --glcol:  #cecece;
+
+    --btncol: #afafaf;
+    --btncolh:#c5c5c5;
+    --active: #969696;
+
+    --lbarbtn:#dbdbdb;
+    --lbarbth:#cacaca;
+    --lbarbtt:#2c2c2c;
+    --lbartxt:#2c2c2c;
+
+    --txtcol: #252525;
+    --txtinpc:#252525;
+    --btntxtc:#2c2c2c;
+
+    --advbar: #5f5f5f;
+    --advbar2:#6e6e6e;
+    --advslid:#e25252;
+
+    --guidel: #999999;
+    --guidebl:#e25252;
+    --guidmix: darken;
+    
+    --bordcol:#adadad;
+    --gridcol:#7c7c7c;
+    --lboxcol:#e7e7e7;
+    --tboxcol:#f5f5f5;
+    --blcol:  #ff7979;
+
+    --redbtn: #c55252;
+    --redbtnh:#dd6d6d;
+    --deletec:#e0d8d8;
+
+    
+    --glyphw: #858585;
+    --glyphwl:#e4e4e4;
+    --glyphal:#252525;
+
+    --glyphr: #b63030;
+    --glyphrl:#fff3f3;
+    --glyphtr:#ce4e4e;
+
+    --glyphy: #d78216;
+    --glyphyl:#fffff3;
+    --glyphty:#b8751e;
+
+    --glyphg: #469530;
+    --glyphgl:#f3fff3;
+    --glyphtg:#50a538;
+
+    --glyphb: #3b43bb;
+    --glyphbl:#f3f3ff;
+    --glyphtb:#4f58ce;
+
+    --notag:  #4e4e4e;
+
+    --pencil: #fff56d;
+    --syringe:#c52761;
+    --spill:  #ffffff;
+    --move:   #318ec4;
+    --seltool:#14970f;
+
+    --wspcol: #ffaf04a9;
+}
+:root[data-theme="kaasiand"] {
+    --bgcol:  #5F2900 repeat url(../assets/wood.bmp);
+    --barcol: linear-gradient(to left, darkred 4px, transparent 4px), #A3642A url(../assets/wood.jpg);
+    --glcol:  #ffe8b9 url(../assets/banana.bmp) repeat;
+
+    --btncol:  
+    linear-gradient(to left,   black 1px,     transparent 1px),
+    linear-gradient(to top,    black 1px,     transparent 1px),
+    linear-gradient(to right,  burlywood 1px, transparent 1px),
+    linear-gradient(to bottom, burlywood 1px, transparent 1px),
+    linear-gradient(to left,   black 2px,     transparent 2px),
+    linear-gradient(to top,    black 2px,     transparent 2px),
+    linear-gradient(to right,  burlywood 2px, transparent 2px),
+    linear-gradient(to bottom, burlywood 2px, transparent 2px),
+    linear-gradient(to left,   black 3px,     transparent 3px),
+    linear-gradient(to top,    black 3px,     transparent 3px),
+    linear-gradient(to right,  burlywood 3px, transparent 3px),
+    linear-gradient(to bottom, burlywood 3px, darkred   3px),
+    #e4bb69;
+    --btncolh:
+    linear-gradient(to left,   black 1px, transparent 1px),
+    linear-gradient(to top,    black 1px, transparent 1px),
+    linear-gradient(to right,  white 1px, transparent 1px),
+    linear-gradient(to bottom, white 1px, transparent 1px),
+    linear-gradient(to left,   black 2px, transparent 2px),
+    linear-gradient(to top,    black 2px, transparent 2px),
+    linear-gradient(to right,  white 2px, transparent 2px),
+    linear-gradient(to bottom, white 2px, transparent 2px),
+    linear-gradient(to left,   black 3px, transparent 3px),
+    linear-gradient(to top,    black 3px, transparent 3px),
+    linear-gradient(to right,  white 3px, transparent 3px),
+    linear-gradient(to bottom, white 3px, crimson   3px),
+    #fad284;
+    --active:
+    linear-gradient(to left,   white 1px, transparent 1px),
+    linear-gradient(to top,    white 1px, transparent 1px),
+    linear-gradient(to right,  black 1px, transparent 1px),
+    linear-gradient(to bottom, black 1px, transparent 1px),
+    linear-gradient(to left,   white 2px, transparent 2px),
+    linear-gradient(to top,    white 2px, transparent 2px),
+    linear-gradient(to right,  black 2px, transparent 2px),
+    linear-gradient(to bottom, black 2px, transparent 2px),
+    linear-gradient(to left,   white 3px, transparent 3px),
+    linear-gradient(to top,    white 3px, transparent 3px),
+    linear-gradient(to right,  black 3px, transparent 3px),
+    linear-gradient(to bottom, black 3px, crimson   3px),
+    #ffe6b5;
+
+    --lbarbtn:#e66767;
+    --lbarbth:#fc7a7a;
+    --lbarbtt:yellow;
+    --lbartxt:yellow;
+
+    --txtcol: white;
+    --txtinpc:black;
+    --btntxtc:yellow;
+
+    --advbar: #A3642A;
+    --advbar2:#ad7e51;
+    --advslid:#e25252;
+
+    --guidel: #999999;
+    --guidebl:#920d0d;
+    --guidmix: hard-light;
+    
+    --bordcol:burlywood;
+    --gridcol:#979797;
+    --lboxcol:#A3642A;
+    --tboxcol:#f5f5f5;
+    --blcol:  hotpink;
+
+    --redbtn: #c55252;
+    --redbtnh:#dd6d6d;
+    --deletec:#e0d8d8;
+
+    
+    --glyphw: saddlebrown;
+    --glyphwl:white;
+    --glyphal:#313131;
+
+    --glyphr: crimson;
+    --glyphrl:white;
+    --glyphtr:red;
+
+    --glyphy: darkorange;
+    --glyphyl:white;
+    --glyphty:yellow;
+
+    --glyphg: green;
+    --glyphgl:white;
+    --glyphtg:lime;
+
+    --glyphb: blue;
+    --glyphbl:white;
+    --glyphtb:cyan;
+
+    --notag:  white;
+
+    --pencil: yellow;
+    --syringe:hotpink;
+    --spill:  white;
+    --move:   cyan;
+    --seltool:lime;
+    --wspcol: yellow;
+}
+:root[data-theme="kaasiand"] .block_category + ul button.currentGroup::after,
+:root[data-theme="kaasiand"] .bold,
+:root[data-theme="kaasiand"] .textbtn:hover,
+:root[data-theme="kaasiand"] .textbtn:focus-visible {
+    color: white !important;
+}
+:root[data-theme="kaasiand"] .block_category.bold::before,
+:root[data-theme="kaasiand"] .textbtn.active:hover::before,
+:root[data-theme="kaasiand"] .textbtn.active:focus-visible::before {
+    border-color: white;
+}
+:root[data-theme="kaasiand"] #blocklist button {
+    filter: drop-shadow(0px 1px 2px black);
+}
+:root[data-theme="kaasiand"] #letterbox {
+    border-left-color: darkred;
+    border-top-color: darkred;
+}
+:root[data-theme="kaasiand"] #leftbar,
+:root[data-theme="kaasiand"] #glyphimg_cont,
+:root[data-theme="kaasiand"] #adv_width_bar,
+:root[data-theme="kaasiand"] #preview_image,
+:root[data-theme="kaasiand"] #preview_input,
+:root[data-theme="kaasiand"] #glyphlist {
+    box-shadow: 2px 2px 5px black;
+}
+:root[data-theme="kaasiand"] #adv_width_slider {
+    filter: drop-shadow(0px 1px 1px #0008);
+    border-bottom-color: darkred;
+}
+:root[data-theme="kaasiand"] .kernpreview button::after,
+:root[data-theme="kaasiand"] .kernpreview button::before {
+    background-color: black;
+}
+:root[data-theme="kaasiand"] #glyphlist {
+    color: black;
+}
+:root[data-theme="kaasiand"] body {
+    font-family: 'Times New Roman', "FreeSerif", Times, serif;
+}
+:root[data-theme="kaasiand"] #leftbar,
+:root[data-theme="kaasiand"] .textbtn {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+:root[data-theme="kaasiand"] .break {
+    font-size: 14px !important;
+}
+
+
+:root {
+    --fontsyn: none;
+
+    --glyphwidth:  20;
+    --glyphheight: 24;
+
+    --scalepx: 2px;
+    --glyphwidthpx:  calc(var(--glyphwidth)  * var(--scalepx));
+    --glyphheightpx: calc(var(--glyphheight) * var(--scalepx));
+
+    --tracking: 1;
+    --trackingpx: calc(var(--tracking) * var(--scalepx));
+
+    background: var(--bgcol);
+    font-synthesis: var(--fontsyn);
+}
+
+html, body {
+    height: 100%;
+    max-height: 100vh;
+    font-family: Tahoma, FreeSans, Helvetica, sans-serif;
+    color: var(--txtcol);
+    overflow-y: hidden;
+}
+
+body {
+    margin: 0;
+    display: flex;
+}
+
+/* ************ LAYOUT ************ */
+
+#leftbar {
+    min-width: 200px;
+    width: 200px;
+    background: var(--barcol);
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--lbartxt);
+
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    gap: 5px;
+}
+
+#main_cont {
+    flex-grow: 1;
+    display: flex;
+}
+
+#glyphedit_preview_cont {
+    min-width: 450px;
+    width: 450px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 20px;
+
+    flex-grow: 1;
+    padding: 10px;
+    padding-right: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#glyphedit_cont, #preview_cont, #glyphlist_cont {
+    width: 100%;
+    height: 1px;
+    border-collapse: collapse;
+}
+#glyphedit_cont td:first-child {
+    width: 32px;
+    border-collapse: collapse;
+}
+#glyphedit_cont td {
+    padding: 5px;
+}
+
+.areaheader {
+    padding: 10px 0 !important;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* ************ BUTTONS ************ */
+
+.toolbtn {
+    display: block;
+    position: relative;
+
+    width:  32px;
+    height: 32px;
+    text-align: center;
+    margin: 1px 1px 0 0;
+    padding: 4px;
+    box-sizing: border-box;
+}
+.toolbtn::after {
+    display: block;
+    content: "";
+    width:  24px;
+    height: 24px;
+}    
+#pencil::after {
+    clip-path: path("m4.3382 20.468v-5.4789l10.324-10.324c1.4311-1.4311 3.1721-1.8387 4.9803-0.030538 1.7869 1.7869 1.3718 3.578-0.03054 4.9803l-4.2426-4.2426-0.80705 0.80695 4.243 4.243-6.871 6.871-4.243-4.243-0.80723 0.80734 4.2426 4.2426-1.4142 1.4142-4.2426-4.2426v5.1961z");
+    background-color: var(--pencil);
+}
+#syringe::after {
+    clip-path: path("m 4.0582094,3.2546962 0.938886,1.7657875 1.7657878,-0.938886 0.4694409,0.8828946 -3.9447832,3.2305646 0.4694425,0.8828935 1.7657877,-0.9388857 5.1641139,9.7122863 4.498686,1.005509 1.878015,3.532032 0.882893,-0.469441 -1.878013,-3.53203 1.682027,-4.291854 L 12.586379,4.383278 14.352167,3.4443919 13.882725,2.5614983 8.9985706,4.0253632 8.529126,3.1424701 10.294914,2.203584 9.314965,0.45963066 Z m 2.8169001,5.2978184 5.2978185,-2.8169 4.459828,8.3877184 -5.297819,2.816899 z m 3.6160355,1.4754094 0.46944,0.882893 2.207463,-1.1737278 -0.469442,-0.8828943 z m 1.408327,2.64868 0.46944,0.882895 2.207464,-1.173729 -0.469442,-0.882893 z");
+    background-color: var(--syringe);
+}
+#milk::after {
+    clip-path: path("m19 1.9999-2.8748 1.4371 5.2617 2.604 2.6133-1.541zm-5.1702 2.5854-3.8297 1.9146v3.5l-1.9999 1.9999 0.79478 0.7953c-0.59252 0.3714-1.2557 0.83931-2.3167 1.0733-2.7551 0.60766-1.7034 2.0215-3.3393 2.4598-0.93743 0.25118-2.1129 0.70849-2.2944 1.386-0.23033 0.85961 3.3181-0.050092 3.0768 1.3937-0.19861 1.1884-3.9212 1.0615-3.9212 2.0758 0 0.46258 0.78102 0.34142 2.0448 0.50953 0.98238 0.13067 1.8326 1.3157 3.3905 1.3157 2.8863 0 3.125-0.97978 5.3335-0.97978 1.3312 0 2.7349-0.11227 2.6458-0.75861-0.1248-0.90573-1.4152-1.1966-1.4433-1.8252-0.05302-1.1831 4.7552-0.7161 6.1159-1.6387 1.0162-0.68901-1.1423-1.3063-2.0624-1.5529-1.1081-0.2969-1.9585-0.34469-1.9585-0.76843 0-0.97239 1.5992-1.1992 1.8567-1.8536 0.06343-0.16116 0.06012-0.42003 0.01292-0.56741l1.064-1.0645h0.99994v-3.9998l-2.9998 2.9998v-2.9998l-0.99994-0.99994 3.9998 0.99994 1.3684-0.7984zm-1.3296 4.4147 2.9998 2.9998-0.28009 0.28009c-0.37418-0.18178-0.88842-0.28009-1.558-0.28009h-2.6856c-0.47874 0-0.86415 0.0994-1.2211 0.25528l-0.25476-0.25528zm5.7908 3.943c-0.40265-1e-6 -0.71468 0.17143-0.71468 0.55707 0 0.38564 0.32223 0.55707 0.71985 0.55707s0.71985-0.16721 0.71985-0.55707c0-0.38986-0.32237-0.55707-0.72502-0.55707z");
+    background-color: var(--spill);
+}
+#move::after {
+    clip-path: path("M 11.999784,1.5000425 7.4997472,6.0000793 H 10.999833 V 10.999833 H 6.0000793 V 7.4997472 l -4.5000368,4.5000368 4.5000368,4.500037 v -3.499569 h 4.9997537 v 4.999754 H 7.4997472 l 4.5000368,4.500037 4.500037,-4.500037 h -3.499569 v -4.999754 h 4.999754 v 3.499569 L 22.500043,11.999784 18.000006,7.4997472 V 10.999833 H 13.000252 V 6.0000793 h 3.499569 z");
+    background-color: var(--move);
+}
+#select::after {
+    clip-path: path("m 4.8871573,2.0000426 c -1.5992691,0 -2.8871147,1.2774908 -2.8871147,2.8638606 v 3.136191 H 3.9998877 V 5.000327 c 0,-0.5539911 0.4464482,-1.0004396 1.0004393,-1.0004393 H 8.0000942 V 2.0000426 Z m 11.1128337,0 v 1.9998451 h 2.999767 c 0.553991,0 0.999923,0.4464482 0.999923,1.0004393 v 2.9997672 h 2.000362 v -3.136191 c 0,-1.5863698 -1.287845,-2.8638606 -2.887115,-2.8638606 z M 2.0000426,15.999991 v 3.136191 c 0,1.586371 1.2878456,2.863861 2.8871147,2.863861 H 8.0000942 V 19.899947 H 5.000327 c -0.5539911,0 -1.0004396,-0.445932 -1.0004393,-0.999922 v -2.900034 z m 17.9996384,0 v 2.900034 c 0,0.55399 -0.445932,0.999922 -0.999923,0.999922 h -2.999767 v 2.100096 h 3.112937 c 1.59927,0 2.887115,-1.27749 2.887115,-2.863861 v -3.136191 z");
+    background-color: var(--seltool);
+}
+.toolbtn.tag::after {
+    clip-path: path("M 4.9189448,2.3698852 3.6914382,9.3335256 12.868539,22.439785 21.059983,16.704074 11.882882,3.5978148 Z m 2.294462,3.2768314 C 8.1181793,5.0129218 9.3654466,5.232682 9.9991173,6.1375412 10.632678,7.0424774 10.412595,8.2896875 9.5075723,8.9231248 8.6028017,9.5565703 7.3558413,9.336697 6.7222858,8.4320034 6.0888407,7.5272325 6.3087134,6.2802722 7.2134068,5.6467166 Z");
+}
+.toolbtn.notag::after {
+    clip-path: path("m 19.826697,1.8562174 -3.182752,3.1827515 -3.181718,-3.1822347 -1.0604,1.0609172 3.181718,3.1817177 -3.181718,3.181718 1.060917,1.0604009 3.181201,-3.1817184 3.182235,3.1822344 1.060917,-1.0604001 -3.182235,-3.1822348 3.182235,-3.1822344 z M 3.7734131,7.0843221 2.8592571,12.268502 9.6913979,22.026045 15.790251,17.755505 8.9575927,7.9984782 Z m 2.5357624,2.1698931 c 0.477955,-0.00806 0.9515874,0.2135545 1.2464357,0.6345868 0.4716751,0.673709 0.3073879,1.602709 -0.366386,2.074292 C 6.5156389,12.434684 5.587638,12.270754 5.1159669,11.597225 4.6443775,10.923638 4.8077903,9.9951211 5.4813191,9.5234497 5.7339145,9.3465061 6.0224026,9.25905 6.3091755,9.2542152 Z");
+    background-color: var(--notag);
+}
+.toolbtn.x::after {
+    clip-path: path("M 18.363981,4.221612 12.000043,10.58555 5.6361047,4.221612 4.221612,5.6361047 l 6.363938,6.3639383 -6.363938,6.363938 1.4144927,1.414492 6.3639383,-6.363938 6.363938,6.363938 1.414492,-1.414492 -6.363938,-6.363938 6.363938,-6.3639383 z");
+    background-color: var(--notag);
+}
+.toolbtn.fliph::after {
+    clip-path: path("m12 0.99994v2.9998h1.0005v-2.9998zm-0.99994 2.9998-9 15h9zm3.0003 0v15h9zm-2.0004 1.0005v3.9998h1.0005v-3.9998zm0 4.9997v4.0003h1.0005v-4.0003zm0 5.0002v3.9998h1.0005v-3.9998zm0 4.9997v3.0003h1.0005v-3.0003z");
+    background-color: var(--notag);
+}
+.toolbtn.flipv::after {
+    clip-path: path("m22 12h-2.9998v-1.0005h2.9998zm-2.9998 0.99994-15 9v-9zm0-3.0003h-15v-9zm-1.0005 2.0004h-3.9998v-1.0005h3.9998zm-4.9997 0h-4.0003v-1.0005h4.0003zm-5.0002 0h-3.9998v-1.0005h3.9998zm-4.9997 0h-3.0003v-1.0005h3.0003z");
+    background-color: var(--notag);
+}
+.toolbtn.scale1::after {
+    clip-path: path("m 14.000179,2.999817 v 1.2500527 h 1.250053 1.249536 1.250053 v 1.2500528 h 1.250053 V 4.2498697 2.999817 h -1.250053 -1.250053 -1.249536 z m 3.749642,2.5001055 h -1.250053 v 1.2500531 h 1.250053 z m -1.250053,1.2500531 h -1.249536 v 1.2500527 h 1.249536 z m -1.249536,1.2500527 h -1.250053 v 1.2500531 1.2505696 h 1.250053 1.249536 1.250053 1.250053 V 9.2500814 H 17.749821 16.499768 15.250232 Z M 6.0311564,10.551294 c -2.3278788,0 -4.2302328,1.90287 -4.2302328,4.230749 0,2.327879 1.902354,4.2323 4.2302328,4.2323 0.9048191,0 1.746102,-0.287689 2.4360269,-0.77618 0.4549031,0.958265 1.7062187,2.56031 1.9983277,2.852539 l 1.460893,1.461409 c 1.154945,1.088661 3.145134,-0.54699 1.874304,-1.87482 L 12.340332,19.216398 C 12.04818,18.924124 10.445529,17.672246 9.4872761,17.217554 9.97578,16.527623 10.263973,15.686875 10.263973,14.782043 c 0,-2.327879 -1.9049376,-4.230749 -4.2328166,-4.230749 z m 0,1.500167 c 1.5172197,0 2.7326497,1.213362 2.7326497,2.730582 0,1.517219 -1.21543,2.732133 -2.7326497,2.732133 -1.5172195,0 -2.7300661,-1.214914 -2.7300661,-2.732133 0,-1.51722 1.2128466,-2.730582 2.7300661,-2.730582 z");
+    background-color: var(--notag);
+}
+.toolbtn.scale2::after {
+    clip-path: path("M 13.00024,0.99993896 V 2.999817 h 1.999878 1.999878 1.999878 v 2.0003947 h 1.999878 V 2.999817 0.99993896 h -1.999878 -1.999878 -1.999878 z m 5.999634,4.00027274 h -1.999878 v 1.9998777 h 1.999878 z m -1.999878,1.9998777 h -1.999878 v 2.0003947 h 1.999878 z M 15.000118,9.0004841 H 13.00024 v 1.9998779 2.000395 h 1.999878 1.999878 1.999878 1.999878 V 11.000362 H 18.999874 16.999996 15.000118 Z M 6.0311564,10.551294 c -2.3278788,0 -4.2302328,1.90287 -4.2302328,4.230749 0,2.327879 1.902354,4.2323 4.2302328,4.2323 0.9048191,0 1.746102,-0.287689 2.4360269,-0.77618 0.4549031,0.958265 1.7062187,2.56031 1.9983277,2.852539 l 1.460893,1.461409 c 1.154945,1.088661 3.145134,-0.54699 1.874304,-1.87482 L 12.340332,19.216398 C 12.04818,18.924124 10.445529,17.672246 9.4872761,17.217554 9.97578,16.527623 10.263973,15.686875 10.263973,14.782043 c 0,-2.327879 -1.9049376,-4.230749 -4.2328166,-4.230749 z m 0,1.500167 c 1.5172197,0 2.7326497,1.213362 2.7326497,2.730582 0,1.517219 -1.21543,2.732133 -2.7326497,2.732133 -1.5172195,0 -2.7300661,-1.214914 -2.7300661,-2.732133 0,-1.51722 1.2128466,-2.730582 2.7300661,-2.730582 z");
+    background-color: var(--notag);
+}
+.toolbtn.copy::after {
+    clip-path: path("m 8.0000283,2 v 3.0003334 h 6.0001507 l 0.999939,0.999939 h 3.999756 V 5.0003334 L 16.000057,2 Z m 7.0000897,4.0002724 2.500106,2.5001058 v 8.4997398 h 1.49965 V 7.2 Z m -9.9999063,0 V 21.00039 H 16.000057 V 11.2 l -4.000273,-1.199972 h 4.000273 V 9.0000893 L 13.00024,6.0002724 Z");
+    background-color: var(--notag);
+}
+.toolbtn.paste::after {
+    clip-path: path("M 12.500012,1.5 C 11.671556,1.4998772 11.199884,1.8950415 11.199833,2.9996502 H 8.9999673 v 1.5001666 c 0,0.8310001 0.6691667,1.5001668 1.5001667,1.5001668 h 3.999756 c 0.831,0 1.500167,-0.6691667 1.500167,-1.5001668 V 2.9996502 H 13.800191 C 13.800141,1.8950415 13.328469,1.4998773 12.500012,1.5 Z M 6.0001504,4.0001059 V 19.999646 H 10.500134 V 9.9997396 h 7.499801 l 0.999939,0.9999394 V 4.0001059 h -1.999878 v 0.799951 c 0,1.1080001 -1.091866,2.1998657 -2.199866,2.1998657 h -4.600236 c -1.1080001,0 -2.1998657,-1.0918656 -2.1998657,-2.1998657 v -0.799951 z m 5.9996336,6.9995731 v 10.022127 l 8.000029,-0.0217 v -7.500318 l -2.499589,-2.500105 z");
+    background-color: var(--notag);
+}
+.toolbtn.plus::after {
+    clip-path: path("M 10.999845,5.0002117 V 10.999845 H 5.0002117 v 2.000395 h 5.9996333 v 5.999634 H 13.00024 V 13.00024 h 5.999634 V 10.999845 H 13.00024 V 5.0002117 Z");
+    background-color: var(--btntxtc);
+}
+.toolbtn.minus::after {
+    clip-path: path("m 5,11 v 2.00024 H 19 V 11 Z");
+    background-color: var(--btntxtc);
+}
+.toolbtn.plus, .toolbtn.minus {
+    padding: 4px 2px;
+}
+#tagbtn_r::after { background-color: var(--glyphtr); }
+#tagbtn_y::after { background-color: var(--glyphty); }
+#tagbtn_g::after { background-color: var(--glyphtg); }
+#tagbtn_b::after { background-color: var(--glyphtb); }
+
+.toolbtn, .textbtn {
+    border: none;
+    position: relative;
+    font: inherit;
+
+    cursor: pointer;
+    background: var(--btncol);
+    color: var(--btntxtc);
+}
+.toolbtn.active {
+    background: var(--active);
+}
+.toolbtn:not(.active):hover, .textbtn:hover,
+.toolbtn:not(.active):focus-visible, .textbtn:focus-visible {
+    background: var(--btncolh);
+}
+
+
+.colourbtn {
+    display: block;
+    position: relative;
+
+    width:  32px;
+    height: 32px;
+    border-radius: 50%;
+    margin: 1px 1px 0 0;
+    border: 7px solid var(--btncol);
+    box-sizing: border-box;
+    background-color: var(--clr);
+    cursor: pointer;
+}
+.colourbtn.active {
+    border-color: var(--active);
+}
+.colourbtn:not(.active):hover, .colourbtn:not(.active):focus-visible {
+    border-color: var(--btncolh);
+}
+
+
+.left {
+    float: left;
+}
+.btnlabel {
+    padding: 6px 8px;
+    font-size: 14px;
+}
+.btnlabel::after {
+    content: attr(data-name);
+}
+.btnlabel:not(div + .btnlabel) {
+    padding-left: 0px;
+}
+
+.btndivider {
+    display: block;
+
+    width:  8px;
+    height: 8px;
+}
+
+.textbtn {
+    padding: 5px 28px;
+}
+.textbtn.active::before {
+    display: block;
+    position: absolute;
+    content: "";
+    box-sizing: border-box;
+    width: 14px;
+    height: 8px;
+    border: none;
+    border-bottom: 3px solid var(--btntxtc);
+    border-left: 3px solid var(--btntxtc);
+    top: 45%;
+    left: 8px;
+    transform: translateY(-50%) rotate(-45deg);
+}
+.textbtn::after {
+    content: attr(data-name);
+}
+#toollist {
+    vertical-align: top;
+    padding-top: 0 !important;
+}
+
+.leftbarbtn {
+    width: 100%;
+    background-color: var(--lbarbtn);
+    color: var(--lbartxt);
+    font-size: 14px;
+}
+.leftbarbtn.active::before {
+    border-color: var(--lbartxt)
+}
+.leftbarbtn:hover, .leftbarbtn:focus-visible {
+    background-color: var(--lbarbth) !important;
+}
+.redbg {
+    background-color: var(--redbtn);
+}
+.redbg::after {
+    background-color: var(--deletec) !important;
+}
+.redbg:hover, .redbg:focus-visible {
+    background-color: var(--redbtnh) !important;
+}
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ******************************************************************
+    BLOCK LIST
+ ****************************************************************** */
+
+#blocklist {
+    padding: 20px 5px 10px 10px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+#blocklist button {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    font-size: 14px;
+    line-height: 120%;
+    margin-bottom: 3px;
+}
+#blocklist button::after {
+    content: attr(data-name);
+}
+.bold {
+    font-weight: bold !important;
+}
+.block_category {
+    display: block;
+    position: relative;
+    margin: 5px 5px 5px 0 !important;
+    padding: 2px 0 0 20px !important;
+
+    cursor: default !important;
+}
+.block_category::before {
+    display: block;
+    position: absolute;
+    content: "";
+    width: 8px;
+    height: 8px;
+    border: 2px solid var(--lbartxt);
+    border-left: none;
+    border-top: none;
+    box-sizing: border-box;
+    left: 3px;
+    top: calc(50% - 4px);
+    transform: rotate(45deg);
+}
+.block_category.folded::before {
+    transform: rotate(-45deg);
+}
+.block_category.folded + ul {
+    display: none;
+}
+.block_category + ul {
+    display: block;
+    margin: 0 0 0 -20px;
+    list-style-type: none;
+    font-size: 14px;
+}
+.block_category + ul button {
+    margin: 0;
+    padding: 2px 0;
+    cursor: pointer;
+    text-decoration: none;
+}
+.block_category + ul button.currentGroup::after {
+    font-weight: bold;
+}
+.block_category + ul button:not(.block_category):hover::after {
+    text-decoration: underline;
+}
+.block_category + ul button:focus-visible::after,
+.block_category:focus-visible::after {
+    text-decoration: underline;
+}
+.block_category + ul:empty::after {
+    content: var(--emptystr);
+    opacity: 0.5;
+}
+
+/* ******************************************************************
+    GLYPH EDITOR
+ ****************************************************************** */
+
+.glyphhead {
+    font-size: 24px;
+    padding-bottom: 10px !important;
+    display: flex;
+    width: 370px;
+    height: 33px;
+}
+#codepointname {
+    display: inline-block;
+    width: 100px;
+    font-size: 22px;
+    transform: translateY(3px);
+}
+#codepointname::after {
+    content: attr(data-name);
+}
+
+#letterbox {
+    display: inline-block;
+    border: 2px solid var(--bordcol);
+    padding: 1px 8px 2px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-3px);
+    background: var(--lboxcol);
+    height: 30px;
+    min-width: 25px;
+}
+#letterbox::before {
+    display: inline-block;
+    content: "";
+    width: 108px;
+    margin-right: -100px;
+    transform: translateX(-8px);
+    height: 2px;
+    background-color: var(--blcol);
+    mix-blend-mode: var(--guidmix);
+}
+#letterboxspan {
+    white-space: pre;
+}
+#letterboxspan.iswhitespace {
+    background-color: var(--wspcol);
+}
+#glyphcanv_bar_cont {
+    overflow: hidden;
+    padding-top: 0 !important;
+    --pixelw: calc(100% / var(--glyphwidth));
+    --pixelh: calc(100% / var(--glyphheight));
+
+}
+#glyphimg_cont {
+    position: relative;
+    width: 360px;
+    overflow: hidden;
+    padding: 5px;
+    background: var(--glcol);
+}
+#glyphcanv {
+    display: block;
+    width: 100%;
+    
+    image-rendering: pixelated;
+    margin: 0;
+    padding: 0;
+
+    cursor: crosshair;
+}
+
+ratio + L + dont care + didnt ask + youre british {
+    aspect-ratio: 420 / 69;
+}
+
+#glyphcanvoverlay {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: 5px solid transparent;
+    box-sizing: border-box;
+    background-clip: padding-box;
+    pointer-events: none;
+}
+#glyphcanvgrid {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+    background-size: var(--pixelw) var(--pixelh);
+    background-repeat: repeat;
+    background-image: linear-gradient(to top,   var(--gridcol) 1px, transparent 1px, transparent calc(100% - 1px), var(--gridcol) calc(100% - 1px)),
+                      linear-gradient(to right, var(--gridcol) 1px, transparent 1px, transparent calc(100% - 1px), var(--gridcol) calc(100% - 1px));
+}
+#glyphcanvselection {
+    display: block;
+    position: absolute;
+    content: "";
+    --selw: 0;
+    --selh: 0;
+    --selx: 0;
+    --sely: 0;
+    left:   calc(var(--pixelw) * var(--selx));
+    top:    calc(var(--pixelh) * var(--sely));
+    width:  calc(var(--pixelw) * var(--selw));
+    height: calc(var(--pixelh) * var(--selh));
+    box-sizing: border-box;
+    background-color: #80bd6f40;
+}
+.guideline {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    --guidey: -1;
+    top: calc(var(--pixelh) * var(--guidey));
+    transform: translateY(-50%);
+    background-color: var(--guidel);
+    mix-blend-mode: var(--guidmix);
+}
+#guide_baseline {
+    background-color: var(--guidebl);
+}
+#adv_width_bar {
+    position: relative;
+    margin-top: 5px;
+    display: block;
+    background-size: var(--pixelw) 100%;
+    background-repeat: repeat;
+    background-image: linear-gradient(to right, var(--advbar2) 1px, var(--advbar) 1px, var(--advbar) calc(100% - 1px), var(--advbar2) calc(100% - 1px));
+    
+    width: 360px;
+    height: 30px;
+    padding: 0 !important;
+    border: 5px solid var(--advbar);
+}
+#adv_width_slider {
+    position: absolute;
+    display: block;
+    background-color: var(--advslid);
+    padding: 0;
+    height: 20px;
+    width: 24px;
+    --advwidth: 2;
+    left: calc(var(--pixelw) * var(--advwidth));
+    bottom: -5px;
+    border-bottom: 2px solid var(--advbar);
+    border-top: 20px solid transparent;
+    background-clip: padding-box;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+#adv_width_slider::before {
+    position: absolute;
+    display: block;
+    content: "";
+    background-color: var(--advslid);
+    padding: 0;
+    height: max(800px, 100vh);
+    width: 2px;
+    left: 0;
+    bottom: 20px;
+    border: 11px solid transparent;
+    border-bottom-color: var(--advslid);
+    background-clip: padding-box;
+    pointer-events: none;
+}
+
+/* ************ FONT PREVIEW ************ */
+
+#preview_image {
+    display: block;
+    background: var(--glcol);
+    image-rendering: pixelated;
+    overflow-y: auto;
+    width: 400px;
+}
+#preview_input {
+    display: block;
+    height: 100px;
+    overflow-y: auto;
+    width: 400px;
+    resize: none;
+    margin-top: 10px;
+    box-sizing: border-box;
+    background: var(--tboxcol);
+    border: 1px solid var(--bordcol);
+    color: var(--txtinpc);
+}
+
+/* ******************************************************************
+    GLYPH LIST AND KERNING PAIRS
+ ****************************************************************** */
+
+#glyphlist_kern_cont {
+    flex-grow: 3;
+    display: flex;
+    padding: 10px;
+    gap: 20px;
+    max-height: 100vh;
+    width: 100%;
+
+    overflow: hidden;
+}
+
+/* ************ GLYPH LIST ************ */
+
+#glyphlist_cont {
+    flex-grow: 1;
+    min-width: 250px;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    gap: 5px;
+}
+#glyphlist_cont>div {
+    height: max-content;
+}
+#glyphlist {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0px;
+    background: var(--glcol);
+    padding: 5px;
+    margin-top: 5px;
+    
+    overflow-y: auto;
+    align-content: flex-start;
+}
+
+#glyphlist .break {
+    flex-basis: 100%;
+    font-size: 12px;
+    padding: 4px 0;
+}
+#glyphlist_notice {
+    font-size: 14px;
+    font-style: italic;
+}
+
+.glyph {
+    display: block;
+    position: relative;
+    width: calc(var(--glyphwidthpx) + 9px);
+    height: calc(var(--glyphheightpx) + 9px);
+    box-sizing: border-box;
+    padding: 4px;
+    margin-top: 13px;
+    border: 1px solid transparent;
+    border-left: none;
+    border-top: none;
+    background: var(--btncol);
+    background-clip: padding-box !important;
+    background-size: var(--glyphwidthpx) var(--glyphheightpx) !important;
+    cursor: pointer;
+    text-align: center;
+    image-rendering: pixelated;
+}
+
+.glyph.active,.glyph.tempsel {
+    background: var(--active);
+}
+.glyph:not(.active):not(.tempsel):hover {
+    background: var(--btncolh);
+}
+.glyph::before {
+    display: block;
+    content: attr(data-ch);
+    position: absolute;
+    width: 100%;
+    height: 13px;
+    top: -13px;
+    left: 0;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 10px;
+    padding: 0 0 1px;
+
+    background-color: var(--glyphw);
+    color: var(--glyphwl);
+    white-space: nowrap;
+}
+/* ************ WHITESPACE CHARACTERS ************ */
+:not(.compact) > .glyph[data-ch=" "]::before {
+    content: var(--spacestr);
+    font-size: 9px;
+    padding: 1px 0 0;
+    font-style: italic;
+}
+:not(.compact) > .glyph[data-ch=" "]::before {
+    content: "NBSP";
+    font-size: 9px;
+    padding: 1px 0 0;
+    font-style: italic;
+}
+:not(.compact) > .glyph[data-ch="　"]::before {
+    content: "IDSP";
+    font-size: 9px;
+    padding: 1px 0 0;
+    font-style: italic;
+}
+
+.compact .glyph {
+    margin: 0px;
+    padding: 2px;
+    width: calc(var(--glyphwidthpx) + 4px);
+    height: calc(var(--glyphheightpx) + 4px);
+}
+.compact .glyph::before {
+    content: "";
+    height: 3px;
+    top: 0px;
+    background: none;
+}
+.glyph[data-tag="r"]::before {
+    background-color: var(--glyphr);
+    color: var(--glyphrl);
+}
+.glyph[data-tag="y"]::before {
+    background-color: var(--glyphy);
+    color: var(--glyphyl);
+}
+.glyph[data-tag="g"]::before {
+    background-color: var(--glyphg);
+    color: var(--glyphgl);
+}
+.glyph[data-tag="b"]::before {
+    background-color: var(--glyphb);
+    color: var(--glyphbl);
+}
+.glyph::after {
+    display: block;
+    width: calc(100% - 1px);
+    content: attr(data-ch);
+    opacity: 0.5;
+    font-size: max(14px, calc(var(--glyphheightpx) - 12px));
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+    color: var(--glyphal);
+}
+.glyph.hasbitmap {
+    background-repeat: no-repeat  !important;
+    background-origin: content-box !important;
+}
+.glyph.hasbitmap::after {
+    content: "";
+}
+
+.glyph.active::after, .glyph.tempsel::after {
+    opacity: 1;
+}
+
+/* ************ KERNING PAIRS ************ */
+
+#kern_cont {
+    width: 200px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#kernpairlist {
+    flex-grow: 1;
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    gap: 2px;
+    background: var(--glcol);
+    padding: 5px;
+    margin-top: 5px;
+    
+    overflow-y: auto;
+    align-content: flex-start;
+}
+#kernpairlist:empty::after {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    content: var(--emptystr);
+    opacity: 0.5;
+}
+#kern_find_input, #kern_add_input, #copyoverin, #trackinginput, #leadinginput {
+    width: 100%;
+
+    margin-top: 1px;
+    height: 32px;
+    box-sizing: border-box;
+    background: var(--tboxcol);
+    border: 1px solid var(--bordcol);
+    color: var(--txtinpc);
+    text-align: center;
+}
+#copyoverin {
+    height: unset;
+}
+.kernpair {
+    display: flex;
+
+    position: relative;
+    width: 100%;
+    min-height: max(var(--glyphheightpx), 32px);
+    /* background: var(--btncol); */
+}
+.kernpair .kernpreview {
+    position: relative;
+    flex-grow: 1;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 2px;
+    background: var(--btncol);
+    background-image: none !important;
+    margin-left: 5px;
+
+    display: flex;
+    gap: var(--trackingpx);
+    align-items: center;
+    padding-left: 5px;
+}
+.kernpreview button {
+    display: block;
+    position: absolute;
+    width:  16px;
+    height: 16px;
+    border: none;
+    
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%) rotate(45deg);
+
+    background: none;
+    cursor: pointer;
+}
+.kernpreview button::after, .kernpreview button::before {
+    display: block;
+    position: absolute;
+    content: "";
+    
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    background: var(--btntxtc);
+}
+.kernpreview button::before {
+    width:  100%;
+    height:  2px;
+}
+.kernpreview button::after {
+    width:   2px;
+    height: 100%;
+}
+.kernpreview .kernch {
+    display: inline-block;
+    width:  var(--glyphwidthpx);
+    height: var(--glyphheightpx);
+    image-rendering: pixelated;
+    background-size: var(--glyphwidthpx) var(--glyphheightpx) !important;
+}
+.kernpreview .kernch::after {
+    content: attr(data-fst);
+    color: var(--glyphal);
+}
+.kernpair .toolbtn {
+    box-sizing: border-box;
+    width: 28px;
+    margin: 0 !important;
+    background-color: var(--btncol);
+    height: 100%;
+}
+.kernpair input {
+    width: 36px;
+
+    margin: 0 1px;
+    height: 100%;
+    box-sizing: border-box;
+    background: var(--tboxcol);
+    border: 1px solid var(--bordcol);
+    color: var(--txtinpc);
+    text-align: center;
+}
+
+
+
+/* modal */
+
+.hidden {
+    display: none !important;
+}
+#modal_cont {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: brightness(0.6);
+    background-color: #0004;
+    color: var(--lbartxt);
+}
+.modal {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: var(--barcol);
+    padding: 35px 20px 20px 20px;
+    box-sizing: border-box;
+    max-width: calc(100vw - 20px);
+    min-width: 200px;
+    box-shadow: 1px 3px 50px #0004;
+}
+.modal h1 {
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    background: var(--lbarbtn);
+    font-size: 18px;
+    padding: 5px 30px 5px 8px;
+    box-sizing: border-box;
+    margin: 0;
+}
+#newfontdrop {
+    width: 100%;
+    min-width: min(500px, calc(100vw - 60px));
+    max-width: calc(100vw - 60px);
+    box-sizing: border-box;
+    height: 150px;
+    border: 3px dotted var(--txtcol);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#newfontdrop .textbtn {
+    width: auto;
+    background-color: var(--lbarbtn);
+    color: var(--lbartxt);
+    margin: 5px;
+    font-size: inherit;
+}
+.modal input {
+    width: 36px;
+    height: 32px;
+    box-sizing: border-box;
+    background: var(--tboxcol);
+    border: 1px solid var(--bordcol);
+    color: var(--txtinpc);
+    text-align: center;
+}
+#logostuff {
+    color: var(--lbartxt);
+    opacity: 0.5;
+    padding: 5px 8px;
+}
+#logostuff::after {
+    padding-left: 5px;
+    content: attr(data-ver);
+    font-size: 12px;
+}
+#logostuff svg {
+    fill: var(--lbartxt);
+    margin-right: 5px;
+    vertical-align: -1px;
+}
+
+
+#importfont_cont {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    --glyphwidth:  20;
+    --glyphheight: 20;
+    width: 100%;
+}
+.importfont_glyph {
+    background: var(--glcol);
+    display: block;
+    position: relative;
+    width: 100%;
+}
+.importfont_glyph canvas {
+    display: block;
+    width:  calc(var(--glyphwidth) * 16px);
+    max-width: 100%;
+    image-rendering: pixelated;
+}
