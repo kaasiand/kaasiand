@@ -1457,7 +1457,8 @@ function save() {
         a[k] = {};
         a[k].w = glyphBitmaps[k].width;
         a[k].h = glyphBitmaps[k].height;
-        a[k].d = [...glyphBitmaps[k].data];
+        tctx.putImageData(glyphBitmaps[k],0,0);
+        a[k].d = tempCanvas.toDataURL().slice(22);
     }
     let b = {};
     for (const k in kerningPairs) {
@@ -1508,9 +1509,27 @@ function load() {
 
         advanceWidth = data.adv;
         glyphBitmaps = {};
-        for (const k in a) {
-            let arr = new Uint8ClampedArray(a[k].d);
-            glyphBitmaps[k] = new ImageData(arr,a[k].w,a[k].h);
+        let bmps = Object.keys(data.bmp);
+        for (let i = 0; i < bmps.length; i++) {
+            let k = bmps[i];
+            if (typeof a[k].d == "object") { //old format, array data
+                let arr = new Uint8ClampedArray(a[k].d);
+                glyphBitmaps[k] = new ImageData(arr,a[k].w,a[k].h);
+            }
+            else { // new format, base64 png string data
+                let im = new Image();
+                im.onload = function() {
+                    tctx.clearRect(0,0,gwidth,gheight)
+                    tctx.drawImage(im,0,0);
+                    glyphBitmaps[k] = tctx.getImageData(0,0,gwidth,gheight);
+                    if (i == bmps.length - 1) {
+                        loadElemGroup(currentGroup.elem, false);
+                        reloadCurrentGlyph();
+                        updatePreview();
+                    }
+                }
+                im.src = "data:image/png;base64," + a[k].d;
+            }
         }
 
         kerningPairs = {};
@@ -1822,7 +1841,7 @@ function dropHandler(e) {
     e.preventDefault();
     if (!e.dataTransfer.items) return;
 
-    handleFiles(e.dataTransfer.items);
+    handleFiles([].map.call(e.dataTransfer.items, it => it.getAsFile()));
 }
 function fntInput() {
     if (!this.files || !this.files[0]) return;
@@ -1830,9 +1849,9 @@ function fntInput() {
 }
 
 function handleFiles(files) {
-    let ttf = [].find.call(files, it => isOutlineFont(it.getAsFile()))?.getAsFile();
-    let fnt = [].find.call(files, it => /\.fnt$/.test(it.getAsFile()?.name))?.getAsFile();
-    let png = [].find.call(files, it => it.getAsFile()?.type == "image/png")?.getAsFile();
+    let ttf = [].find.call(files, file => isOutlineFont(file));
+    let fnt = [].find.call(files, file => /\.fnt$/.test(file?.name));
+    let png = [].find.call(files, file => file?.type == "image/png");
     
     if (ttf) {
         tryReadFile(ttf);

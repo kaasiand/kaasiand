@@ -395,7 +395,7 @@
                     <td style="width: 150px"><input style="height:20px;" onchange="updateUploadedFontPreview()" type="checkbox" id="fontimportinvert" name="fontimportinvert"></td>
                 </tr>
             </table>
-            <p style="font-size: 14px; font-style: italic;">The result may look better if TrueType hinting is available on your device.</p>
+            <p style="font-size: 14px; font-style: italic;">For optimal results, manually clean up the glyphs after conversion.</p>
             <div style="display: flex; float:right; margin-top: 10px;">
                 <button onclick="closeModal()" class="textbtn leftbarbtn" style="margin-left: 10px; width: auto;font-size:inherit">Cancel</button>
                 <button onclick="importUploadedFont()" class="textbtn leftbarbtn" style="margin-left: 10px; width: auto;font-size:inherit">Import font</button>
@@ -405,7 +405,7 @@
         <div id="resizemodal" class="modal hidden">
             <h1>Resize font</h1>
             <p id="newfontdims">New font dimensions:</p>
-            <label for="resizefontmodal_char" style="padding-right: 10px; white-space: nowrap;font-size:14px;">Preview character</label><input id="resizefontmodal_char" name="resizefontmodal_char" onchange="updateResizeFontPreview()" maxlength="1" style="width: 28px">
+            <label for="resizefontmodal_char" style="padding-right: 10px; white-space: nowrap;font-size:14px;">Preview character</label><input id="resizefontmodal_char" name="resizefontmodal_char" onchange="updateResizePreview()" maxlength="1" style="width: 28px">
             
             <hr style="border: none; border-top: 1px solid var(--lbartxt); opacity: 0.5">
             <table style="vertical-align: middle;margin: 5px auto 0;">
