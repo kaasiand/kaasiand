@@ -153,7 +153,7 @@ const groupComponents = {
     punctu_isl: { chars: " .,?!'\":;-/&()„“‚‘",              nameEN: "Punctuation", nameFR: "Ponctuation", nameJP: "句読点"},
     punctu_dkn: { chars: " .,?!'\":;-/&()»«›‹“”‘’",          nameEN: "Punctuation", nameFR: "Ponctuation", nameJP: "句読点"},
     punctu_jpn: { chars: "　。、？！.,:…・〜/（）「」゠※々円",   nameEN: "Punctuation", nameFR: "Ponctuation", nameJP: "句読点" },
-    more_punct: { chars: "[]{}~*_@#%‰€£$¢ …–—―•©®™‼�",       nameEN: "More symbols", nameFR: "Symboles supplémentaires", nameJP: "より多くの記号"},
+    more_punct: { chars: "[]{}~*_@#%€£$¢ …–—―•©®™‼�",        nameEN: "More symbols", nameFR: "Symboles supplémentaires", nameJP: "より多くの記号"},
     basic_math: { chars: " +−×÷⋅=≈≠<>≤≥±∞√",                 nameEN: "Mathematical symbols", nameFR: "Symboles mathématiques", nameJP: "数学記号"},
 
     numeral_en: { chars: "1234567890",                       nameEN: "Numerals", nameFR: "Chiffres", nameJP: "数字"},

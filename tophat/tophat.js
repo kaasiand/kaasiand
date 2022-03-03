@@ -813,7 +813,7 @@ function glyphMouseDown(e) {
         finaliseSelection();
         loadGlyph(e.target.dataset.ch, e.target, false);
     }
-    else if (e.ctrlKey) {
+    else if (e.ctrlKey || e.metaKey) {
         loadGlyph(e.target.dataset.ch, e.target, false);
     }
     else {
@@ -1341,6 +1341,15 @@ function cut() {
         }
     }
 }
+function doDelete() {
+    if (selectionExists()) {
+        deleteSelection();
+        setTool("pencil");
+    }
+    else {
+        deleteGlyphs();
+    }
+}
 
 function pasteGlyphs(str = "") {
     if (!str) str = copystr;
@@ -1757,7 +1766,7 @@ function init() {
 
         switch (e.code) {
             case "KeyZ":
-                if (e.ctrlKey) {
+                if (e.ctrlKey || e.metaKey) {
                     if (e.shiftKey)
                         redo();
                     else
@@ -1765,7 +1774,7 @@ function init() {
                 }
                 break;
             case "KeyY":
-                if (e.ctrlKey) {
+                if (e.ctrlKey || e.metaKey) {
                     redo();
                 }
                 break;
@@ -1803,6 +1812,9 @@ function init() {
                 break;
             case "Enter":
                 applySelection();
+                break;
+            case "Delete":
+                doDelete();
                 break;
             case "Digit1": setTool("pencil");  break;
             case "Digit2": setTool("milk");    break;
