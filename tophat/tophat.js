@@ -1333,7 +1333,7 @@ function cut() {
         if (selectionExists()) {
             copySelection();
             deleteSelection();
-            setTool("pencil");
+            setTool("select");
         }
         else {
             copyGlyphs();
@@ -1344,7 +1344,7 @@ function cut() {
 function doDelete() {
     if (selectionExists()) {
         deleteSelection();
-        setTool("pencil");
+        setTool("select");
     }
     else {
         deleteGlyphs();
@@ -1843,6 +1843,8 @@ function init() {
     setInterval(tryAutosave, 300000);
 
     kern_find_input.value = "";
+    importfontmodal_size.value = 20;
+    importfontmodal_char.value = "";
     updateAutoAdvanceBtnCSS();
     updateAutoSaveBtnCSS();
     updateSeparateTagBtnCSS();
@@ -1971,7 +1973,6 @@ function importOutlineFont() {
     openImportFontModal();
 
     alphathresh.value = 127;
-    importfontmodal_size.value = 20;
     previewFont(20);
 }
 let currentUploadedFont;
@@ -2050,7 +2051,7 @@ function bitifyImageData(id, thresh = 128) {
 }
 function importUploadedFont() {
     importfontmodal.classList.add("hidden");
-    newFont(uploadedFontName, uploadedFontW, uploadedFontH, 0, uploadedFontB);
+    newFont(uploadedFontName+"-"+importfontmodal_size.value * 1, uploadedFontW, uploadedFontH, 0, uploadedFontB);
 
     tctx.font = currentUploadedFont;
     for (let i = 0; i < charsInUploadedFont.length; i++) {
@@ -2161,6 +2162,7 @@ function importFnt(str,fn, obj) {
             glyphBitmaps[charorder[i].ch] = cx.getImageData((i % charsPerRow) * w, Math.floor(i / charsPerRow) * h, w, h);
             advanceWidth[charorder[i].ch] = charorder[i].adv;
             updateGlyphListBitmap(charorder[i].ch);
+            kernByChar[charorder[i].ch]?.forEach(obj => obj.updateSpacing());
         }
 
         loadElemGroup(currentGroup.elem);
@@ -2172,18 +2174,20 @@ function importFnt(str,fn, obj) {
     img.src = imgdata;
 }
 
-function getExportData() {
+function getExportData(embedded = true) {
     let chars = all_glyphs().chars;
     let pairlist = Object.keys(kerningPairs).sort();
 
     let outstr = getExportMetrics();
-    outstr += "\ndatalen=";
-    let imgb64 = getExportCanvasData(chars);
-    outstr += imgb64.length;
-    outstr += "\ndata=";
-    outstr += imgb64;
-    outstr += "\nwidth=" +gwidth;
-    outstr += "\nheight="+gheight;
+    if (embedded) {
+        outstr += "\ndatalen=";
+        let imgb64 = getExportCanvasData(chars);
+        outstr += imgb64.length;
+        outstr += "\ndata=";
+        outstr += imgb64;
+        outstr += "\nwidth=" +gwidth;
+        outstr += "\nheight="+gheight;
+    }
     outstr += "\n\ntracking="+settings.tracking;
     outstr += "\n";
 
@@ -2203,7 +2207,6 @@ function getExportData() {
     }
 
     return outstr;
-
 }
 
 const glyphsPerRow = 10;
@@ -2230,17 +2233,40 @@ function getExportMetrics() {
 }
 
 function download() {
-    let element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(getExportData()));
+    let el = document.createElement("a");
+    el.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(getExportData(true)));
     let fontname = settings.fontname || getLocalisedString("untitled");
-    element.setAttribute('download', fontname.replace(/\s/g, "-")+".fnt");
+    el.setAttribute("download", fontname.replace(/\s/g, "-")+".fnt");
   
-    element.style.display = 'none';
-    document.body.appendChild(element);
+    el.style.display = "none";
+    document.body.appendChild(el);
   
-    element.click();
+    el.click();
   
-    document.body.removeChild(element);
+    document.body.removeChild(el);
+}
+function downloadSplit() {
+    let el = document.createElement("a");
+    let el2 = document.createElement("a");
+
+    el.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(getExportData(false)));
+    el2.setAttribute("href", "data:image/png;base64," + getExportCanvasData(all_glyphs().chars));
+
+    let fontname = settings.fontname || getLocalisedString("untitled");
+
+    el.setAttribute("download", fontname.replace(/\s/g, "-")+".fnt");
+    el2.setAttribute("download", fontname.replace(/\s/g, "-")+"-table-"+gwidth+"-"+gheight+".fnt");
+  
+    el.style.display = "none";
+    el2.style.display = "none";
+    document.body.appendChild(el);
+    document.body.appendChild(el2);
+  
+    el.click();
+    el2.click();
+  
+    document.body.removeChild(el);
+    document.body.removeChild(el2);
 }
 
 function tryOpenNewFontModal(e) {

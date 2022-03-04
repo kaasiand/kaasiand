@@ -27,14 +27,20 @@
 <body onload="init()" ondragover="tryOpenNewFontModal(event);" ondrop="dropHandler(event);">     
 
 <div id="leftbar">
-<div id="logostuff" data-ver="v0.8"><svg width="14px" height="14px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<div id="logostuff" data-ver="v0.8.2"><svg width="14px" height="14px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="m12.732 1.0172a12 4 10 0 0-12.512 1.8552 12 4 10 0 0 11.123 6.0232 12 4 10 0 0 12.513-1.8557 12 4 10 0 0-11.123-6.0228zm-0.34728 1.9695a6 2 10 0 1 5.5617 3.0114 6 2 10 0 1-6.2563 0.92758 6 2 10 0 1-5.5612-3.0113 6 2 10 0 1 6.2558-0.92767zm-7.3783 7.2937-1.7427 9.8831c-0.19248 1.0878 2.2975 2.4363 5.5611 3.0118 3.2639 0.57554 6.0652 0.15998 6.2564-0.92809l1.7427-9.8831c-1.8575 0.028961-3.9276-0.14837-6.002-0.51417-2.0743-0.36577-4.08-0.9071-5.8154-1.5696z"/></svg>tophat</div>
 <button id="newfontbtn" class="leftbarbtn textbtn" onclick="openNewFontModal()" data-name="New..."></button>
-<button id="exportbtn" class="leftbarbtn textbtn" onclick="download()" data-name="Export .fnt"></button>
+<div style="display: flex;">
+    <div></div><div class="btnlabel" style="white-space: nowrap;">Export</div>
+    <button id="exportbtn"  class="leftbarbtn textbtn" style="padding: 5px;margin-right: 5px; white-space: nowrap;" onclick="download()" data-name=".fnt"></button>
+    <button id="export2btn" class="leftbarbtn textbtn" style="padding: 5px; white-space: nowrap;" onclick="downloadSplit()" data-name=".fnt + .png"></button>
+</div>
 <button id="resizebtn" class="leftbarbtn textbtn" onclick="openResizeModal()" data-name="Resize font"></button>
 <div class="btndivider"></div>
-<button class="leftbarbtn textbtn" onclick="save()" style="padding: 5px;" data-name="Save to browser"></button>
-<button class="leftbarbtn textbtn" onclick="load()" style="padding: 5px;" data-name="Load browser backup"></button>
+<div style="display: flex;gap:5px">
+    <button class="leftbarbtn textbtn" onclick="save()" style="padding: 5px;" data-name="Save"></button>
+    <button class="leftbarbtn textbtn" onclick="load()" style="padding: 5px;" data-name="Restore save"></button>
+</div>
 <button id="autosavebtn" class="leftbarbtn textbtn" onclick="toggleAutoSave()" data-name="Autosave" title="Automatically save every 5 minutes (as long as the tab is active), and whenever you switch to a different glyph."></button>
 
 <div id="blocklist">

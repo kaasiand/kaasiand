@@ -361,12 +361,12 @@ let baseLetterFromDiacritic = {
 }
 
 let stringL10n = {
-    new_font:    { nameEN: "New...",      nameFR: "Nouveau...",    nameJP: ".fnt として保存" },
-    export_fnt:  { nameEN: "Export .fnt", nameFR: "Exporter .fnt", nameJP: ".fnt として保存" },
+    new_font:    { nameEN: "New...",      nameFR: "Nouveau...",    nameJP: "新しいフォント" },
+    export_fnt:  { nameEN: "Export", nameFR: "Exporter", nameJP: "として保存" },
 
-    savebrowser: { nameEN: "Save to browser",          nameFR: "Régler la chasse automatiquement", nameJP: "ブラウザに保存"      },
-    loadbrowser: { nameEN: "Load from browser backup", nameFR: "Restaurer sauvegarde",             nameJP: "バックアップをロード" },
-    autosave:    { nameEN: "Autosave",                 nameFR: "Sauvegarde auto",                  nameJP: "自動保存"           },
+    savebrowser: { nameEN: "Save",         nameFR: "Sauvegarder", nameJP: "保存" },
+    loadbrowser: { nameEN: "Restore save", nameFR: "Restaurer",   nameJP: "ロード" },
+    autosave:    { nameEN: "Autosave",     nameFR: "Sauvegarde auto", nameJP: "自動保存"           },
 
     
     autoadvance: { nameEN: "Auto-update advance width", nameFR: "Régler la chasse automatiquement", nameJP: "文字幅を自動的に調整する" },
