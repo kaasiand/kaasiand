@@ -445,7 +445,7 @@ body {
 }
 
 .areaheader {
-    padding: 10px 0 !important;
+    padding: 0px 0 8px !important;
     font-weight: bold;
     font-size: 16px;
 }
@@ -1130,7 +1130,7 @@ ratio + L + dont care + didnt ask + youre british {
     content: var(--emptystr);
     opacity: 0.5;
 }
-#kern_find_input, #kern_add_input, #copyoverin, #trackinginput, #leadinginput {
+#kern_find_input, #kern_add_input, #glyphedit_preview_cont input {
     width: 100%;
 
     margin-top: 1px;

@@ -74,6 +74,8 @@ function undoRemoveFirst() {
     undoItemCount--;
 }
 function initiateUndoState(glyphs) {
+    if (typeof glyphs == "string") glyphs = [...glyphs];
+
     if (currentUndoIdx >= firstUndoItemIdx) {
         // save the state of each glyph to the PREVIOUS item, BEFORE changes happen
         let obj = undos[currentUndoIdx];
@@ -94,6 +96,7 @@ function initiateUndoState(glyphs) {
 }
 function finaliseUndoState(glyphs) {
     if (!unfinishedundo) return;
+    if (typeof glyphs == "string") glyphs = [...glyphs];
     let obj = undos[currentUndoIdx];
 
     // save the state of each glyph to the CURRENT item, AFTER changes happen
@@ -153,7 +156,7 @@ function redo() {
 }
 function loadUndoState(u) {
     for (const key in u.data) {
-        if (key.length == 1) {
+        if ([...key].length == 1) {
             // bitmap
             pasteSingleGlyph(u.data[key].bmp, key, u.data[key].adv);
             kernByChar[key]?.forEach(obj => obj.updateSpacing());
@@ -186,11 +189,12 @@ class KernPair {
         //<button onclick="this.nextElementSibling.value--" class="toolbtn minus"></button><button onclick="this.previousElementSibling.value++" class="toolbtn plus"></button></div>
         d.classList.add("kernpair");
         d.dataset.pair = pair;
+        let pairarr = [...pair];
 
         let d2 = document.createElement("div");
         d2.classList.add("kernpreview");
-        d2.dataset.fst = pair[0];
-        d2.dataset.snd = pair[1];
+        d2.dataset.fst = pairarr[0];
+        d2.dataset.snd = pairarr[1];
         let dc1 = document.createElement("div");
         dc1.classList.add("kernch");
         let dc2 = document.createElement("div");
@@ -199,7 +203,7 @@ class KernPair {
         dcb.onclick = () => this.deletePair(true);
         d2.append(dc1, dc2, dcb);
 
-        d2.title = `${pair} (${toCodepointString(pair[0])} ${toCodepointString(pair[1])})`;
+        d2.title = `${pair} (${toCodepointString(pairarr[0])} ${toCodepointString(pairarr[1])})`;
         dcb.title = "Delete kerning pair";
 
         let inp = document.createElement("input");
@@ -221,9 +225,9 @@ class KernPair {
         addKerningPairToObject(this);
 
         this.setValue(value);
-        updateGlyphListBitmap(this.pair[0]);
-        if (this.pair[1] != this.pair[0])
-            updateGlyphListBitmap(this.pair[1]);
+        updateGlyphListBitmap(pairarr[0]);
+        if (pairarr[1] != pairarr[0])
+            updateGlyphListBitmap(pairarr[1]);
     }
     setElem(el) {
         this.elem = el;
@@ -233,12 +237,13 @@ class KernPair {
             initiateKernUndoState([this.pair]);
 
         this.elem.parentNode.removeChild(this.elem);
+        let pairarr = [...this.pair];
 
         delete kerningPairs[this.pair];
-        delete kernByChar[this.pair[0]][kernByChar[this.pair[0]].indexOf(this)];
+        delete kernByChar[pairarr[0]][kernByChar[pairarr[0]].indexOf(this)];
 
-        if (this.pair[0] != this.pair[1])
-            delete kernByChar[this.pair[1]][kernByChar[this.pair[1]].indexOf(this)];
+        if (pairarr[0] != pairarr[1])
+            delete kernByChar[pairarr[1]][kernByChar[pairarr[1]].indexOf(this)];
 
         if (undoable)
             finaliseKernUndoState([this.pair]);
@@ -260,24 +265,25 @@ class KernPair {
     incr() { this.setValue(this.value + 1, true); updatePreview(); }
     decr() { this.setValue(this.value - 1, true); updatePreview(); }
     updateSpacing() {
-        this.elem.querySelector(".kernch").style.marginRight = `calc(calc(var(--glyphwidthpx) * -1) + calc(${(advanceWidth[this.pair[0]] ?? 0) + this.value} * var(--scalepx)))`;
+        this.elem.querySelector(".kernch").style.marginRight = `calc(calc(var(--glyphwidthpx) * -1) + calc(${(advanceWidth[[...this.pair][0]] ?? 0) + this.value} * var(--scalepx)))`;
     }
 }
 
 function addKerningPairToObject(pairObj) {
     let pair = pairObj.pair;
     kerningPairs[pair] = pairObj;
+    let pairarr = [...pair];
 
-    if (!(pair[0] in kernByChar))
-        kernByChar[pair[0]] = [];
+    if (!(pairarr[0] in kernByChar))
+        kernByChar[pairarr[0]] = [];
 
-    if (!(pair[1] in kernByChar))
-        kernByChar[pair[1]] = [];
+    if (!(pairarr[1] in kernByChar))
+        kernByChar[pairarr[1]] = [];
 
-    kernByChar[pair[0]].push(pairObj);
+    kernByChar[pairarr[0]].push(pairObj);
 
-    if (pair[0] != pair[1])
-        kernByChar[pair[1]].push(pairObj);
+    if (pairarr[0] != pairarr[1])
+        kernByChar[pairarr[1]].push(pairObj);
 
 }
 
@@ -286,7 +292,7 @@ function makeKerningPair(str, val = 0, undoable = true) {
         kernpairlist.prepend(kerningPairs[str].elem);
         return;
     }
-    if (str.length != 2) return;
+    if ([...str].length != 2) return;
     kern_add_input.value = "";
 
     if (undoable)
@@ -309,9 +315,9 @@ function loadKernPairList() {
 
     toLoad.sort((a,b) => a.pair > b.pair);
     toLoad.forEach(k => {
-        if (match.length == 1 && (k.pair[0] == match || k.pair[1] == match))
+        if ([...match].length == 1 && ([...k.pair][0] == match || [...k.pair][1] == match))
             kernpairlist.appendChild(k.elem), k.updateSpacing();
-        else if (match.length == 2 && k.pair == match)
+        else if ([...match].length == 2 && k.pair == match)
             kernpairlist.appendChild(k.elem), k.updateSpacing();
         else if (!match)
             kernpairlist.appendChild(k.elem), k.updateSpacing();
@@ -404,7 +410,7 @@ function loadGroupComponentToGlyphTable(comp) {
 }
 
 function toCodepointString(c) {
-    return `U+${c.charCodeAt(0).toString(16).padStart(4,0).toUpperCase()}`;
+    return `U+${c.codePointAt(0).toString(16).padStart(4,0).toUpperCase()}`;
 }
 function generateCharArrayFromCodepointRange(first, last) {
     let result = [];
@@ -441,13 +447,13 @@ function copyoverKern(orig) {
 
     let a = kernByChar[orig];
     if (a && a.length > 0) {
-        let undoarr = a.flatMap(obj => obj.pair[0] == obj.pair[1] ? [obj.pair[0] + currentGlyph, currentGlyph + obj.pair[0], currentGlyph + currentGlyph] : [obj.pair.replace(orig, currentGlyph)]);
+        let undoarr = a.flatMap(obj => [...obj.pair][0] == [...obj.pair][1] ? [[...obj.pair][0] + currentGlyph, currentGlyph + [...obj.pair][0], currentGlyph + currentGlyph] : [obj.pair.replace(orig, currentGlyph)]);
         initiateKernUndoState(undoarr);
         a.forEach(obj => {
-            if (obj.pair[0] == obj.pair[1]) {
+            if ([...obj.pair][0] == [...obj.pair][1]) {
                 // pair "aa" becomes "äa" + "aä" + "ää"
-                makeKerningPair(obj.pair[0]  + currentGlyph, obj.value, false);
-                makeKerningPair(currentGlyph + obj.pair[0] , obj.value, false);
+                makeKerningPair([...obj.pair][0]  + currentGlyph, obj.value, false);
+                makeKerningPair(currentGlyph + [...obj.pair][0] , obj.value, false);
                 makeKerningPair(currentGlyph + currentGlyph, obj.value, false);
             } else {
                 // pair "ab" becomes "äb"
@@ -1036,7 +1042,7 @@ function updateGlyphListBitmapCurrent(g, el) {
         kernByChar[g]?.forEach(obj => {
             let els = obj.elem.querySelectorAll(".kernch");
             for (let i = 0; i < els.length; i++) {
-                if (obj.pair[i] == g) {
+                if ([...obj.pair][i] == g) {
                     els[i].style.backgroundImage = url;
                 }
             }
@@ -1056,7 +1062,7 @@ function updateGlyphListBitmapCurrent(g, el) {
         kernByChar[g]?.forEach(obj => {
             let els = obj.elem.querySelectorAll(".kernch");
             for (let i = 0; i < els.length; i++) {
-                if (obj.pair[i] == g) {
+                if ([...obj.pair][i] == g) {
                     els[i].style.backgroundImage = "none";
                 }
             }
@@ -1082,7 +1088,7 @@ function updateGlyphListBitmap(g, el = null) {
         kernByChar[g]?.forEach(obj => {
             let els = obj.elem.querySelectorAll(".kernch");
             for (let i = 0; i < els.length; i++) {
-                if (obj.pair[i] == g) {
+                if ([...obj.pair][i] == g) {
                     els[i].style.backgroundImage = url;
                 }
             }
@@ -1103,7 +1109,7 @@ function updateGlyphListBitmap(g, el = null) {
         kernByChar[g]?.forEach(obj => {
             let els = obj.elem.querySelectorAll(".kernch");
             for (let i = 0; i < els.length; i++) {
-                if (obj.pair[i] == g) {
+                if ([...obj.pair][i] == g) {
                     els[i].style.backgroundImage = "none";
                 }
             }
@@ -1113,15 +1119,6 @@ function updateGlyphListBitmap(g, el = null) {
 
 function copyImageData(imagedata) {
     return new ImageData(imagedata.data, imagedata.width, imagedata.height);
-}
-
-function removeDuplicates(str) {
-    let out = "";
-    for (let i = 0; i < str.length; i++) {
-        if (!out.includes(str[i]))
-            out += str[i];
-    }
-    return out;
 }
 
 function setTagSelectedGlyphs(tag) { // "", "r", "y", "g" or "b"
@@ -1265,6 +1262,7 @@ function copyGlyphs() {
     copyGlyphsFromString(str);
 }
 function copyGlyphsFromString(str) {
+    str = [...str];
     copybitmapdata = [];
     copyadvancedata = [];
     for (let i = 0; i < str.length; i++) {
@@ -1357,7 +1355,8 @@ function pasteGlyphs(str = "") {
     applySelection();
 
     let elemlist = glyphlist.querySelectorAll(".active");
-
+    
+    str = [...str];
     let strlen = str.length;
     let destlen = elemlist.length;
 
@@ -1519,6 +1518,7 @@ function load() {
         advanceWidth = data.adv;
         glyphBitmaps = {};
         let bmps = Object.keys(data.bmp);
+        let imgsloaded = 0;
         for (let i = 0; i < bmps.length; i++) {
             let k = bmps[i];
             if (typeof a[k].d == "object") { //old format, array data
@@ -1533,7 +1533,8 @@ function load() {
                     glyphBitmaps[k] = tctx.getImageData(0,0,gwidth,gheight);
                     updateGlyphListBitmap(k);
                     kernByChar[k]?.forEach(obj => obj.updateSpacing());
-                    if (i == bmps.length - 1) {
+                    imgsloaded++;
+                    if (imgsloaded == bmps.length) {
                         loadElemGroup(currentGroup.elem, false);
                         reloadCurrentGlyph();
                         updatePreview();
@@ -1607,11 +1608,12 @@ function toggleAutoSave() {
 
 function processTextAndSetCanvasHeight(str, maxw) {
     let x = 0;
-    let outstr = "";
+    let outstr = [];
     let linestart = 0;
+    str = [...str];
     for (let i = 0, j = 0; i < str.length && j < 500; i++, j++) {
         if (str[i] == "\n") {
-            outstr += str.slice(linestart, i);
+            outstr.push(...str.slice(linestart, i));
             x = 0;
             linestart = i;
             continue;
@@ -1624,19 +1626,20 @@ function processTextAndSetCanvasHeight(str, maxw) {
             let idx = str.slice(linestart, i).lastIndexOf(" ") + linestart;
 
             if (idx <= linestart) {
-                outstr += str.slice(linestart, i) + "\n";
+                outstr.push(...str.slice(linestart, i), "\n");
                 x = (advanceWidth[str[i]] ?? 0) + settings.tracking;
                 linestart = i;
             } else {
                 idx++;
-                outstr += str.slice(linestart, idx) + "\n";
+                outstr.push(...str.slice(linestart, idx), "\n");
                 linestart = idx;
                 x = 0;
                 i = idx - 1;
             }
         }
     }
-    outstr += str.slice(linestart);
+    outstr.push(...str.slice(linestart));
+    outstr = outstr.join('');
 
     preview_image.height = Math.max(outstr.split('\n').length * (gheight+settings.leading), Math.floor((gheight+settings.leading) * 5.5));
     return outstr;
@@ -1644,6 +1647,7 @@ function processTextAndSetCanvasHeight(str, maxw) {
 
 function drawText(str) {
     let x = 0, y = 0;
+    str = [...str];
     for (let i = 0; i < str.length; i++) {
         if (str[i] == "\n") {
             x = 0;
@@ -1709,6 +1713,11 @@ function selectNextGlyph(e) {
 function tryAutosave() {
     if (prefs.autosave)
         save();
+}
+
+function tryGoto() {
+    if ([...gotochar.value].length == 1)
+    loadGlyph(gotochar.value, document.createElement("div"));
 }
 
 function init() {
@@ -1835,6 +1844,30 @@ function init() {
     kern_add_input.onkeydown = e => {
         if (e.code == "Enter") {
             makeKerningPair(kern_add_input.value);
+        }
+    };
+    let gotoOnInput = e => {
+        if (e.code == "Enter") {
+            e.target.onchange();
+            tryGoto();
+        }
+    };
+    gotochar.onkeydown = gotoOnInput;
+    gotocode.onkeydown = gotoOnInput;
+    gotochar.oninput = e => {
+        if ([...gotochar.value].length > 1)
+            gotochar.value = [...gotochar.value][0];
+    }
+    gotochar.onchange = () => {
+        if (gotochar.value && [...gotochar.value].length == 1 && gotochar.value.codePointAt(0) <= 0x3ffff)
+            gotocode.value = toCodepointString(gotochar.value);
+    };
+    gotocode.onchange = () => {
+        let match = gotocode.value.match(/^(?:u\+|0x|)([0-9a-f]{2,5})$/i);
+        if (match && match[1]) {
+            let val = ("0x"+match[1]) * 1;
+            if (val <= 0x3ffff && val >= 0x20 && !(val >= 0x7F && val < 0xA0))
+                gotochar.value = String.fromCodePoint("0x"+match[1]);
         }
     };
 
@@ -1990,8 +2023,8 @@ function previewFont(size) {
     currentUploadedFont = size+"pt TopHatOutlineFnt"+globalfontidx;
     tctx.font = currentUploadedFont;
 
-    for (let i = 0; i < charsInUploadedFont.length; i++) {
-        let bbox = tctx.measureText(charsInUploadedFont[i]);
+    for (let i = 0; i < [...charsInUploadedFont].length; i++) {
+        let bbox = tctx.measureText([...charsInUploadedFont][i]);
 
         if (bbox.actualBoundingBoxAscent  > maxascent)  maxascent  = bbox.actualBoundingBoxAscent;
         if (bbox.actualBoundingBoxDescent > maxdescent) maxdescent = bbox.actualBoundingBoxDescent;
@@ -2052,8 +2085,8 @@ function importUploadedFont() {
     newFont(uploadedFontName+"-"+importfontmodal_size.value * 1, uploadedFontW, uploadedFontH, 0, uploadedFontB);
 
     tctx.font = currentUploadedFont;
-    for (let i = 0; i < charsInUploadedFont.length; i++) {
-        let char = charsInUploadedFont[i];
+    for (let i = 0; i < [...charsInUploadedFont].length; i++) {
+        let char = [...charsInUploadedFont][i];
         let bbox = tctx.measureText(char);
 
         let adv = Math.round(bbox.width);
@@ -2126,9 +2159,9 @@ function importFnt(str,fn, obj) {
             case "tracking": tr = afterEq * 1; break;
             default:
                 let real = keyWs.replace(/space/g, " ");
-                if (real.length == 1) {
+                if ([...real].length == 1) {
                     charorder.push({ ch: real, adv: afterWs * 1 || 0 });
-                } else if (real.length == 2) {
+                } else if ([...real].length == 2) {
                     makeKerningPair(real, afterWs * 1 || 0, false);
                     kerningPairCount++;
                 }
@@ -2173,7 +2206,7 @@ function importFnt(str,fn, obj) {
 }
 
 function getExportData(embedded = true) {
-    let chars = all_glyphs().chars;
+    let chars = [...all_glyphs().chars];
     let pairlist = Object.keys(kerningPairs).sort();
 
     let outstr = getExportMetrics();
@@ -2196,12 +2229,13 @@ function getExportData(embedded = true) {
 
     // TODOOOOOO: CHECK HOW PLAYDATE CAPS AND THE SDK DEAL WITH KERNING PAIRS CONTAINING A SPACE
     for (let i = 0; i < pairlist.length; i++) {
-        if (/\s/.test(pairlist[i][1]) && pairlist[i][1] != " ") continue;
+        let pl = [...pairlist[i]];
+        if (/\s/.test(pl[1]) && pl[1] != " ") continue;
         // ^ for now: skip kerning pairs ending in non-space whitespace
         //            as the compiler hates this
 
         if (kerningPairs[pairlist[i]].value)
-            outstr += "\n" + pairlist[i][0] + pairlist[i][1] + "\t" + kerningPairs[pairlist[i]].value;
+            outstr += "\n" + pl[0] + pl[1] + "\t" + kerningPairs[pairlist[i]].value;
     }
 
     return outstr;
@@ -2248,7 +2282,7 @@ function downloadSplit() {
     let el2 = document.createElement("a");
 
     el.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(getExportData(false)));
-    el2.setAttribute("href", "data:image/png;base64," + getExportCanvasData(all_glyphs().chars));
+    el2.setAttribute("href", "data:image/png;base64," + getExportCanvasData([...all_glyphs().chars]));
 
     let fontname = settings.fontname || getLocalisedString("untitled");
 
@@ -2280,19 +2314,10 @@ function openNewFontModal() {
     newfontmodal_w_in.value = gwidth;
     newfontmodal_h_in.value = gheight;
 
-    modal_cont.classList.remove("hidden");
-    newfontmodal.classList.remove("hidden");
-    importfontmodal.classList.add("hidden");
-    resizemodal.classList.add("hidden");
+    openModal("newfontmodal");
 }
 function openImportFontModal() {
-    docMouseUp();
-    applySelection();
-
-    modal_cont.classList.remove("hidden");
-    importfontmodal.classList.remove("hidden");
-    newfontmodal.classList.add("hidden");
-    resizemodal.classList.add("hidden");
+    openModal("importfontmodal");
 }
 let fontResize = { n: 0, e: 0, s: 0, w: 0 };
 
@@ -2308,6 +2333,12 @@ function fontResizeDecr(direction) {
         updateResizePreview();
 }
 
+function openModal(name) {
+    docMouseUp();
+    applySelection();
+    closeModal(false);
+    document.getElementById(name)?.classList.remove("hidden");
+}
 function openResizeModal() {
     docMouseUp();
     applySelection();
@@ -2316,10 +2347,7 @@ function openResizeModal() {
     resizefontmodal_char.value = currentGlyph;
     updateResizePreview();
 
-    modal_cont.classList.remove("hidden");
-    importfontmodal.classList.add("hidden");
-    newfontmodal.classList.add("hidden");
-    resizemodal.classList.remove("hidden");
+    openModal("resizemodal");
 }
 function updateResizePreview() {
     let cx = prevcanvR.getContext("2d");
@@ -2385,11 +2413,9 @@ function resizeFont() {
     reloadCurrentGlyph();
 }
 
-function closeModal() {
-    modal_cont.classList.add("hidden");
-    newfontmodal.classList.add("hidden");
-    importfontmodal.classList.add("hidden");
-    resizemodal.classList.add("hidden");
+function closeModal(entirely = true) {
+    modal_cont.classList.toggle("hidden", entirely);
+    [].forEach.call(modal_cont.querySelectorAll(".modal"), el => el.classList.add("hidden"));
 }
 function newFont(name,w,h,tr = 1,bl = -1) {
     if (w * h <= 1) return;

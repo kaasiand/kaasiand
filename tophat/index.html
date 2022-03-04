@@ -35,7 +35,10 @@
     <button id="exportbtn"  class="leftbarbtn textbtn" style="padding: 5px;margin-right: 5px; white-space: nowrap;" onclick="download()" data-name=".fnt"></button>
     <button id="export2btn" class="leftbarbtn textbtn" style="padding: 5px; white-space: nowrap;" onclick="downloadSplit()" data-name=".fnt + .png"></button>
 </div>
-<button id="resizebtn" class="leftbarbtn textbtn" onclick="openResizeModal()" data-name="Resize font"></button>
+<div style="display: flex;gap:5px">
+    <button id="resizebtn"  class="leftbarbtn textbtn" style="padding: 5px;" onclick="openResizeModal()"  data-name="Resize font"></button>
+    <!-- <button id="outlinebtn" class="leftbarbtn textbtn" style="padding: 5px;" onclick="openOutlineModal()" data-name="Outline font"></button> -->
+</div>
 <div class="btndivider"></div>
 <div style="display: flex;gap:5px">
     <button class="leftbarbtn textbtn" onclick="save()" style="padding: 5px;" data-name="Save"></button>
@@ -218,7 +221,7 @@
     </td>
 </tr>
 <tr>
-    <td id="toollist" rowspan="4">
+    <td id="toollist" rowspan="5">
         <button onclick="setTool('pencil')"  id="pencil" class="toolbtn" title="Pencil"  aria-label="Pencil tool"></button>
         <button onclick="setTool('milk')"    id="milk"   class="toolbtn" title="Spill"   aria-label="Spill tool"></button>
         <button onclick="setTool('syringe')" id="syringe"class="toolbtn" title="Syringe" aria-label="Syringe tool"></button>
@@ -264,7 +267,15 @@
         <button id="copyovergbtn" class="textbtn" onclick="if (copyoverin.value) copyoverGlyph(copyoverin.value);" style="flex-grow: 1; padding:5px;order:3"></button>
         <button id="copyoverkbtn" class="textbtn" onclick="if (copyoverin.value) copyoverKern(copyoverin.value);"  style="flex-grow: 1; padding:5px;order:3"></button>
         <div id="copyoverlbl2" class="btnlabel" style="white-space: nowrap;padding-right:0;margin-right: -2px;order:5"></div>
-        <input id="copyoverin" style="width:28px;order:0" maxlength="1">
+        <input id="copyoverin" style="width:28px;order:0" maxlength="2" oninput="if ([...this.value].length > 1) this.value = [...this.value][0];" placeholder="&hellip;">
+    </td>
+</tr>
+<tr>
+    <td style="display: flex; width: 370px; gap: 8px; font-size: 14px;">
+        <div id="gotolabel" class="btnlabel" style="white-space: nowrap;padding-right:0;margin-right: -2px;">Jump to character/codepoint</div>
+        <input id="gotochar" style="width:28px;" maxlength="2" placeholder="字">
+        <input id="gotocode" style="width:100%;" maxlength="7" placeholder="U+0D9E">
+        <button id="gotobtn" class="textbtn" onclick="tryGoto()" style="width:100%;padding:5px;">Go</button>
     </td>
 </tr>
 </table>
@@ -329,8 +340,8 @@
             Kerning pairs
         </div>
         <div style="display: flex; gap: 5px">
-            <input id="kern_find_input" type="text" maxlength="2" placeholder="Filter pairs" oninput="loadKernPairList()">
-            <input id="kern_add_input" type="text" maxlength="2" placeholder="Add pair">
+            <input id="kern_find_input" type="text" maxlength="3" placeholder="Filter pairs" oninput="if([...kern_find_input.value].length > 2) kern_find_input.value = [...kern_find_input.value][0]+[...kern_find_input.value][1]; loadKernPairList()">
+            <input id="kern_add_input" type="text" maxlength="3" oninput="if([...kern_add_input.value].length > 2) kern_add_input.value = [...kern_add_input.value][0]+[...kern_add_input.value][1];" placeholder="Add pair">
             <button onclick="makeKerningPair(kern_add_input.value)" title="Add kerning pair" class="toolbtn plus"></button>
         </div>
         <div id="kernpairlist"></div>
