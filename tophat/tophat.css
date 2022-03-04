@@ -202,6 +202,11 @@
 :root[data-theme="inkwell"] #cbtnt {
     background-color: var(--glcol);
 }
+:root[data-theme="stationery"] #preview_image,
+:root[data-theme="inkwell"]    #preview_image {
+    background-color: var(--btncol);
+    border-color: var(--btncol);
+}
 
 :root[data-theme="kaasiand"] {
     --bgcol:  #5F2900 repeat url(../assets/wood.bmp);
@@ -922,6 +927,7 @@ ratio + L + dont care + didnt ask + youre british {
 #preview_image {
     display: block;
     background: var(--glcol);
+    border: 2px solid var(--glcol);
     image-rendering: pixelated;
     overflow-y: auto;
     width: 400px;
