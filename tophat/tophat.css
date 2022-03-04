@@ -132,6 +132,77 @@
 
     --wspcol: #ffaf04a9;
 }
+:root[data-theme="inkwell"] {
+    --bgcol:  #2b2b2b;
+    --barcol: #3a3a3a;
+    --glcol:  #4d4d4d;
+
+    --btncol: #686868;
+    --btncolh:#777777;
+    --active: #969696;
+
+    --lbarbtn:#555555;
+    --lbarbth:#696969;
+    --lbarbtt:#d8d8d8;
+    --lbartxt:#c4c4c4;
+
+    --txtcol: #c4c4c4;
+    --txtinpc:#202020;
+    --btntxtc:#b6b6b6;
+
+    --advbar: #444444;
+    --advbar2:#585858;
+    --advslid:#b93d3d;
+
+    --guidel: #999999;
+    --guidebl:#eb6565;
+    --guidmix: overlay;
+    
+    --bordcol:#535353;
+    --gridcol:#7c7c7c;
+    --lboxcol:#464646;
+    --tboxcol:#9c9c9c;
+    --blcol:  #ff8b8b;
+
+    --redbtn: #c55252;
+    --redbtnh:#dd6d6d;
+    --deletec:#e0d8d8;
+
+    
+    --glyphw: #3f3f3f;
+    --glyphwl:#e4e4e4;
+    --glyphal:#c0c0c0;
+
+    --glyphr: #b63030;
+    --glyphrl:#fff3f3;
+    --glyphtr:#e47070;
+
+    --glyphy: #bb750d;
+    --glyphyl:#fffff3;
+    --glyphty:#e0a331;
+
+    --glyphg: #3a8f22;
+    --glyphgl:#f3fff3;
+    --glyphtg:#56b93a;
+
+    --glyphb: #3268cc;
+    --glyphbl:#f3f3ff;
+    --glyphtb:#83baec;
+
+    --notag:  #dbdbdb;
+
+    --pencil: #fff56d;
+    --syringe:#f78db4;
+    --spill:  #d8d8d8;
+    --move:   #74c3f0;
+    --seltool:#83d880;
+
+    --wspcol: #ca8b03a9;
+}
+:root[data-theme="inkwell"] #cbtnt {
+    background-color: var(--glcol);
+}
+
 :root[data-theme="kaasiand"] {
     --bgcol:  #5F2900 repeat url(../assets/wood.bmp);
     --barcol: linear-gradient(to left, darkred 4px, transparent 4px), #A3642A url(../assets/wood.jpg);
@@ -577,7 +648,7 @@ body {
  ****************************************************************** */
 
 #blocklist {
-    padding: 20px 5px 10px 10px;
+    padding: 10px 5px 10px 10px;
     flex-grow: 1;
     overflow-y: auto;
 }
@@ -651,6 +722,23 @@ body {
 .block_category + ul:empty::after {
     content: var(--emptystr);
     opacity: 0.5;
+}
+#leftbar select {
+    border: none;
+    position: relative;
+    font-family: inherit;
+
+    background: var(--lbarbtn);
+    color: var(--lbarbtt);
+}
+#leftbar select:hover, #leftbar select:focus-visible {
+    background: var(--lbarbth) !important;
+}
+#leftbar option {
+    position: relative;
+    font-family: inherit;
+    background-color: var(--lbarbtn);
+    color: var(--lbarbtt);
 }
 
 /* ******************************************************************

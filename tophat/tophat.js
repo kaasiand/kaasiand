@@ -1459,6 +1459,9 @@ function docCopy(e) {
 
     copy();
 }
+function savePrefs() {
+    localStorage.setItem("tophat_prefs", JSON.stringify(prefs));
+}
 
 function save() {
     let a = {};
@@ -1473,7 +1476,7 @@ function save() {
     for (const k in kerningPairs) {
         b[k] = kerningPairs[k].value;
     }
-    localStorage.setItem("tophat_prefs", JSON.stringify(prefs));
+    savePrefs();
     localStorage.setItem("tophat_font", JSON.stringify({
         bmp: a,
         blk: currentGroupName,
@@ -1531,6 +1534,7 @@ function load() {
                     tctx.clearRect(0,0,gwidth,gheight)
                     tctx.drawImage(im,0,0);
                     glyphBitmaps[k] = tctx.getImageData(0,0,gwidth,gheight);
+                    updateGlyphListBitmap(k);
                     if (i == bmps.length - 1) {
                         loadElemGroup(currentGroup.elem, false);
                         reloadCurrentGlyph();
@@ -1600,7 +1604,7 @@ function toggleKernCurrent() {
 function toggleAutoSave() {
     prefs.autosave = !prefs.autosave;
     updateAutoSaveBtnCSS();
-    localStorage.setItem("tophat_prefs", JSON.stringify(prefs));
+    savePrefs();
 }
 
 function processTextAndSetCanvasHeight(str, maxw) {
@@ -1728,7 +1732,12 @@ function init() {
 
     if (localStorage.getItem("tophat_prefs")) {
         prefs = JSON.parse(localStorage.getItem("tophat_prefs"));
+    } else {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            prefs.theme = "inkwell";
+        }
     }
+    updateTheme();
 
     switch (language) {
         case "fr": currentGroupName ??= "frlanguage"; break;
@@ -2059,6 +2068,7 @@ function importUploadedFont() {
 
     loadElemGroup(currentGroup.elem);
     loadKernPairList();
+    reloadCurrentGlyph();
     updatePreview();
     closeModal();
 }
@@ -2405,4 +2415,14 @@ function setColour(r,g,b,a, mouseUp = true) {
     currentColour[1] = g;
     currentColour[2] = b;
     currentColour[3] = a;
+}
+
+function setTheme(themename) {
+    prefs.theme = themename;
+    savePrefs();
+    updateTheme();
+}
+function updateTheme() {
+    themeselect.value = prefs.theme;
+    document.documentElement.dataset.theme = prefs.theme;
 }
