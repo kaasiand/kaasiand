@@ -1516,11 +1516,6 @@ function load() {
 
         initiateUndoState("");
 
-        kerningPairs = {};
-        for (const k in b) {
-            makeKerningPair(k, b[k], false);
-        }
-
         advanceWidth = data.adv;
         glyphBitmaps = {};
         let bmps = Object.keys(data.bmp);
@@ -1537,6 +1532,7 @@ function load() {
                     tctx.drawImage(im,0,0);
                     glyphBitmaps[k] = tctx.getImageData(0,0,gwidth,gheight);
                     updateGlyphListBitmap(k);
+                    kernByChar[k]?.forEach(obj => obj.updateSpacing());
                     if (i == bmps.length - 1) {
                         loadElemGroup(currentGroup.elem, false);
                         reloadCurrentGlyph();
@@ -1546,6 +1542,11 @@ function load() {
                 im.src = "data:image/png;base64," + a[k].d;
             }
         }
+        kerningPairs = {};
+        for (const k in b) {
+            makeKerningPair(k, b[k], false);
+        }
+
         finaliseUndoState("");
     }
     updateGuideCSS();
