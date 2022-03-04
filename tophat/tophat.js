@@ -908,7 +908,7 @@ function canvMouseMove(e) {
         case "milk":
             drawCanvas();
             destClr = ctx.getImageData(x, y, 1, 1).data;
-            spill(destClr,clr,x,y);
+            spill(destClr,startClickOnSameColour ? [0,0,0,0] : clr,x,y);
             break;
         case "syringe":
             setColour(...ctx.getImageData(x,y,1,1).data, false);
@@ -1494,8 +1494,6 @@ function save() {
     }));
 }
 function load() {
-    let outglyph = "";
-
     if (!localStorage || !localStorage.getItem("tophat_font")) {
         console.log("No font data stored");
         openNewFontModal();
@@ -1516,8 +1514,12 @@ function load() {
         currentGlyph = data.cur;
         metrics = data.met;
 
-        outglyph = Object.keys(data.adv).join("");
-        initiateUndoState(outglyph);
+        initiateUndoState("");
+
+        kerningPairs = {};
+        for (const k in b) {
+            makeKerningPair(k, b[k], false);
+        }
 
         advanceWidth = data.adv;
         glyphBitmaps = {};
@@ -1544,13 +1546,8 @@ function load() {
                 im.src = "data:image/png;base64," + a[k].d;
             }
         }
-
-        kerningPairs = {};
-        for (const k in b) {
-            makeKerningPair(k, b[k], false);
-        }
+        finaliseUndoState("");
     }
-    finaliseUndoState(outglyph);
     updateGuideCSS();
 }
 
