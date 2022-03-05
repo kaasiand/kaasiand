@@ -1124,6 +1124,7 @@ function copyImageData(imagedata) {
 function setTagSelectedGlyphs(tag) { // "", "r", "y", "g" or "b"
     let allchars = tagged_all().chars;
     let selchars = [].map.call(glyphlist.querySelectorAll(".active"), el => el.dataset.ch);
+    if (!selchars.length) selchars = [currentGlyph];
 
     selchars.forEach(c => {
         if (tag && !groupComponents["tagged_"+tag].chars.includes(c))
@@ -1185,17 +1186,24 @@ function flipGlyphV(g) {
 function flipGlyphs(horiz = true) {
     // order the selected glyphs by appearance in the list
     let act = glyphlist.querySelectorAll(".active");
-    let str = [].map.call(act, el => el.dataset.ch).join("");
+    let str = [].map.call(act, el => el.dataset.ch).join("") || currentGlyph;
 
     initiateUndoState(str);
 
-    [].forEach.call(act, el => {
+    if (act.length) {
+        [].forEach.call(act, el => {
+            if (horiz)
+                flipGlyphH(el.dataset.ch);
+            else
+                flipGlyphV(el.dataset.ch);
+            updateGlyphListBitmap(el.dataset.ch, el);
+        });
+    } else {
         if (horiz)
-            flipGlyphH(el.dataset.ch);
+            flipGlyphH(currentGlyph);
         else
-            flipGlyphV(el.dataset.ch);
-        updateGlyphListBitmap(el.dataset.ch, el);
-    });
+            flipGlyphV(currentGlyph);
+    }
 
     reloadCurrentGlyph();
 
@@ -1215,27 +1223,25 @@ function flip(horiz) {
 
 function deleteGlyphs() {
     // order the selected glyphs by appearance in the list
-    let act = glyphlist.querySelectorAll(".active");
-    let str = [].map.call(act, el => el.dataset.ch).join("");
+    let str = [].map.call(glyphlist.querySelectorAll(".active"), el => el.dataset.ch).join("") || currentGlyph;
 
     initiateUndoState(str);
 
-    [].forEach.call(act, el => {
-        deleteGlyph(el.dataset.ch);
-        kernByChar[el.dataset.ch]?.forEach(obj => obj.updateSpacing());
+    [...str].forEach(ch => {
+        deleteGlyph(ch);
+        kernByChar[ch]?.forEach(obj => obj.updateSpacing());
     });
 
     reloadCurrentGlyph();
-
+    updatePreview();
     finaliseUndoState(str);
 }
 function deleteGlyphsAndPairs() {
-    let act = glyphlist.querySelectorAll(".active");
-    let str = [].map.call(act, el => el.dataset.ch).join("");
+    let str = [].map.call(glyphlist.querySelectorAll(".active"), el => el.dataset.ch).join("") || currentGlyph;
     let pairsToDelete = [];
 
-    [].forEach.call(act, el => {
-        kernByChar[el.dataset.ch]?.forEach(pairobj => { pairsToDelete.push(pairobj.pair); });
+    [...str].forEach(ch => {
+        kernByChar[ch]?.forEach(pairobj => { pairsToDelete.push(pairobj.pair); });
     });
     if (pairsToDelete.length) {
         initiateKernUndoState(pairsToDelete);
@@ -1244,16 +1250,16 @@ function deleteGlyphsAndPairs() {
     }
 
     initiateUndoState(str);
-    [].forEach.call(act, el => {
-        deleteGlyph(el.dataset.ch);
+    [...str].forEach(ch => {
+        deleteGlyph(ch);
     });
     finaliseUndoState(str);
-
+    updatePreview();
     reloadCurrentGlyph();
 }
 function copyGlyphs() {
     // order the selected glyphs by appearance in the list
-    let str = [].map.call(glyphlist.querySelectorAll(".active"), el => el.dataset.ch).join("");
+    let str = [].map.call(glyphlist.querySelectorAll(".active"), el => el.dataset.ch).join("") || currentGlyph;
 
     navigator.clipboard.writeText(str);
     copystr = str;
@@ -1293,13 +1299,12 @@ function pasteSelection() {
     applySelection();
 
     let elemlist = glyphlist.querySelectorAll(".active");
-    let destlen = elemlist.length;
 
-    let undostr = [].map.call(elemlist, el => el.dataset.ch).join();
+    let undostr = [].map.call(elemlist, el => el.dataset.ch).join("") || currentGlyph;
     initiateUndoState(undostr);
     
-    for (let i = 0; i < destlen; i++) {
-        pasteSelectionSingleGlyph(elemlist[i].dataset.ch);
+    for (let i = 0; i < undostr.length; i++) {
+        pasteSelectionSingleGlyph(undostr[i]);
     }
     reloadCurrentGlyph();
     finaliseUndoState(undostr);
@@ -1361,7 +1366,7 @@ function pasteGlyphs(str = "") {
     let destlen = elemlist.length;
 
     // undo string stuff
-    let undostr = [].map.call(elemlist, el => el.dataset.ch).join();
+    let undostr = [].map.call(elemlist, el => el.dataset.ch).join("") || currentGlyph;
     if (destlen == 1) {
         let elem = elemlist[0];
         for (let i = 0; i < strlen; i++) {
@@ -1417,8 +1422,10 @@ function deleteGlyph(g, reload = false) {
         updateGlyphListBitmap(g, el);
     });
     
-    if (reload)
+    if (reload) {
         reloadCurrentGlyph();
+        updatePreview();
+    }
 }
 
 function isTextSelected() {
@@ -1716,8 +1723,10 @@ function tryAutosave() {
 }
 
 function tryGoto() {
-    if ([...gotochar.value].length == 1)
-    loadGlyph(gotochar.value, document.createElement("div"));
+    if ([...gotochar.value].length != 1) return;
+
+    let elem = glyphlist.querySelector(gotochar.value == "'" ? '[data-ch="\'"]' : "[data-ch='"+gotochar.value+"']") ?? document.createElement("div");
+    loadGlyph(gotochar.value, elem);
 }
 
 function init() {
