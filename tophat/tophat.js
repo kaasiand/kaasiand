@@ -1882,6 +1882,9 @@ function init() {
 
     setInterval(tryAutosave, 300000);
 
+    copyoverin.value = "";
+    gotocode.value = "";
+    gotochar.value = "";
     kern_find_input.value = "";
     importfontmodal_size.value = 20;
     importfontmodal_char.value = "";
@@ -2391,29 +2394,30 @@ function updateResizePreview() {
         cx.drawImage(tempCanvas,Math.max(fontResize.w,0), Math.max(fontResize.n,0));
     }
 }
-function resizeFont() {
-    setGlyphDimensions(gwidth + fontResize.e + fontResize.w, gheight + fontResize.n + fontResize.s);
+function resizeFontNESW(n,e,s,w) {
+    setGlyphDimensions(gwidth + e + w, gheight + n + s);
 
-    if (fontResize.w) {
+    if (w) {
         for (const k in advanceWidth) {
-            advanceWidth[k] = Math.min(gwidth, advanceWidth[k] + fontResize.w);
+            advanceWidth[k] = Math.min(gwidth, advanceWidth[k] + w);
         }
     }
     for (const k in glyphBitmaps) {
-        tctx.putImageData(glyphBitmaps[k], fontResize.w, fontResize.n);
+        tctx.putImageData(glyphBitmaps[k], w, n);
         glyphBitmaps[k] = tctx.getImageData(0,0,gwidth, gheight);
         updateGlyphListBitmap(k);
     }
-    if (fontResize.n) {
+    if (n) {
         for (const k in metrics) {
             if (metrics[k] != -1)
-                metrics[k] = Math.max(metrics[k] + fontResize.n, -1);
+                metrics[k] = Math.max(metrics[k] + n, -1);
         }
     }
     for (const k in kerningPairs) {
         kerningPairs[k].updateSpacing();
     }
 
+    clearUndos();
     loadElemGroup(currentGroup.elem);
 
     closeModal();
@@ -2421,10 +2425,19 @@ function resizeFont() {
     updatePreview();
     reloadCurrentGlyph();
 }
+function resizeFont() {
+    resizeFontNESW(fontResize.n,fontResize.e,fontResize.s,fontResize.w);
+}
 
 function closeModal(entirely = true) {
     modal_cont.classList.toggle("hidden", entirely);
     [].forEach.call(modal_cont.querySelectorAll(".modal"), el => el.classList.add("hidden"));
+}
+function clearUndos() {
+    currentUndoIdx = -1;
+    firstUndoItemIdx = 0;
+    undoItemCount = 0;
+    undos = {};
 }
 function newFont(name,w,h,tr = 1,bl = -1) {
     if (w * h <= 1) return;
@@ -2442,10 +2455,7 @@ function newFont(name,w,h,tr = 1,bl = -1) {
     kernByChar   = {};
     setGlyphDimensions(w,h);
 
-    currentUndoIdx = -1;
-    firstUndoItemIdx = 0;
-    undoItemCount = 0;
-    undos = {};
+    clearUndos();
     loadElemGroup(currentGroup.elem);
     loadKernPairList();
     closeModal();

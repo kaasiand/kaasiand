@@ -28,7 +28,8 @@
 
 <div id="leftbar">
 <div id="logostuff" data-ver="v0.8.2"><svg width="14px" height="14px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="m12.732 1.0172a12 4 10 0 0-12.512 1.8552 12 4 10 0 0 11.123 6.0232 12 4 10 0 0 12.513-1.8557 12 4 10 0 0-11.123-6.0228zm-0.34728 1.9695a6 2 10 0 1 5.5617 3.0114 6 2 10 0 1-6.2563 0.92758 6 2 10 0 1-5.5612-3.0113 6 2 10 0 1 6.2558-0.92767zm-7.3783 7.2937-1.7427 9.8831c-0.19248 1.0878 2.2975 2.4363 5.5611 3.0118 3.2639 0.57554 6.0652 0.15998 6.2564-0.92809l1.7427-9.8831c-1.8575 0.028961-3.9276-0.14837-6.002-0.51417-2.0743-0.36577-4.08-0.9071-5.8154-1.5696z"/></svg>tophat</div>
+    <path d="m12.732 1.0172a12 4 10 0 0-12.512 1.8552 12 4 10 0 0 11.123 6.0232 12 4 10 0 0 12.513-1.8557 12 4 10 0 0-11.123-6.0228zm-0.34728 1.9695a6 2 10 0 1 5.5617 3.0114 6 2 10 0 1-6.2563 0.92758 6 2 10 0 1-5.5612-3.0113 6 2 10 0 1 6.2558-0.92767zm-7.3783 7.2937-1.7427 9.8831c-0.19248 1.0878 2.2975 2.4363 5.5611 3.0118 3.2639 0.57554 6.0652 0.15998 6.2564-0.92809l1.7427-9.8831c-1.8575 0.028961-3.9276-0.14837-6.002-0.51417-2.0743-0.36577-4.08-0.9071-5.8154-1.5696z"/></svg>
+    tophat</div>
 <button id="newfontbtn" class="leftbarbtn textbtn" onclick="openNewFontModal()" data-name="New..."></button>
 <div style="display: flex;">
     <div></div><div class="btnlabel" style="white-space: nowrap;">Export</div>
@@ -84,6 +85,9 @@
     <ul>
         <li><button data-group="kana_punct"></button></li>
         <li><button data-group="kanji_comm"></button></li>
+        <li><button data-group="jouyou_rad"></button></li>
+        <li><button data-group="kyouiku_kj"></button></li>
+        <li><button data-group="jouyou_kji"></button></li>
     </ul>
 </li>
 </ul>
@@ -254,27 +258,27 @@
     <td><button id="autoadvbtn" class="textbtn" onclick="toggleAutoAdjust()" style="width:370px">Auto-adjust advance width</button></td>
 </tr>
 <tr>
-    <td><div style="display: flex; width: 370px; gap: 8px; font-size: 14px;">
-        <div    id="setguide_lbl" class="btnlabel" style="white-space: nowrap;padding-right:0;margin-right: -2px;">Set guide</div>
+    <td style="display: flex; width: 370px; gap: 5px; font-size: 14px; padding-top: 1px;">
+        <div    id="setguide_lbl" class="btnlabel" style="white-space: nowrap;padding-right:1px;">Set guide</div>
         <button id="baseline_btn" class="textbtn" onclick="setGuide('baseline')" style="padding: 5px; flex-grow: 1;">Baseline</button>
         <button id="x_height_btn" class="textbtn" onclick="setGuide('xHeight')"  style="padding: 5px; flex-grow: 1;">x-height</button>
         <button id="capheightbtn" class="textbtn" onclick="setGuide('capHeight')"style="padding: 5px; flex-grow: 1;">Cap height</button>
-    </div></td>
-</tr>
-<tr>
-    <td style="display: flex; width: 370px; gap: 8px; font-size: 14px;">
-        <div id="copyoverlbl1" class="btnlabel" style="white-space: nowrap;padding-right:0;margin-right: -2px;order:1"></div>
-        <button id="copyovergbtn" class="textbtn" onclick="if (copyoverin.value) copyoverGlyph(copyoverin.value);" style="flex-grow: 1; padding:5px;order:3"></button>
-        <button id="copyoverkbtn" class="textbtn" onclick="if (copyoverin.value) copyoverKern(copyoverin.value);"  style="flex-grow: 1; padding:5px;order:3"></button>
-        <div id="copyoverlbl2" class="btnlabel" style="white-space: nowrap;padding-right:0;margin-right: -2px;order:5"></div>
-        <input id="copyoverin" style="width:28px;order:0" maxlength="2" oninput="if ([...this.value].length > 1) this.value = [...this.value][0];" placeholder="&hellip;">
     </td>
 </tr>
 <tr>
-    <td style="display: flex; width: 370px; gap: 8px; font-size: 14px;">
+    <td style="display: flex; width: 370px; gap: 5px; font-size: 14px; padding-top: 1px;">
+        <div id="copyoverlbl1" class="btnlabel" style="white-space: nowrap;padding-right:1px;order:1"></div>
+        <button id="copyovergbtn" class="textbtn" onclick="if (copyoverin.value) copyoverGlyph(copyoverin.value);" style="flex-grow: 1; padding:5px;order:3"></button>
+        <button id="copyoverkbtn" class="textbtn" onclick="if (copyoverin.value) copyoverKern(copyoverin.value);"  style="flex-grow: 1; padding:5px;order:3"></button>
+        <div id="copyoverlbl2" class="btnlabel" style="white-space: nowrap;padding-right:0;margin-right: -2px;order:5"></div>
+        <input id="copyoverin" style="width:28px;order:0" value="" maxlength="2" oninput="if ([...this.value].length > 1) this.value = [...this.value][0];" placeholder="&hellip;">
+    </td>
+</tr>
+<tr>
+    <td style="display: flex; width: 370px; gap: 5px; font-size: 14px; padding-top: 1px;">
         <div id="gotolabel" class="btnlabel" style="white-space: nowrap;padding-right:0;margin-right: -2px;">Jump to character/codepoint</div>
-        <input id="gotochar" style="width:28px;" maxlength="2" placeholder="字">
-        <input id="gotocode" style="width:100%;" maxlength="7" placeholder="U+0D9E">
+        <input id="gotochar" style="width:28px;" value="" maxlength="2" placeholder="字">
+        <input id="gotocode" style="width:100%;" value="" maxlength="7" placeholder="U+0D9E">
         <button id="gotobtn" class="textbtn" onclick="tryGoto()" style="width:100%;padding:5px;">Go</button>
     </td>
 </tr>
@@ -284,22 +288,16 @@
 <tr><td class="areaheader">Font preview</td></tr>
 <tr><td><div style="height: calc(var(--glyphheightpx) * 5.5); overflow: hidden auto; max-width: 400px;"><canvas id="preview_image"></canvas></div></td></tr>
 <tr><td><textarea id="preview_input" oninput="settings.previewtext = this.value; updatePreview()"></textarea></td></tr>
-<tr><td>
-    <table style="border-collapse: collapse;">
-        <tr><td style="padding-right: 10px; white-space: nowrap;font-size:14px;">Tracking</td>
-            <td style="display: flex">
-                <button onclick="setTracking(settings.tracking-1)" class="toolbtn minus" style="width:auto;"></button>
-                <input id="trackinginput" oninput="this.value = ~~this.value" maxlength="2" style="width: 48px; margin-right:1px">
-                <button onclick="setTracking(settings.tracking+1)" class="toolbtn plus" style="width:auto;"></button>
-            </td></tr>
-        <tr><td style="padding-right: 10px; white-space: nowrap;font-size:14px;">Leading</td>
-            <td style="display: flex">
-                <button onclick="setLeading(settings.leading-1)" class="toolbtn minus" style="width:auto;"></button>
-                <input id="leadinginput" oninput="this.value = ~~this.value" maxlength="2" style="width: 48px; margin-right:1px">
-                <button onclick="setLeading(settings.leading+1)" class="toolbtn plus" style="width:auto;"></button>
-            </td></tr>
-
-    </table>
+<tr><td style="display: flex; width: 400px">
+    <div class="btnlabel">Tracking</div>
+    <button onclick="setTracking(settings.tracking-1)" class="toolbtn minus" style="width:auto;"></button>
+    <input id="trackinginput" oninput="this.value = ~~this.value" maxlength="2" style="width: 48px; margin-right:1px">
+    <button onclick="setTracking(settings.tracking+1)" class="toolbtn plus" style="width:auto;"></button>
+    <div class="btndivider" style="width: 100%;"></div>
+    <div class="btnlabel">Leading</div>
+    <button onclick="setLeading(settings.leading-1)" class="toolbtn minus" style="width:auto;"></button>
+    <input id="leadinginput" oninput="this.value = ~~this.value" maxlength="2" style="width: 48px; margin-right:1px">
+    <button onclick="setLeading(settings.leading+1)" class="toolbtn plus" style="width:auto;"></button>
 </td></tr>
 </table>
 
@@ -370,7 +368,7 @@
             <p>or create a new one from scratch:</p>
             <table style="font-size:14px;">
                 <tr>
-                    <td style="padding-right: 10px;">Name</td>
+                    <td style="padding-right: 10px;" value="">Name</td>
                     <td style="display: flex; width: 150px"><input id="newfontmodal_namein" maxlength="32" style="width: 100%"><div style="display:inline-block; padding-top: 8px;width: 20px">.fnt</div></td>
                 </tr>
                 <tr>
@@ -392,7 +390,7 @@
             <table style="font-size:14px;width:100%">
                 <tr>
                     <td style="padding-right: 10px; white-space: nowrap;">Preview character</td>
-                    <td><input id="importfontmodal_char" onchange="updateUploadedFontPreview()" maxlength="1" style="width: 28px"></td>
+                    <td><input id="importfontmodal_char" value="" onchange="updateUploadedFontPreview()" maxlength="1" style="width: 28px"></td>
                 </tr>
                 <tr>
                     <td style="padding-right: 10px; white-space: nowrap;">Font size</td>
@@ -464,6 +462,51 @@
                         <button onclick="fontResizeIncr('s')" class="toolbtn plus"  style="margin:1px auto;width: auto;height:24px;padding:0 4px;"></button>
                     </td>
                     <td></td>
+                </tr>
+            </table>
+            <hr style="border: none; border-top: 1px solid var(--lbartxt); opacity: 0.5">
+            <p style="font-size: 14px; font-style: italic;">This action cannot be undone with the undo feature.</p>
+            <div style="display: flex; float:right; margin-top: 10px;">
+                <button onclick="closeModal()" class="textbtn leftbarbtn" style="margin-left: 10px; width: auto;font-size:inherit">Cancel</button>
+                <button onclick="resizeFont()" class="textbtn leftbarbtn" style="margin-left: 10px; width: auto;font-size:inherit">Resize font</button>
+            </div>
+        </div>
+
+        <div id="outlinemodal" class="modal hidden">
+            <h1>Outline font</h1>
+            <table style="font-size:14px;width:100%">
+                <tr>
+                    <td style="padding-right: 10px; white-space: nowrap;">Outline type</td>
+                    <td><input id="outlinemodal_char" value="" onchange="updateUploadedFontPreview()" maxlength="1" style="width: 28px"></td>
+                </tr>
+                <tr>
+                    <td style="padding-right: 10px; white-space: nowrap;">Preview character</td>
+                    <td><input id="outlinemodal_char" value="" onchange="updateUploadedFontPreview()" maxlength="1" style="width: 28px"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="importfont_cont">
+                            <div class="importfont_glyph">
+                                <canvas id="prevcanvA"></canvas>
+                            </div>
+                            <div style="width:20px;text-align:center">&rarr;</div>
+                            <div class="importfont_glyph">
+                                <canvas id="prevcanvB"></canvas>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-right: 10px; white-space: nowrap;" colspan="2">
+                        <input style="height:20px;transform: translateY(2px);" onchange="updateOutlinePreview()" type="checkbox" id="fontimportinvert" name="fontimportinvert">
+                        <label for="fontimportinvert">Only apply to selected glyphs</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-right: 10px; white-space: nowrap;" colspan="2">
+                        <input style="height:20px;transform: translateY(2px);" onchange="updateOutlinePreview()" type="checkbox" id="fontimportinvert" name="fontimportinvert">
+                        <label for="fontimportinvert">Expand canvas where needed</label>
+                    </td>
                 </tr>
             </table>
             <hr style="border: none; border-top: 1px solid var(--lbartxt); opacity: 0.5">
