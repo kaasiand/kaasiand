@@ -2199,7 +2199,7 @@ function importFnt(str,fn, obj) {
 
     for (let i = 0; i < data.length; i++) {
         let eqidx = data[i].indexOf("=");
-        let wsidx = data[i].indexOf("\t");
+        let wsidx = data[i].search(/(?!^)(\s)/);
 
         let keyEq = eqidx == -1 ? "" : data[i].slice(0, eqidx);
         let keyWs = data[i].slice(0, wsidx); // separate slice needed in case of " =" kern pair
@@ -2223,7 +2223,13 @@ function importFnt(str,fn, obj) {
             case "height": h = afterEq * 1; break;
             case "tracking": tr = afterEq * 1; break;
             default:
-                let real = keyWs.replace(/space/g, " ");
+                if (data[i].startsWith("--") && !(/^--\s+-?\d+$/.test(data[i]))) {
+                    // then it is a comment
+                    //                            🡱 "--" kerning pair data WILL match this
+                    break;
+                }
+                let real = keyWs.replace(/space/g, " ").replace(/U\+([0-9a-f]+)/ig, (_,p) => String.fromCodePoint("0x"+p));
+
                 if ([...real].length == 1) {
                     charorder.push({ ch: real, adv: afterWs * 1 || 0 });
                 } else if ([...real].length == 2) {
@@ -2295,9 +2301,12 @@ function getExportData(embedded = true) {
     // TODOOOOOO: CHECK HOW PLAYDATE CAPS AND THE SDK DEAL WITH KERNING PAIRS CONTAINING A SPACE
     for (let i = 0; i < pairlist.length; i++) {
         let pl = [...pairlist[i]];
-        if (/\s/.test(pl[1]) && pl[1] != " ") continue;
-        // ^ for now: skip kerning pairs ending in non-space whitespace
-        //            as the compiler hates this
+        if (/\s/.test(pl[1]) && pl[1] != " ") {
+            //outstr += "\n" + toCodepointString(pl[0]) + toCodepointString(pl[1]) + "\t" + kerningPairs[pairlist[i]].value;
+            continue;
+        }
+        // ^ for kerning pairs ending in non-space whitespace
+        // still ignores until sdk fix
 
         if (kerningPairs[pairlist[i]].value)
             outstr += "\n" + pl[0] + pl[1] + "\t" + kerningPairs[pairlist[i]].value;
@@ -2368,7 +2377,7 @@ function downloadSplit() {
 
 function tryOpenNewFontModal(e) {
     e.preventDefault();
-    if (!this.files || !this.files[0]) return;
+    if (!e.dataTransfer.items || e.dataTransfer.items[0]?.kind != "file") return;
 
     if (newfontmodal.classList.contains("hidden"))
         openNewFontModal();
