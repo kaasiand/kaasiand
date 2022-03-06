@@ -378,6 +378,9 @@
     --tracking: 1;
     --trackingpx: calc(var(--tracking) * var(--scalepx));
 
+    --leading: 1;
+    --leadingpx: calc(var(--leading) * var(--scalepx));
+
     background: var(--bgcol);
     font-synthesis: var(--fontsyn);
 }
@@ -935,7 +938,7 @@ ratio + L + dont care + didnt ask + youre british {
     overflow-y: auto;
     width: 400px;
 }
-#preview_input {
+#preview_input, #fontimportkeepglyph {
     display: block;
     height: 100px;
     overflow-y: auto;
@@ -1260,6 +1263,8 @@ ratio + L + dont care + didnt ask + youre british {
     max-width: calc(100vw - 20px);
     min-width: 200px;
     box-shadow: 1px 3px 50px #0004;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 .modal h1 {
     display: block;

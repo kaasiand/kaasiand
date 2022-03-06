@@ -27,7 +27,7 @@
 <body onload="init()" ondragover="tryOpenNewFontModal(event);" ondrop="dropHandler(event);">     
 
 <div id="leftbar">
-<div id="logostuff" data-ver="v0.9"><svg width="14px" height="14px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<div id="logostuff" data-ver="v0.9.1"><svg width="14px" height="14px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="m12.732 1.0172a12 4 10 0 0-12.512 1.8552 12 4 10 0 0 11.123 6.0232 12 4 10 0 0 12.513-1.8557 12 4 10 0 0-11.123-6.0228zm-0.34728 1.9695a6 2 10 0 1 5.5617 3.0114 6 2 10 0 1-6.2563 0.92758 6 2 10 0 1-5.5612-3.0113 6 2 10 0 1 6.2558-0.92767zm-7.3783 7.2937-1.7427 9.8831c-0.19248 1.0878 2.2975 2.4363 5.5611 3.0118 3.2639 0.57554 6.0652 0.15998 6.2564-0.92809l1.7427-9.8831c-1.8575 0.028961-3.9276-0.14837-6.002-0.51417-2.0743-0.36577-4.08-0.9071-5.8154-1.5696z"/></svg>
     tophat</div>
 <button id="newfontbtn" class="leftbarbtn textbtn" onclick="openNewFontModal()" data-name="New..."></button>
@@ -287,7 +287,7 @@
 
 <table id="preview_cont">
 <tr><td class="areaheader">Font preview</td></tr>
-<tr><td><div style="height: calc(var(--glyphheightpx) * 5.5); overflow: hidden auto; max-width: 400px;"><canvas id="preview_image"></canvas></div></td></tr>
+<tr><td><div style="height: calc(calc(calc(var(--glyphheightpx) + var(--leadingpx)) * 5.5) + 4px); overflow: hidden auto; max-width: 400px;"><canvas id="preview_image"></canvas></div></td></tr>
 <tr><td><textarea id="preview_input" oninput="settings.previewtext = this.value; updatePreview()"></textarea></td></tr>
 <tr><td style="display: flex; width: 400px">
     <div class="btnlabel">Tracking</div>
@@ -418,6 +418,10 @@
                     <td style="padding-right: 10px; white-space: nowrap;"><label for="fontimportinvert">Invert result</label></td>
                     <td><input style="height:20px;" onchange="updateUploadedFontPreview()" type="checkbox" id="fontimportinvert" name="fontimportinvert"></td>
                 </tr>
+                <tr>
+                    <td style="vertical-align:top;padding: 10px 10px 0 0; white-space: nowrap;">Only keep these glyphs:</td>
+                    <td><textarea style="width:100%;height:150px;resize: vertical;direction: ltr;unicode-bidi: bidi-override;" id="fontimportkeepglyph" onchange="updateKeepGlyphs()"></textarea></td>
+                </tr>
             </table>
             <p style="font-size: 14px; font-style: italic;">For optimal results, manually clean up the glyphs after conversion.</p>
             <div style="display: flex; float:right; margin-top: 10px;">
@@ -499,6 +503,16 @@
                     </td>
                 </tr>
                 <tr>
+                    <td style="padding-right: 10px; white-space: nowrap;">Presets</td>
+                    <td style="display: flex; gap: 5px">
+                        <button class="textbtn leftbarbtn" onclick="setOutlinePreset('444434444')" style="width:auto;padding: 5px 10px">Inverted outline</button>
+                        <button class="textbtn leftbarbtn" onclick="setOutlinePreset('111101111')" style="width:auto;padding: 5px 10px">Outline only</button>
+                        <button class="textbtn leftbarbtn" onclick="setOutlinePreset('033033000')" style="width:auto;padding: 5px 10px">Bold strokes</button>
+                        <button class="textbtn leftbarbtn" onclick="setOutlinePreset('000040000')" style="width:auto;padding: 5px 10px">Invert font</button>
+                        <button class="textbtn leftbarbtn" onclick="setOutlinePreset('000021011')" style="width:auto;padding: 5px 10px">Shadow</button>
+                    </td>
+                </tr>
+                <tr>
                     <td style="padding-right: 10px; white-space: nowrap;">Preview character</td>
                     <td><input id="outlinemodal_char" value="" onchange="updateOutlinePreview()" maxlength="1" style="width: 28px"></td>
                 </tr>
@@ -523,7 +537,7 @@
                 </tr>
                 <tr>
                     <td style="padding-right: 10px; white-space: nowrap;" colspan="2">
-                        <input style="height:20px;transform: translateY(2px);" onchange="updateOutlinePreview();outlinenotice.classList.toggle('hidden',!this.checked)" type="checkbox" id="cb_outlineexpand" name="cb_outlineexpand">
+                        <input style="height:20px;transform: translateY(2px);" checked onchange="updateOutlinePreview();outlinenotice.classList.toggle('hidden',!this.checked)" type="checkbox" id="cb_outlineexpand" name="cb_outlineexpand">
                         <label for="cb_outlineexpand">Expand canvas where needed</label>
                     </td>
                 </tr>

@@ -519,6 +519,7 @@ function setTracking(tr) {
     updatePreview();
 }
 function setLeading(ld) {
+    document.documentElement.style.setProperty("--leading",  ld);
     settings.leading = ld;
     leadinginput.value = ld;
     updatePreview();
@@ -1447,7 +1448,7 @@ function paste() {
         pasteSelection();
 }
 function docPaste(e) {
-    if (e.target == preview_input || e.target.tagName == "INPUT") return;
+    if (e.target.tagName == "INPUT" || e.target.tagName == "TEXTAREA") return;
 
     let str = e.clipboardData.getData("text");
     if (str != copystr || copytype == "glyph")
@@ -1456,12 +1457,12 @@ function docPaste(e) {
         pasteSelection();
 }
 function docCut(e) {
-    if (e.target == preview_input || e.target.tagName == "INPUT") return;
+    if (e.target.tagName == "INPUT" || e.target.tagName == "TEXTAREA") return;
 
     cut();
 }
 function docCopy(e) {
-    if (e.target == preview_input || e.target.tagName == "INPUT") return;
+    if (e.target.tagName == "INPUT" || e.target.tagName == "TEXTAREA") return;
 
     copy();
 }
@@ -1685,7 +1686,7 @@ function updatePreview() {
     drawText(str);
 }
 function selectPrevGlyph(e) {
-    if (e.target == preview_input || e.target.tagName == "INPUT") return;
+    if (e.target.tagName == "INPUT" || e.target.tagName == "TEXTAREA") return;
     
     let elem;
     if (glyphlist.querySelector(".active")) {
@@ -1699,7 +1700,7 @@ function selectPrevGlyph(e) {
     loadGlyph(elem.dataset.ch, elem, true);
 }
 function selectNextGlyph(e) {
-    if (e.target == preview_input || e.target.tagName == "INPUT") return;
+    if (e.target.tagName == "INPUT" || e.target.tagName == "TEXTAREA") return;
 
     let elem;
     if (glyphlist.querySelector(".active")) {
@@ -1727,6 +1728,12 @@ function tryGoto() {
 
     let elem = glyphlist.querySelector(gotochar.value == "'" ? '[data-ch="\'"]' : "[data-ch='"+gotochar.value+"']") ?? document.createElement("div");
     loadGlyph(gotochar.value, elem);
+}
+function isAllowedUnicode(val) {
+    return val <= 0x3fffff && val >= 0x20 &&
+        !(val >= 0x007F && val <  0x00A0) &&
+        !(val >= 0x2028 && val <= 0x202E) &&
+        !(val >= 0x2060 && val <= 0x206F);
 }
 
 function init() {
@@ -1787,8 +1794,8 @@ function init() {
     ttfpick.onchange = fntInput;
 
     document.onkeydown = e => {
-        if (e.target == preview_input || e.target.tagName == "INPUT") return;
-
+        if (e.target.tagName == "INPUT" || e.target.tagName == "TEXTAREA") return;
+        
         switch (e.code) {
             case "KeyZ":
                 if (e.ctrlKey || e.metaKey) {
@@ -1875,7 +1882,7 @@ function init() {
         let match = gotocode.value.match(/^(?:u\+|0x|)([0-9a-f]{2,5})$/i);
         if (match && match[1]) {
             let val = ("0x"+match[1]) * 1;
-            if (val <= 0x3ffff && val >= 0x20 && !(val >= 0x7F && val < 0xA0))
+            if (isAllowedUnicode(val))
                 gotochar.value = String.fromCodePoint("0x"+match[1]);
         }
     };
@@ -1954,9 +1961,10 @@ function handleFiles(files) {
 let globalfontidx = -1;
 let uploadedFontName = "";
 let charsInUploadedFont = "";
+let charsInUploadedFontToKeep = "";
 function tryReadFile(file, obj) {
     if (!file) return;
-
+    charsInUploadedFont = "";
     impnotsupp.classList.add("hidden");
     if (isOutlineFont(file)) {
         file.arrayBuffer().then(res => {
@@ -1968,7 +1976,7 @@ function tryReadFile(file, obj) {
                 // get which characters are in font
                 for (const key in font.glyphs.glyphs) {
                     let uni = font.glyphs.glyphs[key].unicode;
-                    if (key > 0 && uni && uni >= 0x20 && !(uni >= 0x7F && uni < 0xA0)) {
+                    if (key > 0 && uni && isAllowedUnicode(uni)) {
                         let bbox = font.glyphs.glyphs[key].getPath(0,0,20).getBoundingBox();
                         if (bbox.x2 < 0) continue;
                         let char = String.fromCodePoint(uni);
@@ -2014,9 +2022,14 @@ function tryReadFile(file, obj) {
     }
 }
 function importOutlineFont() {
-    openImportFontModal();
-
+    let arr = [...charsInUploadedFont];
+    arr.sort();
+    charsInUploadedFont = arr.join("");
+    fontimportkeepglyph.value = charsInUploadedFont;
+    charsInUploadedFontToKeep = charsInUploadedFont;
     alphathresh.value = 127;
+    
+    openImportFontModal();
     previewFont(20);
 }
 let currentUploadedFont;
@@ -2036,8 +2049,8 @@ function previewFont(size) {
     currentUploadedFont = size+"pt TopHatOutlineFnt"+globalfontidx;
     tctx.font = currentUploadedFont;
 
-    for (let i = 0; i < [...charsInUploadedFont].length; i++) {
-        let bbox = tctx.measureText([...charsInUploadedFont][i]);
+    for (let i = 0; i < [...charsInUploadedFontToKeep].length; i++) {
+        let bbox = tctx.measureText([...charsInUploadedFontToKeep][i]);
 
         if (bbox.actualBoundingBoxAscent  > maxascent)  maxascent  = bbox.actualBoundingBoxAscent;
         if (bbox.actualBoundingBoxDescent > maxdescent) maxdescent = bbox.actualBoundingBoxDescent;
@@ -2056,6 +2069,13 @@ function previewFont(size) {
     importfont_cont.style.setProperty("--glyphheight", uploadedFontH);
     updateUploadedFontPreview();
 }
+function updateKeepGlyphs() {
+    let str = [...fontimportkeepglyph.value].filter(ch => charsInUploadedFont.includes(ch)).join("") || charsInUploadedFont;
+    charsInUploadedFontToKeep = str;
+    fontimportkeepglyph.value = str;
+    updateImportFontPreview();
+}
+
 function updateUploadedFontPreview() {
     let ax = prevcanvA.getContext("2d");
     let bx = prevcanvB.getContext("2d");
@@ -2098,8 +2118,8 @@ function importUploadedFont() {
     newFont(uploadedFontName+"-"+importfontmodal_size.value * 1, uploadedFontW, uploadedFontH, 0, uploadedFontB);
 
     tctx.font = currentUploadedFont;
-    for (let i = 0; i < [...charsInUploadedFont].length; i++) {
-        let char = [...charsInUploadedFont][i];
+    for (let i = 0; i < [...charsInUploadedFontToKeep].length; i++) {
+        let char = [...charsInUploadedFontToKeep][i];
         let bbox = tctx.measureText(char);
 
         let adv = Math.round(bbox.width);
@@ -2390,6 +2410,18 @@ function isOutlineOnBtm() {
 function isOutlineOnCenter() {
     return !!(olbtnC.dataset.px*1)*1;
 }
+function setOutlinePreset(str) {
+    olbtnNW.dataset.px = str[0];
+    olbtnN .dataset.px = str[1];
+    olbtnNE.dataset.px = str[2];
+    olbtnW .dataset.px = str[3];
+    olbtnC .dataset.px = str[4];
+    olbtnE .dataset.px = str[5];
+    olbtnSW.dataset.px = str[6];
+    olbtnS .dataset.px = str[7];
+    olbtnSE.dataset.px = str[8];
+    updateOutlinePreview();
+}
 function outlineButtonToFilter(px) {
     if (px == 1) return "brightness(0)";
     if (px == 2) return "brightness(0) invert(1)";
@@ -2503,6 +2535,8 @@ function updateResizePreview() {
     
     prevcanvR.width  = gwidth  + Math.max(fontResize.e,0) + Math.max(fontResize.w,0);
     prevcanvR.height = gheight + Math.max(fontResize.n,0) + Math.max(fontResize.s,0);
+
+    newfontdims.innerText = getLocalisedString("newfontdim").replace("%w", gwidth + fontResize.e + fontResize.w).replace("%h", gheight + fontResize.n + fontResize.s);
 
     cx.globalCompositeOperation = "source-over";
     cx.globalAlpha = 1;

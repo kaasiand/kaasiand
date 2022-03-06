@@ -408,6 +408,9 @@ let stringL10n = {
     copyoverk: { nameEN: "Kerning",   nameFR: "Crénage",   nameJP: "カーニング" },
     copyover2: { nameEN: "from",      nameFR: "du glyphe", nameJP: "をコピー" },
 
+    newfontdim: { nameEN: "New font dimensions: %w × %h", nameFR: "Nouvelles dimensions de la police: %w × %h", nameJP: "フォントの新しい寸法: %w × %h" },
+
+
     glypheditor: { nameEN: "Glyph editor",    nameFR: "Editeur de glyphes",  nameJP: "グリフエディタ" },
     fontpreview: { nameEN: "Font preview",    nameFR: "Aperçu de la police", nameJP: "フォントプレビュー" },
     kerningpair: { nameEN: "Kerning pairs",   nameFR: "Paires de crénage",   nameJP: "カーニング" },
