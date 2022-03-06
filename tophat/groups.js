@@ -417,6 +417,7 @@ let stringL10n = {
 
     spacestr:    { nameEN: "'space'",   nameFR: "'espace'", nameJP: "'スペース'" },
     emptystr:    { nameEN: "'(no items)'", nameFR: "'(vide)'", nameJP: "'(空っぽ)'" },
+    countstr:    { nameEN: "Glyph count: ", nameFR: "Nombre de glyphes : ", nameJP: "文字の数: " },
     untitled:    { nameEN: "untitled", nameFR: "sans titre", nameJP: "無題" },
 }
 

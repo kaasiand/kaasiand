@@ -468,6 +468,9 @@ function copyoverKern(orig) {
     reloadCurrentGlyph();
     tryAutosave();
 }
+function updateGlyphCount() {
+    glyphcount.dataset.count = Object.keys(advanceWidth).length;
+}
 
 function updateBlockList(initial) {
     let list = [...blocklist.querySelectorAll("button[data-group]")];
@@ -493,6 +496,7 @@ function updateBlockList(initial) {
 
     document.documentElement.style.setProperty("--emptystr", getLocalisedString("emptystr"));
     glyphlist.style.setProperty("--spacestr", getLocalisedString("spacestr"));
+    glyphcount.dataset.countstr = getLocalisedString("countstr");
     updateCopyGlyphKernButton();
     
     document.documentElement.style.setProperty("--fontsyn", language == "jp" ? "none" : "initial");
@@ -608,6 +612,7 @@ function storeGlyphAdvWidth() {
     advanceWidth[currentGlyph] = currentAdvWidth;
     storeGlyphBitmap();
     kernByChar[currentGlyph]?.forEach(obj => obj.updateSpacing());
+    updateGlyphCount();
 }
 function updateAdvanceWidthCSS() {
     adv_width_slider.style.setProperty("--advwidth", currentAdvWidth);
@@ -622,6 +627,7 @@ function autoUpdateAdvanceWidthGlyph(g) {
     if (x)
         advanceWidth[g] = x;
     kernByChar[g]?.forEach(obj => obj.updateSpacing());
+    updateGlyphCount();
 }
 function getGlyphRightEdge(g) {
     if (!glyphBitmaps[g]) return 0;
@@ -1237,6 +1243,7 @@ function deleteGlyphs() {
     reloadCurrentGlyph();
     updatePreview();
     finaliseUndoState(str);
+    updateGlyphCount();
 }
 function deleteGlyphsAndPairs() {
     let str = [].map.call(glyphlist.querySelectorAll(".active"), el => el.dataset.ch).join("") || currentGlyph;
@@ -1258,6 +1265,7 @@ function deleteGlyphsAndPairs() {
     finaliseUndoState(str);
     updatePreview();
     reloadCurrentGlyph();
+    updateGlyphCount();
 }
 function copyGlyphs() {
     // order the selected glyphs by appearance in the list
@@ -1398,6 +1406,7 @@ function pasteGlyphs(str = "") {
     reloadCurrentGlyph();
     finaliseUndoState(undostr);
     updatePreview();
+    updateGlyphCount();
 }
 function pasteSingleGlyph(imagedata, dest, width) {
     if (imagedata) {
@@ -1427,6 +1436,7 @@ function deleteGlyph(g, reload = false) {
     if (reload) {
         reloadCurrentGlyph();
         updatePreview();
+        updateGlyphCount();
     }
 }
 
@@ -1636,21 +1646,31 @@ function processTextAndSetCanvasHeight(str, maxw) {
             continue;
         }
 
-        if (str[i] in advanceWidth)
-            x += (advanceWidth[str[i]] ?? 0) + settings.tracking;
+        if (str[i] in advanceWidth) {
+            x += advanceWidth[str[i]] + settings.tracking;
+        }
+        else if ("�" in advanceWidth) {
+            str[i] = "�";
+            x += advanceWidth["�"] + settings.tracking;
+        }
 
         if (x >= maxw) {
             let idx = str.slice(linestart, i).lastIndexOf(" ") + linestart;
+            x = 0;
 
             if (idx <= linestart) {
                 outstr.push(...str.slice(linestart, i), "\n");
-                x = (advanceWidth[str[i]] ?? 0) + settings.tracking;
+
+                if (str[i] in advanceWidth)
+                    x += advanceWidth[str[i]] + settings.tracking;
+                else if ("�" in advanceWidth)
+                    x += advanceWidth["�"] + settings.tracking;
+                
                 linestart = i;
             } else {
                 idx++;
                 outstr.push(...str.slice(linestart, idx), "\n");
                 linestart = idx;
-                x = 0;
                 i = idx - 1;
             }
         }
@@ -1898,6 +1918,7 @@ function init() {
 
     setInterval(tryAutosave, 300000);
 
+    updateGlyphCount();
     copyoverin.value = "";
     gotocode.value = "";
     gotochar.value = "";
@@ -2146,6 +2167,7 @@ function importUploadedFont() {
     reloadCurrentGlyph();
     updatePreview();
     closeModal();
+    updateGlyphCount();
 }
 
 function importFnt(str,fn, obj) {

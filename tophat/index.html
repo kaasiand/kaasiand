@@ -286,7 +286,7 @@
 </table>
 
 <table id="preview_cont">
-<tr><td class="areaheader" style="display: flex; white-space: nowrap; width: 400px">Font preview<div class="btndivider" style="width:100%"></div>
+<tr><td class="areaheader" style="display: flex; white-space: nowrap; width: 400px">Font preview<div class="btndivider" style="flex-grow: 1;"></div></div>
 <div class="colourbtn smallcolourbtn" onclick="setFPBG(0); preview_image_cont.classList.remove('greyfilter'); preview_image_cont.style.setProperty('--clr',this.dataset.clr)" data-clr="var(--primgcontbg)" style="--clr:var(--btntransp)"></div>
 <div class="colourbtn smallcolourbtn" onclick="setFPBG(1); preview_image_cont.classList.remove('greyfilter'); preview_image_cont.style.setProperty('--clr',this.dataset.clr)" data-clr="#000" style="--clr:#000" ></div>
 <div class="colourbtn smallcolourbtn" onclick="setFPBG(2); preview_image_cont.classList.remove('greyfilter'); preview_image_cont.style.setProperty('--clr',this.dataset.clr)" data-clr="#fff" style="--clr:#fff" ></div>
@@ -300,7 +300,7 @@
     <button onclick="setTracking(settings.tracking-1)" class="toolbtn minus" style="width:auto;"></button>
     <input id="trackinginput" oninput="this.value = ~~this.value" maxlength="2" style="width: 48px; margin-right:1px">
     <button onclick="setTracking(settings.tracking+1)" class="toolbtn plus" style="width:auto;"></button>
-    <div class="btndivider" style="width: 100%;"></div>
+    <div class="btndivider" style="flex-grow: 1;"></div>
     <div class="btnlabel">Leading</div>
     <button onclick="setLeading(settings.leading-1)" class="toolbtn minus" style="width:auto;"></button>
     <input id="leadinginput" oninput="this.value = ~~this.value" maxlength="2" style="width: 48px; margin-right:1px">
@@ -313,8 +313,10 @@
 <div id="glyphlist_kern_cont">
 
     <div id="glyphlist_cont">
-        <div class="areaheader">
+        <div class="areaheader" style="display: flex; white-space: nowrap;">
             Glyphs
+            <div class="btndivider" style="flex-grow: 1;"></div>
+            <span id="glyphcount"></span>
         </div>
         <div style="display: flex;">
             <button onclick="setTagSelectedGlyphs('r')" class="toolbtn tag" id="tagbtn_r" title="Set tag to Red"    aria-label="Set tag to Red"></button>
