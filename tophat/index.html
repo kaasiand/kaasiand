@@ -27,7 +27,7 @@
 <body onload="init()" ondragover="tryOpenNewFontModal(event);" ondrop="dropHandler(event);">     
 
 <div id="leftbar">
-<div id="logostuff" data-ver="v0.8.2"><svg width="14px" height="14px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<div id="logostuff" data-ver="v0.9"><svg width="14px" height="14px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="m12.732 1.0172a12 4 10 0 0-12.512 1.8552 12 4 10 0 0 11.123 6.0232 12 4 10 0 0 12.513-1.8557 12 4 10 0 0-11.123-6.0228zm-0.34728 1.9695a6 2 10 0 1 5.5617 3.0114 6 2 10 0 1-6.2563 0.92758 6 2 10 0 1-5.5612-3.0113 6 2 10 0 1 6.2558-0.92767zm-7.3783 7.2937-1.7427 9.8831c-0.19248 1.0878 2.2975 2.4363 5.5611 3.0118 3.2639 0.57554 6.0652 0.15998 6.2564-0.92809l1.7427-9.8831c-1.8575 0.028961-3.9276-0.14837-6.002-0.51417-2.0743-0.36577-4.08-0.9071-5.8154-1.5696z"/></svg>
     tophat</div>
 <button id="newfontbtn" class="leftbarbtn textbtn" onclick="openNewFontModal()" data-name="New..."></button>
@@ -38,7 +38,7 @@
 </div>
 <div style="display: flex;gap:5px">
     <button id="resizebtn"  class="leftbarbtn textbtn" style="padding: 5px;" onclick="openResizeModal()"  data-name="Resize font"></button>
-    <!-- <button id="outlinebtn" class="leftbarbtn textbtn" style="padding: 5px;" onclick="openOutlineModal()" data-name="Outline font"></button> -->
+    <button id="outlinebtn" class="leftbarbtn textbtn" style="padding: 5px;" onclick="openOutlineModal()" data-name="Outline font"></button>
 </div>
 <div class="btndivider"></div>
 <div style="display: flex;gap:5px">
@@ -391,7 +391,7 @@
             <table style="font-size:14px;width:100%">
                 <tr>
                     <td style="padding-right: 10px; white-space: nowrap;">Preview character</td>
-                    <td><input id="importfontmodal_char" value="" onchange="updateUploadedFontPreview()" maxlength="1" style="width: 28px"></td>
+                    <td style="width:100%"><input id="importfontmodal_char" value="" onchange="updateUploadedFontPreview()" maxlength="1" style="width: 28px"></td>
                 </tr>
                 <tr>
                     <td style="padding-right: 10px; white-space: nowrap;">Font size</td>
@@ -412,11 +412,11 @@
                 </tr>
                 <tr>
                     <td style="padding-right: 10px; white-space: nowrap;">Alpha threshold</td>
-                    <td style="width: 150px"><input oninput="updateUploadedFontPreview()" style="width:100%;" type="range" id="alphathresh" min="1" max="254" value="127"></td>
+                    <td><input oninput="updateUploadedFontPreview()" style="width:150px;" type="range" id="alphathresh" min="1" max="254" value="127"></td>
                 </tr>
                 <tr>
                     <td style="padding-right: 10px; white-space: nowrap;"><label for="fontimportinvert">Invert result</label></td>
-                    <td style="width: 150px"><input style="height:20px;" onchange="updateUploadedFontPreview()" type="checkbox" id="fontimportinvert" name="fontimportinvert"></td>
+                    <td><input style="height:20px;" onchange="updateUploadedFontPreview()" type="checkbox" id="fontimportinvert" name="fontimportinvert"></td>
                 </tr>
             </table>
             <p style="font-size: 14px; font-style: italic;">For optimal results, manually clean up the glyphs after conversion.</p>
@@ -474,47 +474,67 @@
         </div>
 
         <div id="outlinemodal" class="modal hidden">
-            <h1>Outline font</h1>
+            <h1>Outline/invert font</h1>
             <table style="font-size:14px;width:100%">
                 <tr>
-                    <td style="padding-right: 10px; white-space: nowrap;">Outline type</td>
-                    <td><input id="outlinemodal_char" value="" onchange="updateUploadedFontPreview()" maxlength="1" style="width: 28px"></td>
+                    <td style="padding-right: 10px; white-space: nowrap;">Outline style</td>
+                    <td style="width:100%">
+                        <table>
+                            <tr>
+                                <td><button id="olbtnNW" class="outlinepixelbtn" data-px="0" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnN"  class="outlinepixelbtn" data-px="3" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnNE" class="outlinepixelbtn" data-px="3" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                            </tr>
+                            <tr>
+                                <td><button id="olbtnW" class="outlinepixelbtn" data-px="0" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnC" class="outlinepixelbtn" data-px="3" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnE" class="outlinepixelbtn" data-px="3" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                            </tr>
+                            <tr>
+                                <td><button id="olbtnSW" class="outlinepixelbtn" data-px="0" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnS"  class="outlinepixelbtn" data-px="0" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnSE" class="outlinepixelbtn" data-px="0" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                            </tr>
+                        </table>    
+                    </td>
                 </tr>
                 <tr>
                     <td style="padding-right: 10px; white-space: nowrap;">Preview character</td>
-                    <td><input id="outlinemodal_char" value="" onchange="updateUploadedFontPreview()" maxlength="1" style="width: 28px"></td>
+                    <td><input id="outlinemodal_char" value="" onchange="updateOutlinePreview()" maxlength="1" style="width: 28px"></td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <div id="importfont_cont">
                             <div class="importfont_glyph">
-                                <canvas id="prevcanvA"></canvas>
+                                <canvas id="prevcanv_outlA"></canvas>
                             </div>
                             <div style="width:20px;text-align:center">&rarr;</div>
                             <div class="importfont_glyph">
-                                <canvas id="prevcanvB"></canvas>
+                                <canvas id="prevcanv_outlB"></canvas>
                             </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding-right: 10px; white-space: nowrap;" colspan="2">
-                        <input style="height:20px;transform: translateY(2px);" onchange="updateOutlinePreview()" type="checkbox" id="fontimportinvert" name="fontimportinvert">
-                        <label for="fontimportinvert">Only apply to selected glyphs</label>
+                        <input style="height:20px;transform: translateY(2px);" type="checkbox" id="cb_outlineselect" name="cb_outlineselect">
+                        <label for="cb_outlineselect">Only apply to selected glyphs</label>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding-right: 10px; white-space: nowrap;" colspan="2">
-                        <input style="height:20px;transform: translateY(2px);" onchange="updateOutlinePreview()" type="checkbox" id="fontimportinvert" name="fontimportinvert">
-                        <label for="fontimportinvert">Expand canvas where needed</label>
+                        <input style="height:20px;transform: translateY(2px);" onchange="updateOutlinePreview();outlinenotice.classList.toggle('hidden',!this.checked)" type="checkbox" id="cb_outlineexpand" name="cb_outlineexpand">
+                        <label for="cb_outlineexpand">Expand canvas where needed</label>
                     </td>
                 </tr>
             </table>
+            <div id="outlinenotice" class="hidden">
             <hr style="border: none; border-top: 1px solid var(--lbartxt); opacity: 0.5">
             <p style="font-size: 14px; font-style: italic;">This action cannot be undone with the undo feature.</p>
+            </div>
             <div style="display: flex; float:right; margin-top: 10px;">
                 <button onclick="closeModal()" class="textbtn leftbarbtn" style="margin-left: 10px; width: auto;font-size:inherit">Cancel</button>
-                <button onclick="resizeFont()" class="textbtn leftbarbtn" style="margin-left: 10px; width: auto;font-size:inherit">Resize font</button>
+                <button onclick="outlineFont()" class="textbtn leftbarbtn" style="margin-left: 10px; width: auto;font-size:inherit">Resize font</button>
             </div>
         </div>
     </div>

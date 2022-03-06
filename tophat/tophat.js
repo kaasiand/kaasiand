@@ -1888,6 +1888,7 @@ function init() {
     kern_find_input.value = "";
     importfontmodal_size.value = 20;
     importfontmodal_char.value = "";
+    cb_outlineexpand.onchange();
     updateAutoAdvanceBtnCSS();
     updateAutoSaveBtnCSS();
     updateSeparateTagBtnCSS();
@@ -2319,9 +2320,6 @@ function tryOpenNewFontModal(e) {
         openNewFontModal();
 }
 function openNewFontModal() {
-    docMouseUp();
-    applySelection();
-
     newfontmodal_namein.value = "";
     newfontmodal_w_in.value = gwidth;
     newfontmodal_h_in.value = gheight;
@@ -2352,15 +2350,154 @@ function openModal(name) {
     document.getElementById(name)?.classList.remove("hidden");
 }
 function openResizeModal() {
-    docMouseUp();
-    applySelection();
-
     fontResize = { n: 0, e: 0, s: 0, w: 0 };
     resizefontmodal_char.value = currentGlyph;
     updateResizePreview();
 
     openModal("resizemodal");
 }
+function openOutlineModal() {
+    prevcanv_outlA.width  = gwidth + 2;
+    prevcanv_outlA.height = gheight + 2;
+    prevcanv_outlB.width  = gwidth + 2;
+    prevcanv_outlB.height = gheight + 2;
+
+    outlinemodal_char.value = currentGlyph;
+    updateOutlinePreview();
+    openModal("outlinemodal");
+}
+function updateOutlinePreview() {
+    if (!glyphBitmaps[outlinemodal_char.value]) return;
+
+    let cxa = prevcanv_outlA.getContext("2d");
+    let cxb = prevcanv_outlB.getContext("2d");
+    cxa.putImageData(glyphBitmaps[outlinemodal_char.value], 1, 1);
+    cxb.clearRect(0,0,prevcanv_outlB.width,prevcanv_outlB.height);
+    cxb.putImageData(makeOutlineImageData(glyphBitmaps[outlinemodal_char.value]), 1-(isOutlineOnLeft()*cb_outlineexpand.checked), 1-(isOutlineOnTop()*cb_outlineexpand.checked));
+}
+function isOutlineOnLeft() {
+    return !!(olbtnW.dataset.px*1 + olbtnNW.dataset.px*1 + olbtnSW.dataset.px*1)*1;
+}
+function isOutlineOnRight() {
+    return !!(olbtnE.dataset.px*1 + olbtnNE.dataset.px*1 + olbtnSE.dataset.px*1)*1;
+}
+function isOutlineOnTop() {
+    return !!(olbtnN.dataset.px*1 + olbtnNW.dataset.px*1 + olbtnNE.dataset.px*1)*1;
+}
+function isOutlineOnBtm() {
+    return !!(olbtnS.dataset.px*1 + olbtnSW.dataset.px*1 + olbtnSE.dataset.px*1)*1;
+}
+function isOutlineOnCenter() {
+    return !!(olbtnC.dataset.px*1)*1;
+}
+function outlineButtonToFilter(px) {
+    if (px == 1) return "brightness(0)";
+    if (px == 2) return "brightness(0) invert(1)";
+    if (px == 3) return "none";
+    if (px == 4) return "invert(1)";
+    return "none";
+}
+function makeOutlineImageData(imgdata) {
+    let extra = {n:0,e:0,s:0,w:0};
+    if (cb_outlineexpand.checked) {
+        extra.n = isOutlineOnTop();
+        extra.e = isOutlineOnRight();
+        extra.s = isOutlineOnBtm();
+        extra.w = isOutlineOnLeft();
+    }
+    let canv = document.createElement("canvas");
+    let cx = canv.getContext("2d");
+    canv.width  = gwidth  + extra.e + extra.w;
+    canv.height = gheight + extra.n + extra.s;
+
+    tctx.putImageData(imgdata,0,0);
+    
+    if (olbtnNW.dataset.px > 0) {
+        cx.filter = outlineButtonToFilter(olbtnNW.dataset.px);
+        cx.drawImage(tempCanvas,extra.w-1,extra.n-1);
+    }
+    if (olbtnNE.dataset.px > 0) {
+        cx.filter = outlineButtonToFilter(olbtnNE.dataset.px);
+        cx.drawImage(tempCanvas,extra.w+1,extra.n-1);
+    }
+    if (olbtnSW.dataset.px > 0) {
+        cx.filter = outlineButtonToFilter(olbtnSW.dataset.px);
+        cx.drawImage(tempCanvas,extra.w-1,extra.n+1);
+    }
+    if (olbtnSE.dataset.px > 0) {
+        cx.filter = outlineButtonToFilter(olbtnSE.dataset.px);
+        cx.drawImage(tempCanvas,extra.w+1,extra.n+1);
+    }
+    
+    if (olbtnN.dataset.px > 0) {
+        cx.filter = outlineButtonToFilter(olbtnN.dataset.px);
+        cx.drawImage(tempCanvas,extra.w,extra.n-1);
+    }
+    if (olbtnE.dataset.px > 0) {
+        cx.filter = outlineButtonToFilter(olbtnE.dataset.px);
+        cx.drawImage(tempCanvas,extra.w+1,extra.n);
+    }
+    if (olbtnS.dataset.px > 0) {
+        cx.filter = outlineButtonToFilter(olbtnS.dataset.px);
+        cx.drawImage(tempCanvas,extra.w,extra.n+1);
+    }
+    if (olbtnW.dataset.px > 0) {
+        cx.filter = outlineButtonToFilter(olbtnW.dataset.px);
+        cx.drawImage(tempCanvas,extra.w-1,extra.n);
+    }
+    if (olbtnC.dataset.px > 0) {
+        cx.filter = outlineButtonToFilter(olbtnC.dataset.px);
+    } else {
+        cx.globalCompositeOperation = "destination-out";
+    }
+    cx.drawImage(tempCanvas,extra.w,extra.n);
+
+    return cx.getImageData(0,0,canv.width,canv.height);
+}
+function outlineFont() {
+    let str;
+    if (cb_outlineselect.checked) {
+        str = [].map.call(glyphlist.querySelectorAll(".active"), el => el.dataset.ch).join("") || currentGlyph;
+    } else {
+        str = all_glyphs().chars;
+    }
+    str = [...str];
+
+    let newGlyphBitmaps = {};
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] in glyphBitmaps)
+            newGlyphBitmaps[str[i]] = makeOutlineImageData(glyphBitmaps[str[i]]);
+    }
+
+    if (cb_outlineexpand.checked) {
+        resizeFontNESW(isOutlineOnTop(),isOutlineOnRight(),isOutlineOnBtm(),isOutlineOnLeft());
+    } else {
+        initiateUndoState(str);
+    }
+
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] in glyphBitmaps) {
+            glyphBitmaps[str[i]] = newGlyphBitmaps[str[i]];
+            updateGlyphListBitmap(str[i]);
+        }
+        if (isOutlineOnRight() && str[i] in advanceWidth) {
+            advanceWidth[str[i]] = Math.min(gwidth, advanceWidth[str[i]] + 1);
+            kernByChar[str[i]]?.forEach(obj => obj.updateSpacing());
+        }
+    }
+
+    if (!cb_outlineexpand.checked) {
+        finaliseUndoState(str);
+    }
+
+    closeModal();
+    updateGuideCSS();
+    updatePreview();
+    loadElemGroup(currentGroup.elem,false,false);
+    reloadCurrentGlyph();
+}
+
+
 function updateResizePreview() {
     let cx = prevcanvR.getContext("2d");
     
@@ -2397,10 +2534,8 @@ function updateResizePreview() {
 function resizeFontNESW(n,e,s,w) {
     setGlyphDimensions(gwidth + e + w, gheight + n + s);
 
-    if (w) {
-        for (const k in advanceWidth) {
-            advanceWidth[k] = Math.min(gwidth, advanceWidth[k] + w);
-        }
+    for (const k in advanceWidth) {
+        advanceWidth[k] = Math.min(gwidth, advanceWidth[k] + w);
     }
     for (const k in glyphBitmaps) {
         tctx.putImageData(glyphBitmaps[k], w, n);
@@ -2413,20 +2548,17 @@ function resizeFontNESW(n,e,s,w) {
                 metrics[k] = Math.max(metrics[k] + n, -1);
         }
     }
-    for (const k in kerningPairs) {
-        kerningPairs[k].updateSpacing();
-    }
 
     clearUndos();
     loadElemGroup(currentGroup.elem);
+}
+function resizeFont() {
+    resizeFontNESW(fontResize.n,fontResize.e,fontResize.s,fontResize.w);
 
     closeModal();
     updateGuideCSS();
     updatePreview();
     reloadCurrentGlyph();
-}
-function resizeFont() {
-    resizeFontNESW(fontResize.n,fontResize.e,fontResize.s,fontResize.w);
 }
 
 function closeModal(entirely = true) {

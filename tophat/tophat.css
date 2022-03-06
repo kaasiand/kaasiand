@@ -1339,3 +1339,46 @@ ratio + L + dont care + didnt ask + youre british {
     max-width: 100%;
     image-rendering: pixelated;
 }
+.outlinepixelbtn {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-color: var(--btncol);
+    border: 2px solid var(--btncol);
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+}
+.outlinepixelbtn[data-px="1"] {
+    background-color: black;
+}
+.outlinepixelbtn[data-px="2"] {
+    background-color: white;
+}
+.outlinepixelbtn[data-px="3"] {
+    background: linear-gradient(to top left, black 48%, white 52%);
+}
+.outlinepixelbtn[data-px="4"] {
+    background: linear-gradient(to top left, black 48%, white 52%);
+}
+.outlinepixelbtn[data-px="4"]::after {
+    display: block;
+    position: absolute;
+    content: "";
+    width: 16px;
+    height: 16px;
+    top:  calc(50% - 8px);
+    left: calc(50% - 8px);
+    border-radius: 50%;
+    background: linear-gradient(to bottom right, black 48%, white 52%);
+}
+#olbtnC[data-px="0"] {
+    background-image:
+    linear-gradient(to bottom right, 
+        transparent 43%, var(--redbtn) 46%,
+        var(--redbtn) 54%, transparent 57%),
+    linear-gradient(to bottom left, 
+        transparent 43%, var(--redbtn) 46%,
+        var(--redbtn) 54%, transparent 57%);
+    background-color: var(--bgcol);
+}
