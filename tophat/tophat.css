@@ -1,4 +1,5 @@
 :root {
+    --btntransp: var(--bgcol);
     --bgcol:  #806a6a;
     --barcol: #a59191;
     --glcol:  #725c5c;
@@ -66,6 +67,7 @@
     --wspcol: #ffaf04a9;
 }
 :root[data-theme="stationery"] {
+    --btntransp: var(--glcol);
     --bgcol:  #e9e9e9;
     --barcol: #ffffff;
     --glcol:  #cecece;
@@ -133,6 +135,7 @@
     --wspcol: #ffaf04a9;
 }
 :root[data-theme="inkwell"] {
+    --btntransp: var(--glcol);
     --bgcol:  #2b2b2b;
     --barcol: #3a3a3a;
     --glcol:  #4d4d4d;
@@ -199,16 +202,12 @@
 
     --wspcol: #ca8b03a9;
 }
-:root[data-theme="inkwell"] #cbtnt {
-    background-color: var(--glcol);
-}
 :root[data-theme="inkwell"] #modal_cont {
     background-color: #0008;
 }
-:root[data-theme="stationery"] #preview_image,
-:root[data-theme="inkwell"]    #preview_image {
-    background-color: var(--btncol);
-    border-color: var(--btncol);
+:root[data-theme="stationery"] #preview_image_cont,
+:root[data-theme="inkwell"]    #preview_image_cont {
+    --primgcontbg: var(--btncol);
 }
 
 :root[data-theme="kaasiand"] {
@@ -259,8 +258,8 @@
     linear-gradient(to bottom, black 3px, crimson   3px),
     #ffe6b5;
 
-    --lbarbtn:#e66767;
-    --lbarbth:#fc7a7a;
+    --lbarbtn:darkred;
+    --lbarbth:crimson;
     --lbarbtt:yellow;
     --lbartxt:yellow;
 
@@ -282,7 +281,7 @@
     --tboxcol:#f5f5f5;
     --blcol:  hotpink;
 
-    --redbtn: #c55252;
+    --redbtn: red;
     --redbtnh:#dd6d6d;
     --deletec:#e0d8d8;
 
@@ -327,7 +326,8 @@
 :root[data-theme="kaasiand"] .textbtn.active:focus-visible::before {
     border-color: white;
 }
-:root[data-theme="kaasiand"] #blocklist button {
+:root[data-theme="kaasiand"] #blocklist button,
+:root[data-theme="kaasiand"] .btnlabel {
     filter: drop-shadow(0px 1px 2px black);
 }
 :root[data-theme="kaasiand"] #letterbox {
@@ -337,7 +337,7 @@
 :root[data-theme="kaasiand"] #leftbar,
 :root[data-theme="kaasiand"] #glyphimg_cont,
 :root[data-theme="kaasiand"] #adv_width_bar,
-:root[data-theme="kaasiand"] #preview_image,
+:root[data-theme="kaasiand"] #preview_image_cont,
 :root[data-theme="kaasiand"] #preview_input,
 :root[data-theme="kaasiand"] #glyphlist {
     box-shadow: 2px 2px 5px black;
@@ -573,6 +573,12 @@ body {
     box-sizing: border-box;
     background-color: var(--clr);
     cursor: pointer;
+}
+.colourbtn.smallcolourbtn {
+    width:  24px;
+    height: 24px;
+    min-width:  24px;
+    border: 5px solid var(--btncol);
 }
 .colourbtn.active {
     border-color: var(--active);
@@ -930,10 +936,20 @@ ratio + L + dont care + didnt ask + youre british {
 
 /* ************ FONT PREVIEW ************ */
 
+#preview_image_cont {
+    height: calc(calc(calc(var(--glyphheightpx) + var(--leadingpx)) * 5.5) + 4px);
+    overflow: hidden auto;
+    max-width: 400px;
+    --primgcontbg: var(--glcol);
+    --clr: var(--primgcontbg);
+    background: var(--clr);
+}
+#preview_image_cont.greyfilter {
+    filter: contrast(0.6) brightness(0.8) sepia(0.1);
+}
 #preview_image {
     display: block;
-    background: var(--glcol);
-    border: 2px solid var(--glcol);
+    border: 2px solid transparent;
     image-rendering: pixelated;
     overflow-y: auto;
     width: 400px;
@@ -1348,17 +1364,17 @@ ratio + L + dont care + didnt ask + youre british {
     display: block;
     width: 24px;
     height: 24px;
-    background-color: var(--btncol);
+    background: var(--btncol);
     border: 2px solid var(--btncol);
     cursor: pointer;
     position: relative;
     box-sizing: border-box;
 }
 .outlinepixelbtn[data-px="1"] {
-    background-color: black;
+    background: black;
 }
 .outlinepixelbtn[data-px="2"] {
-    background-color: white;
+    background: white;
 }
 .outlinepixelbtn[data-px="3"] {
     background: linear-gradient(to top left, black 48%, white 52%);
@@ -1378,12 +1394,11 @@ ratio + L + dont care + didnt ask + youre british {
     background: linear-gradient(to bottom right, black 48%, white 52%);
 }
 #olbtnC[data-px="0"] {
-    background-image:
+    background:
     linear-gradient(to bottom right, 
         transparent 43%, var(--redbtn) 46%,
         var(--redbtn) 54%, transparent 57%),
     linear-gradient(to bottom left, 
         transparent 43%, var(--redbtn) 46%,
-        var(--redbtn) 54%, transparent 57%);
-    background-color: var(--bgcol);
+        var(--redbtn) 54%, transparent 57%), var(--bgcol);
 }

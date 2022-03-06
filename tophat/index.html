@@ -234,7 +234,7 @@
         <button onclick="setTool('select')"  id="select" class="toolbtn" title="Select"  aria-label="Selection tool"></button>
         <button onclick="setTool('move')"    id="move"   class="toolbtn" title="Move"    aria-label="Move tool"></button>
         <div class="btndivider"></div>
-        <button id="cbtnt" onclick="setColour(  0,  0,  0,  0)" class="colourbtn"        style="--clr:#0000" title="Transparent"aria-label="Transparent"></button>
+        <button id="cbtnt" onclick="setColour(  0,  0,  0,  0)" class="colourbtn"        style="--clr:var(--btntransp)" title="Transparent"aria-label="Transparent"></button>
         <button id="cbtnb" onclick="setColour(  0,  0,  0,255)" class="colourbtn active" style="--clr:#000"  title="Black"      aria-label="Black"></button>
         <button id="cbtnw" onclick="setColour(255,255,255,255)" class="colourbtn"        style="--clr:#fff"  title="White"      aria-label="White"></button>
 
@@ -286,8 +286,14 @@
 </table>
 
 <table id="preview_cont">
-<tr><td class="areaheader">Font preview</td></tr>
-<tr><td><div style="height: calc(calc(calc(var(--glyphheightpx) + var(--leadingpx)) * 5.5) + 4px); overflow: hidden auto; max-width: 400px;"><canvas id="preview_image"></canvas></div></td></tr>
+<tr><td class="areaheader" style="display: flex; white-space: nowrap; width: 400px">Font preview<div class="btndivider" style="width:100%"></div>
+<div class="colourbtn smallcolourbtn" onclick="setFPBG(0); preview_image_cont.classList.remove('greyfilter'); preview_image_cont.style.setProperty('--clr',this.dataset.clr)" data-clr="var(--primgcontbg)" style="--clr:var(--btntransp)"></div>
+<div class="colourbtn smallcolourbtn" onclick="setFPBG(1); preview_image_cont.classList.remove('greyfilter'); preview_image_cont.style.setProperty('--clr',this.dataset.clr)" data-clr="#000" style="--clr:#000" ></div>
+<div class="colourbtn smallcolourbtn" onclick="setFPBG(2); preview_image_cont.classList.remove('greyfilter'); preview_image_cont.style.setProperty('--clr',this.dataset.clr)" data-clr="#fff" style="--clr:#fff" ></div>
+<div class="colourbtn smallcolourbtn" onclick="setFPBG(3); preview_image_cont.classList.add('greyfilter'); preview_image_cont.style.setProperty('--clr',this.dataset.clr)" data-clr="#000" style="--clr:#312f28" ></div>
+<div class="colourbtn smallcolourbtn" onclick="setFPBG(4); preview_image_cont.classList.add('greyfilter'); preview_image_cont.style.setProperty('--clr',this.dataset.clr)" data-clr="#fff" style="--clr:#b0aea7" ></div>
+</td></tr>
+<tr><td><div id="preview_image_cont"><canvas id="preview_image"></canvas></div></td></tr>
 <tr><td><textarea id="preview_input" oninput="settings.previewtext = this.value; updatePreview()"></textarea></td></tr>
 <tr><td style="display: flex; width: 400px">
     <div class="btnlabel">Tracking</div>
@@ -485,19 +491,19 @@
                     <td style="width:100%">
                         <table>
                             <tr>
-                                <td><button id="olbtnNW" class="outlinepixelbtn" data-px="0" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
-                                <td><button id="olbtnN"  class="outlinepixelbtn" data-px="3" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
-                                <td><button id="olbtnNE" class="outlinepixelbtn" data-px="3" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnNW" class="outlinepixelbtn" data-px="4" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnN"  class="outlinepixelbtn" data-px="4" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnNE" class="outlinepixelbtn" data-px="4" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
                             </tr>
                             <tr>
-                                <td><button id="olbtnW" class="outlinepixelbtn" data-px="0" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnW" class="outlinepixelbtn" data-px="4" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
                                 <td><button id="olbtnC" class="outlinepixelbtn" data-px="3" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
-                                <td><button id="olbtnE" class="outlinepixelbtn" data-px="3" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnE" class="outlinepixelbtn" data-px="4" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
                             </tr>
                             <tr>
-                                <td><button id="olbtnSW" class="outlinepixelbtn" data-px="0" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
-                                <td><button id="olbtnS"  class="outlinepixelbtn" data-px="0" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
-                                <td><button id="olbtnSE" class="outlinepixelbtn" data-px="0" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnSW" class="outlinepixelbtn" data-px="4" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnS"  class="outlinepixelbtn" data-px="4" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
+                                <td><button id="olbtnSE" class="outlinepixelbtn" data-px="4" onclick="this.dataset.px = (this.dataset.px*1 + 1) % 5;updateOutlinePreview()" oncontextmenu="event.preventDefault(); this.dataset.px = (this.dataset.px*1 + 4) % 5;updateOutlinePreview()"></button></td>
                             </tr>
                         </table>    
                     </td>

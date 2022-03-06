@@ -22,10 +22,11 @@ let settings = {
     tracking: 1,
     leading: 1,
     fontname: "",
-    scale: 1
+    scale: 1,
 }
 let prefs = {
     autosave: true,
+    fontprevidx: 0,
     theme: "hiratake",
 }
 let metrics = {
@@ -1613,6 +1614,14 @@ function toggleAutoSave() {
     updateAutoSaveBtnCSS();
     savePrefs();
 }
+function setFPBG(n) {
+    prefs.fontprevidx = n;
+    savePrefs();
+}
+function updateFPBG() {
+    prefs.fontprevidx ??= 0;
+    preview_cont.querySelectorAll(".smallcolourbtn")[prefs.fontprevidx].click();
+}
 
 function processTextAndSetCanvasHeight(str, maxw) {
     let x = 0;
@@ -1902,6 +1911,7 @@ function init() {
     updateKernCurrentCSS();
     updateCompactView();
     updatePreview();
+    updateFPBG();
     setScale(settings.scale);
     setTracking(settings.tracking);
     setLeading(settings.leading);
