@@ -2336,6 +2336,8 @@ function downloadSplit() {
 
 function tryOpenNewFontModal(e) {
     e.preventDefault();
+    if (!this.files || !this.files[0]) return;
+
     if (newfontmodal.classList.contains("hidden"))
         openNewFontModal();
 }
