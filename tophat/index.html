@@ -27,7 +27,7 @@
 <body onload="init()" ondragover="tryOpenNewFontModal(event);" ondrop="dropHandler(event);">     
 
 <div id="leftbar">
-<div id="logostuff" data-ver="v0.9.1"><svg width="14px" height="14px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<div id="logostuff" data-ver="v0.9.2"><svg width="14px" height="14px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="m12.732 1.0172a12 4 10 0 0-12.512 1.8552 12 4 10 0 0 11.123 6.0232 12 4 10 0 0 12.513-1.8557 12 4 10 0 0-11.123-6.0228zm-0.34728 1.9695a6 2 10 0 1 5.5617 3.0114 6 2 10 0 1-6.2563 0.92758 6 2 10 0 1-5.5612-3.0113 6 2 10 0 1 6.2558-0.92767zm-7.3783 7.2937-1.7427 9.8831c-0.19248 1.0878 2.2975 2.4363 5.5611 3.0118 3.2639 0.57554 6.0652 0.15998 6.2564-0.92809l1.7427-9.8831c-1.8575 0.028961-3.9276-0.14837-6.002-0.51417-2.0743-0.36577-4.08-0.9071-5.8154-1.5696z"/></svg>
     tophat</div>
 <button id="newfontbtn" class="leftbarbtn textbtn" onclick="openNewFontModal()" data-name="New..."></button>
@@ -54,7 +54,9 @@
 <li>
     <button class="block_category folded" onclick="this.classList.toggle('folded')" data-group="cat_latin"></button>
     <ul>
-        <li><button data-group="latin_uni" ></button></li>
+        <li><button data-group="latin_unic"></button></li>
+        <!-- <li><button data-group="latin_lttr"></button></li> -->
+
         <li><button data-group="enlanguage"></button></li>
         <li><button data-group="frlanguage"></button></li>
         <li><button data-group="delanguage"></button></li>
@@ -66,11 +68,28 @@
         <li><button data-group="sv_fi_lang"></button></li>
         <li><button data-group="islanguage"></button></li>
         <li><button data-group="sami_langs"></button></li>
+        <li><button data-group="pllanguage"></button></li>
+        <li><button data-group="czlanguage"></button></li>
+        <li><button data-group="srlanguag1"></button></li>
+        <li><button data-group="bs_cr_lang"></button></li>
+        <li><button data-group="cnlanguage"></button></li>
+        <li><button data-group="sklanguage"></button></li>
         <!-- <li><button data-group=""></button></li>
         <li><button data-group=""></button></li>
         <li><button data-group=""></button></li>
         <li><button data-group=""></button></li>
         <li><button data-group=""></button></li> -->
+    </ul>
+</li>
+<li>
+    <button class="block_category folded" onclick="this.classList.toggle('folded')" data-group="cat_cyrill"></button>
+    <ul>
+        <li><button data-group="rulanguage"></button></li>
+        <li><button data-group="uklanguage"></button></li>
+        <li><button data-group="bglanguage"></button></li>
+        <li><button data-group="srlanguag2"></button></li>
+        <li><button data-group="mklanguage"></button></li>
+        <li><button data-group="belanguage"></button></li>
     </ul>
 </li>
 <li>
@@ -80,6 +99,7 @@
         <!-- <li><button data-group="greek_poly"></button></li> -->
     </ul>
 </li>
+<li><button data-group="lat_cyr_gr"></button></li>
 <li>
     <button class="block_category folded" onclick="this.classList.toggle('folded')" data-group="cat_jpnese"></button>
     <ul>
@@ -102,7 +122,7 @@
 <ul>
     <li><button data-group="basiclatin"></button></li><li><button data-group="latin1supp"></button></li>
     <li><button data-group="latinext_a"></button></li><li><button data-group="latinext_b"></button></li>
-    <li><button data-group="ipa_ext"   ></button></li><li><button data-group="spacingmod"></button></li>
+    <li><button data-group="ipa_extens"></button></li><li><button data-group="spacingmod"></button></li>
     <li><button data-group="comb_diacr"></button></li><li><button data-group="greek_copt"></button></li>
     <li><button data-group="cyrillic"  ></button></li><li><button data-group="cyril_supp"></button></li>
     <li><button data-group="armenian"  ></button></li><li><button data-group="hebrew"    ></button></li>
@@ -117,20 +137,48 @@
     <li><button data-group="telugu"    ></button></li><li><button data-group="kannada"   ></button></li>
     <li><button data-group="malayalam" ></button></li><li><button data-group="sinhala"   ></button></li>
     <li><button data-group="thai"      ></button></li><li><button data-group="lao"       ></button></li>
-    <li><button data-group="tibetan"   ></button></li>
-    <li><button data-group="myanmar"   ></button></li>
-
-    <li><button data-group="cjksympunc"></button></li>
-    <li><button data-group="hiragana"  ></button></li>
-    <li><button data-group="katakana"  ></button></li>
-    <li><button data-group="bopomofo"  ></button></li>
-    <li><button data-group="hangul_c_j"></button></li>
-    <li><button data-group="kanbun"    ></button></li>
-    <li><button data-group="bopomofo_x"></button></li>
-    <li><button data-group="cjk_stroke"></button></li>
-    <li><button data-group="katakana_x"></button></li>
-    <li><button data-group="enclos_cjk"></button></li>
-    <li><button data-group="cjk_compat"></button></li>
+    <li><button data-group="tibetan"   ></button></li><li><button data-group="myanmar"   ></button></li>
+    <li><button data-group="georgian"  ></button></li><li><button data-group="hanguljamo"></button></li>
+    <li><button data-group="ethiopic"  ></button></li><li><button data-group="ethiopic_s"></button></li>
+    <li><button data-group="cherokee"  ></button></li><li><button data-group="u_c_ab_syl"></button></li>
+    <li><button data-group="ogham"     ></button></li><li><button data-group="runic"     ></button></li>
+    <li><button data-group="tagalog"   ></button></li><li><button data-group="hanunoo"   ></button></li>
+    <li><button data-group="buhid"     ></button></li><li><button data-group="tagbanwa"  ></button></li>
+    <li><button data-group="khmer"     ></button></li><li><button data-group="mongolian" ></button></li>
+    <li><button data-group="u_c_ab_s_x"></button></li><li><button data-group="limbu"     ></button></li>
+    <li><button data-group="tai_le"    ></button></li><li><button data-group="new_tai_lu"></button></li>
+    <li><button data-group="khmer_symb"></button></li><li><button data-group="buginese"  ></button></li>
+    <li><button data-group="tai_tham"  ></button></li><li><button data-group="com_di_m_x"></button></li>
+    <li><button data-group="balinese"  ></button></li><li><button data-group="sundanese" ></button></li>
+    <li><button data-group="batak"     ></button></li><li><button data-group="lepcha"    ></button></li>
+    <li><button data-group="ol_chiki"  ></button></li><li><button data-group="cyrl_ext_c"></button></li>
+    <li><button data-group="georgian_x"></button></li><li><button data-group="sundanes_s"></button></li>
+    <li><button data-group="vedic_exts"></button></li><li><button data-group="phonet_ext"></button></li>
+    <li><button data-group="ph_ext_sup"></button></li><li><button data-group="com_di_sup"></button></li>
+    <li><button data-group="lat_ext_ad"></button></li><li><button data-group="greek_extd"></button></li>
+    <li><button data-group="gener_punc"></button></li><li><button data-group="sup_subscr"></button></li>
+    <li><button data-group="curr_symbs"></button></li><li><button data-group="com_di_sym"></button></li>
+    <li><button data-group="letterlike"></button></li><li><button data-group="numberform"></button></li>
+    <li><button data-group="arrows"    ></button></li><li><button data-group="mathoperat"></button></li>
+    <li><button data-group="misc_techn"></button></li><li><button data-group="controlpic"></button></li>
+    <li><button data-group="opt_ch_rec"></button></li><li><button data-group="enclos_alp"></button></li>
+    <li><button data-group="boxdrawing"></button></li><li><button data-group="blockelems"></button></li>
+    <li><button data-group="geomshapes"></button></li><li><button data-group="misc_symbs"></button></li>
+    <li><button data-group="dingbats"  ></button></li><li><button data-group="miscmath_a"></button></li>
+    <li><button data-group="supp_arr_a"></button></li><li><button data-group="braillepat"></button></li>
+    <li><button data-group="supp_arr_b"></button></li><li><button data-group="miscmath_b"></button></li>
+    <li><button data-group="suppmathop"></button></li><li><button data-group="miscsymarr"></button></li>
+    <li><button data-group="glagolitic"></button></li><li><button data-group="latinext_c"></button></li>
+    <li><button data-group="coptic"    ></button></li><li><button data-group="georgian_s"></button></li>
+    <li><button data-group="tifinagh"  ></button></li><li><button data-group="ethiopic_x"></button></li>
+    <li><button data-group="cyrl_ext_a"></button></li><li><button data-group="supp_punct"></button></li>
+    <li><button data-group="cjkrad_sup"></button></li><li><button data-group="kangxi_rad"></button></li>
+    <li><button data-group="ideodescch"></button></li><li><button data-group="cjksympunc"></button></li>
+    <li><button data-group="hiragana"  ></button></li><li><button data-group="katakana"  ></button></li>
+    <li><button data-group="bopomofo"  ></button></li><li><button data-group="hangul_c_j"></button></li>
+    <li><button data-group="kanbun"    ></button></li><li><button data-group="bopomofo_x"></button></li>
+    <li><button data-group="cjk_stroke"></button></li><li><button data-group="katakana_x"></button></li>
+    <li><button data-group="enclos_cjk"></button></li><li><button data-group="cjk_compat"></button></li>
     <li><button class="block_category folded" onclick="this.classList.toggle('folded')" data-group="cat_cjkuxa"></button>
         <ul>
             <li><button style="font-size: 13px" data-group="cjk_rxa_r0"></button></li>
@@ -182,6 +230,56 @@
         </ul></li> -->
     <li><button data-group="yi_syllabl"></button></li>
     <li><button data-group="yi_radical"></button></li>
+
+    <li><button data-group="lisu"      ></button></li>
+    <li><button data-group="vai"       ></button></li>
+    <li><button data-group="cyrl_ext_b"></button></li>
+    <li><button data-group="bamum"     ></button></li>
+    <li><button data-group="modif_tone"></button></li>
+    <li><button data-group="latinext_d"></button></li>
+    <li><button data-group="sylotinagr"></button></li>
+    <li><button data-group="comm_indic"></button></li>
+    <li><button data-group="phags_pa"  ></button></li>
+    <li><button data-group="saurashtra"></button></li>
+    <li><button data-group="dvngri_ext"></button></li>
+    <li><button data-group="kayah_li"  ></button></li>
+    <li><button data-group="rejang"    ></button></li>
+    <li><button data-group="hngljm_x_a"></button></li>
+    <li><button data-group="javanese"  ></button></li>
+    <li><button data-group="myanmar_xb"></button></li>
+    <li><button data-group="cham"      ></button></li>
+    <li><button data-group="myanmar_xa"></button></li>
+    <li><button data-group="tai_viet"  ></button></li>
+    <li><button data-group="meeteimayx"></button></li>
+    <li><button data-group="ethiopicxa"></button></li>
+    <li><button data-group="latinext_e"></button></li>
+    <li><button data-group="cherokee_s"></button></li>
+    <li><button data-group="meeteimayk"></button></li>
+
+    <li><button class="block_category folded" onclick="this.classList.toggle('folded')" data-group="cat_hngsyl"></button>
+        <ul>
+            <li><button style="font-size: 13px" data-group="hngl_syl_0"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_1"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_2"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_3"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_4"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_5"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_6"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_7"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_8"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_9"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_A"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_B"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_C"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_D"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_E"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_F"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_G"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_H"></button></li>
+            <li><button style="font-size: 13px" data-group="hngl_syl_I"></button></li>
+        </ul></li>
+    <li><button data-group="hngljm_x_b"></button></li>
+
     <li><button class="block_category folded" onclick="this.classList.toggle('folded')" data-group="cat_prvuse"></button>
         <ul>
             <li><button data-group="privateus0"></button></li>
@@ -191,6 +289,17 @@
             <li><button data-group="privateus4"></button></li>
         </ul>
     </li>
+    <li><button data-group="cjk_com_id"></button></li>
+    <li><button data-group="alph_presf"></button></li>
+    <li><button data-group="arab_prf_a"></button></li>
+    <li><button data-group="var_select"></button></li>
+    <li><button data-group="vert_forms"></button></li>
+    <li><button data-group="com_hlfmks"></button></li>
+    <li><button data-group="cjk_com_fo"></button></li>
+    <li><button data-group="small_form"></button></li>
+    <li><button data-group="arab_prf_b"></button></li>
+    <li><button data-group="half_fullw"></button></li>
+    <li><button data-group="specials"  ></button></li>
 </ul>
 </div>
 <div style="display: flex;">

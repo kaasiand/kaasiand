@@ -1754,12 +1754,12 @@ function tryAutosave() {
 
 function tryGoto() {
     if ([...gotochar.value].length != 1) return;
-
+    if (!isAllowedUnicode(gotochar.value.codePointAt(0))) return;
     let elem = glyphlist.querySelector(gotochar.value == "'" ? '[data-ch="\'"]' : "[data-ch='"+gotochar.value+"']") ?? document.createElement("div");
     loadGlyph(gotochar.value, elem);
 }
 function isAllowedUnicode(val) {
-    return val <= 0x3fffff && val >= 0x20 &&
+    return val <= 0x10FFFF && val >= 0x20 &&
         !(val >= 0x007F && val <  0x00A0) &&
         !(val >= 0x2028 && val <= 0x202E) &&
         !(val >= 0x2060 && val <= 0x206F);

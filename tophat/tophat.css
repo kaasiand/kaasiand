@@ -1,3 +1,5 @@
+/* welcome to hell */
+
 :root {
     --btntransp: var(--bgcol);
     --bgcol:  #806a6a;
@@ -677,8 +679,9 @@ body {
     color: inherit;
     text-align: left;
     font-size: 14px;
-    line-height: 120%;
-    margin-bottom: 3px;
+    line-height: 110%;
+    margin-top: 2px;
+    margin-bottom: 1px;
 }
 #blocklist button::after {
     content: attr(data-name);
@@ -694,6 +697,9 @@ body {
 
     cursor: default !important;
 }
+#blocklist > .block_category {
+    margin-top: 15px !important;
+}
 .block_category::before {
     display: block;
     position: absolute;
@@ -705,7 +711,7 @@ body {
     border-top: none;
     box-sizing: border-box;
     left: 3px;
-    top: calc(50% - 4px);
+    top: calc(50% - 2px);
     transform: rotate(45deg);
 }
 .block_category.folded::before {
@@ -1061,10 +1067,27 @@ ratio + L + dont care + didnt ask + youre british {
     white-space: nowrap;
 }
 /* ************ WHITESPACE CHARACTERS ************ */
-:not(.compact) > .glyph[data-ch=" "]::before { content: var(--spacestr); font-size: 9px; padding: 1px 0 0; font-style: italic; }
-:not(.compact) > .glyph[data-ch=" "]::before { content: "NBSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
-:not(.compact) > .glyph[data-ch=" "]::before { content: "FSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
-:not(.compact) > .glyph[data-ch="　"]::before { content: "IDSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content: var(--spacestr); font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content:  "NBSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content:  "NQSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content:  "MQSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content:  "ENSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content:  "EMSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content: "3/MSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content: "4/MSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content: "6/MSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content:   "FSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content:   "PSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content:  "THSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content:   "HSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch="​" ]::before { content:  "ZWSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch="‌" ]::before { content:  "ZWNJ"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch="‍" ]::before { content:   "ZWJ"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content: "NNBSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch=" "]::before { content:  "MMSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch="⁠" ]::before { content:    "WJ"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch="　"]::before { content: "IDSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
+.glyph[data-ch="﻿"]::before { content:"ZWNBSP"; font-size: 9px; padding: 1px 0 0; font-style: italic; }
 
 .compact .glyph {
     margin: 0px;
@@ -1073,7 +1096,7 @@ ratio + L + dont care + didnt ask + youre british {
     height: calc(var(--glyphheightpx) + 4px);
 }
 .compact .glyph::before {
-    content: "";
+    content: "" !important;
     height: 3px;
     top: 0px;
     background: none;
