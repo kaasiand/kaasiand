@@ -454,6 +454,14 @@ body {
     font-weight: bold;
     font-size: 16px;
 }
+.areaheader input[type="checkbox"] {
+    width: 20px;
+}
+.areaheader input[type="checkbox"] + label {
+    font-weight: normal;
+    font-size: 14px;
+    padding-top: 4px;
+}
 
 /* ************ BUTTONS ************ */
 
@@ -957,6 +965,9 @@ ratio + L + dont care + didnt ask + youre british {
 #preview_image_cont.greyfilter {
     filter: contrast(0.6) brightness(0.8) sepia(0.1);
 }
+#preview_image.invfilter {
+    filter: invert(1);
+}
 #preview_image {
     display: block;
     border: 2px solid transparent;
@@ -1176,7 +1187,7 @@ ratio + L + dont care + didnt ask + youre british {
     content: var(--emptystr);
     opacity: 0.5;
 }
-#kern_find_input, #kern_add_input, #glyphedit_preview_cont input {
+#kern_find_input, #kern_add_input, #glyphedit_preview_cont input:not([type="checkbox"]) {
     width: 100%;
 
     margin-top: 1px;

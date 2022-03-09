@@ -405,6 +405,8 @@
 <div class="colourbtn smallcolourbtn" onclick="setFPBG(2); preview_image_cont.classList.remove('greyfilter'); preview_image_cont.style.setProperty('--clr',this.dataset.clr)" data-clr="#fff" style="--clr:#fff" ></div>
 <div class="colourbtn smallcolourbtn" onclick="setFPBG(3); preview_image_cont.classList.add('greyfilter'); preview_image_cont.style.setProperty('--clr',this.dataset.clr)" data-clr="#000" style="--clr:#312f28" ></div>
 <div class="colourbtn smallcolourbtn" onclick="setFPBG(4); preview_image_cont.classList.add('greyfilter'); preview_image_cont.style.setProperty('--clr',this.dataset.clr)" data-clr="#fff" style="--clr:#b0aea7" ></div>
+<div class="btndivider"></div>
+<input type="checkbox" onchange="setFPInv()" id="fpinvcb" name="fpinvcb"><label for="fpinvcb">Invert</label>
 </td></tr>
 <tr><td><div id="preview_image_cont"><canvas id="preview_image"></canvas></div></td></tr>
 <tr><td><textarea id="preview_input" oninput="settings.previewtext = this.value; updatePreview()"></textarea></td></tr>

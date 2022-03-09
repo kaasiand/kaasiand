@@ -1630,9 +1630,19 @@ function setFPBG(n) {
     prefs.fontprevidx = n;
     savePrefs();
 }
+function setFPInv() {
+    prefs.fontprevinv = fpinvcb.checked;
+    updateFPInv();
+    savePrefs();
+}
 function updateFPBG() {
     prefs.fontprevidx ??= 0;
     preview_cont.querySelectorAll(".smallcolourbtn")[prefs.fontprevidx].click();
+}
+function updateFPInv() {
+    prefs.fontprevinv ??= false;
+    fpinvcb.checked = prefs.fontprevinv;
+    preview_image.classList.toggle('invfilter',prefs.fontprevinv);
 }
 
 function processTextAndSetCanvasHeight(str, maxw) {
@@ -1935,6 +1945,7 @@ function init() {
     updateCompactView();
     updatePreview();
     updateFPBG();
+    updateFPInv();
     setScale(settings.scale);
     setTracking(settings.tracking);
     setLeading(settings.leading);
