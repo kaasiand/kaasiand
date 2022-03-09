@@ -502,14 +502,23 @@ const groupComponents = {
 
     more_punct: { chars: " []{}~*_@#%€£$¢…–—―•©®™‼�",        nameEN: "Extra symbols", nameFR: "Symboles supplémentaires", nameJP: "より多くの記号"},
     punc_no_em: { chars: " []{}~*_@#%№€£$¢…–―•©®™‼�",        nameEN: "Extra symbols", nameFR: "Symboles supplémentaires", nameJP: "より多くの記号"},
-    basic_math: { chars: " +−×÷=≠<>≤≥±∞",                    nameEN: "Basic mathematical symbols", nameFR: "Symboles mathématiques de base", nameJP: "基本的な数学記号"},
     buttonicon: { chars: "✛⬆➡⬇⬅ⒶⒷ🎣⊙🔒🟨",                  nameEN: "Button icons", nameFR: "Icônes de boutons", nameJP: "ボタンのアイコン"},
+
+    basic_math: { chars: " +−×÷=≠<>≤≥±∞",                    nameEN: "Basic mathematical symbols", nameFR: "Symboles mathématiques de base", nameJP: "基本的な数学記号"},
+    mathnumber: { chars: " 1234567890xABCDEF",               nameEN: "Numerals", nameFR: "Chiffres", nameJP: "数字"},
+    arithmetop: { chars: "+−±∓×⋅*÷∶/√^!",                    nameEN: "Arithmetic operators", nameFR: "Opérateurs arithmétiques", nameJP: "算術記号"},
+    relationop: { chars: "=≠≈<>≤≥∞",                         nameEN: "Relational operators", nameFR: "Opérateurs relationnels", nameJP: "関係記号"},
+    logical_op: { chars: "∧∨∀∃¬⇒⇔≡⊕⊤⊥",                      nameEN: "Logic symbols", nameFR: "Symboles logiques", nameJP: "論理記号"},
+    setsymbols: { chars: "=≠<>≤≥∞",                          nameEN: "Sets", nameFR: "Ensembles", nameJP: "集合記号"},
 
     numeral_en: { chars: "1234567890",                       nameEN: "Numerals", nameFR: "Chiffres", nameJP: "数字"},
     numeral_fr: { chars: "1234567890ᵉʳˢᵈ",                   nameEN: "Numerals", nameFR: "Chiffres", nameJP: "数字"},
     numeral_oa: { chars: "1234567890ºª",                     nameEN: "Numerals", nameFR: "Chiffres", nameJP: "数字"},
 
-    kanji_nums: { chars: "一二三四五六七八九十百千万億兆〇零",     nameEN: "Numerals", nameFR: "Chiffres", nameJP: "数字"},
+    kanji_nums: { chars: "一二三四五六七八九十百千万億兆〇零",     nameEN: "Numerals", nameFR: "Chiffres",  nameJP: "数字"},
+    kanji_time: { chars: "時分秒間半正午前後月火水木金土日曜今去先再来週年", nameEN: "Time",nameFR: "Temps",  nameJP: "時間"},
+    kanji_lang: { chars: "言語本英文字",                       nameEN: "Language", nameFR: "Langue",    nameJP: "言語"},
+    kanji_peop: { chars: "人男女子名私内僕俺父母兄弟姉妹",        nameEN: "People",   nameFR: "Personnes", nameJP: "人"},
 
 }
 function tagged_all() {
@@ -614,7 +623,7 @@ const groups = {
                   nameFR: "Par lettre",
                   nameJP: "発音区別符号別"},
 
-    math_group: { components: ["alphab_lat","punctu_eng",...group_comm], nameEN:"Mathematical symbols", nameFR: "Symboles mathématiques",  nameJP: "数学記号"},
+    math_group: { components: ["mathnumber","arithmetop","relationop"], nameEN:"Mathematical symbols", nameFR: "Symboles mathématiques",  nameJP: "数学記号"},
 
     enlanguage: { components: ["alphab_lat","punctu_eng",...group_comm],              nameEN: "English",   nameFR: "Anglais",      nameJP:"英語"},
     frlanguage: { components: ["alphab_lat","accent_fra","punctu_fra","numeral_fr",...group_com2], nameEN: "French",    nameFR: "Français",     nameJP:"フランス語"},
@@ -647,7 +656,7 @@ const groups = {
     lat_cyr_gr: { components: ["alphab_lat","alphab_rus","alphab_grk"], nameEN: "Latin/Cyrillic/Greek", nameFR: "Latin, cyrillique, grec", nameJP: "ラテン文字、キリル文字、ギリシア文字"},
 
     kana_punct: { components: ["basic_hira","other_hira","basic_kata","other_kata","punctu_jpn","numeral_en","buttonicon"], nameEN: "Kana and punctuation", nameFR: "Kana et ponctuation", nameJP:"仮名と句読点"},
-    kanji_comm: { components: ["kanji_nums"], nameEN: "Kanji by meaning", nameFR: "Kanji par sens", nameJP:"意味別の漢字"},
+    kanji_comm: { components: ["kanji_nums","kanji_time","kanji_lang","kanji_peop"], nameEN: "Kanji by meaning", nameFR: "Kanji par sens", nameJP:"意味別の漢字"},
     kyouiku_kj: { components: ["jouyou_gr1","jouyou_gr2","jouyou_gr3","jouyou_gr4","jouyou_gr5","jouyou_gr6"], nameEN: "Kyōiku kanji", nameFR: "Kyōiku kanji", nameJP:"教育漢字"},
     jouyou_kji: { components: ["jouyou_grS"], nameEN: "Grade S jōyō kanji", nameFR: "Jōyō kanji du secondaire", nameJP:"中学校で習う漢字"},
     jouyou_rad: { components: ["jouyou_r01","jouyou_r02","jouyou_r03","jouyou_r04","jouyou_r05","jouyou_r06","jouyou_r07","jouyou_r08","jouyou_r09","jouyou_r10"], nameEN: "Jōyō kanji by radical", nameFR: "Jōyō kanji par clé", nameJP:"部首別の常用漢字"},

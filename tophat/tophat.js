@@ -607,6 +607,8 @@ function storeGlyphBitmap() {
     glyphBitmaps[currentGlyph] = currentImageData;
     if (activeGlyphElem)
         updateGlyphListBitmapCurrent(currentGlyph, activeGlyphElem);
+    if (!(currentGlyph in advanceWidth))
+        advanceWidth[currentGlyph] = currentAdvWidth;
 }
 function storeGlyphAdvWidth() {
     advanceWidth[currentGlyph] = currentAdvWidth;
@@ -1823,7 +1825,7 @@ function init() {
     ttfpick.onchange = fntInput;
 
     document.onkeydown = e => {
-        if (e.target.tagName == "INPUT" || e.target.tagName == "TEXTAREA") return;
+        if (e.target.tagName == "INPUT" || e.target.tagName == "TEXTAREA" || isTextSelected()) return;
         
         switch (e.code) {
             case "KeyZ":
