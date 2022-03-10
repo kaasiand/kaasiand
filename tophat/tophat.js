@@ -453,8 +453,8 @@ function copyoverKern(orig) {
         a.forEach(obj => {
             if ([...obj.pair][0] == [...obj.pair][1]) {
                 // pair "aa" becomes "äa" + "aä" + "ää"
-                makeKerningPair([...obj.pair][0]  + currentGlyph, obj.value, false);
-                makeKerningPair(currentGlyph + [...obj.pair][0] , obj.value, false);
+                makeKerningPair([...obj.pair][0] + currentGlyph, obj.value, false);
+                makeKerningPair(currentGlyph + [...obj.pair][0], obj.value, false);
                 makeKerningPair(currentGlyph + currentGlyph, obj.value, false);
             } else {
                 // pair "ab" becomes "äb"
@@ -1812,7 +1812,7 @@ function init() {
     let el = blocklist.querySelector(sel);
     loadElemGroup(el, false, false);
 
-    let temp = glyphlist.querySelector("[data-ch='"+currentGlyph+"']") ?? glyphlist.querySelector(".glyph");
+    let temp = glyphlist.querySelector(currentGlyph == "'" ? '[data-ch="\'"]' : "[data-ch='"+currentGlyph+"']") ?? glyphlist.querySelector(".glyph");
     currentGlyph = temp.dataset.ch;
     loadGlyph(currentGlyph, temp);
 
