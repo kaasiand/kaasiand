@@ -10,7 +10,6 @@ const hgsyl_comp= syl => ({first: syl.codePointAt(0), last: syl.codePointAt(0) +
 
 const b36 = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K"];
 const hgsyl_com2= (n,syls) => Object.fromEntries([...syls].map((c,i) => ["hng_syl_"+b36[n]+b36[i],hgsyl_comp(c)]));
-//hng_syl_00:hgsyl_comp("가"),hng_syl_01:hgsyl_comp("개"),hng_syl_02:hgsyl_comp("갸"),hng_syl_03:hgsyl_comp("걔"),hng_syl_04:hgsyl_comp("거"),hng_syl_05:hgsyl_comp("게"),hng_syl_06:hgsyl_comp("겨"),hng_syl_07:hgsyl_comp("계"),hng_syl_08:hgsyl_comp("고"),hng_syl_09:hgsyl_comp("과"),hng_syl_0A:hgsyl_comp("괘"),hng_syl_0B:hgsyl_comp("괴"),hng_syl_0C:hgsyl_comp("교"),hng_syl_0D:hgsyl_comp("구"),hng_syl_0E:hgsyl_comp("궈"),hng_syl_0F:hgsyl_comp("궤"),hng_syl_0G:hgsyl_comp("귀"),hng_syl_0H:hgsyl_comp("규"),hng_syl_0I:hgsyl_comp("그"),hng_syl_0J:hgsyl_comp("긔"),hng_syl_0K:hgsyl_comp("기"),
 
 const uni = {
     basiclatin: {nameEN: "Basic Latin",         nameFR: "Latin de base",           nameJP: "基本ラテン文字"},
@@ -420,11 +419,43 @@ const groupComponents = {
 
     x_template: { first:0x1FF00,last:0x1FFFF, ...uni.x_template},
 
-    lat_lttr_a:{chars:"AÀÁÂǍÄȦÃĀĂĄȀȂǞǠÅǺȺⱯaàáâǎäȧãāăąȁȃǟǡåǻⱥ", name:"Aa"},
+    lat_lttr_a:{chars:"AÀÁÄÃĀẢĄÅǺḀǍȦẠȀȂǞǠȺⱯⱭⱰaàáäãāảąåǻḁǎȧạȁȃǟǡⱥɐẚɑɒ", name:"Aa"},
+    lat_lttr_ă:{chars:"ĂẮẶẰẲẴăắặằẳẵ", name:"Ăă"},
+    lat_lttr_â:{chars:"ÂẤẬẦẨẪâấậầẩẫ", name:"Ââ"},
     lat_lttr_æ:{chars:"ÆǼǢæǽǣ", name:"Ææ"},
-    lat_lttr_b:{chars:"BḂḄḆƁƂƄbḃḅḇɓƃƅ", name:"Bb"},
-    lat_lttr_c:{chars:"CĆĈĊÇƇȻƆcćĉċçƈȼɔɕ", name:"Cc"},
-    lat_lttr_d:{chars:"DĎĐÐƉƊƋǱǄǲǅdďđðɖɗƌǳǆʣʤʥȡ", name:"Dd"},
+    lat_lttr_b:{chars:"BḂḄḆƁɃƂƄbḃḅḇɓƀƃƅ", name:"Bb"},
+    lat_lttr_c:{chars:"CĆĈČĊÇḈƇȻƆcćĉčċçḉƈȼɔɕ", name:"Cc"},
+    lat_lttr_d:{chars:"DÐĐĎḊḌḐḒḎƉƊƋǱǄǲǅdðđďḋḍḑḓḏɖɗƌǳǆʣʤʥȡẟƍ", name:"Dd"},
+    lat_lttr_e:{chars:"EÈÉËẼĒḔḖĔĚẺĖẸĘḘḚȄȆȨḜɆƎƏeèéëẽēḕḗĕěẻėẹęḙḛȅȇȩḝɇǝəɚɘ", name:"Ee"},
+    lat_lttr_ê:{chars:"ÊẾỀỂỄỆêếềểễệ", name:"Êê"},
+    lat_lttr_ɛ:{chars:"ƐꞫɛɜɝʚɞ", name:"Ɛɛ"},
+    lat_lttr_f:{chars:"FḞƑfḟƒʩ", name:"Ff"},
+    lat_lttr_g:{chars:"GǴĜǦḠĞĠĢǤƓƢƔȜgǵĝǧḡğġģǥɠɡɢʛƣɣɤȝ", name:"Gg"},
+    lat_lttr_h:{chars:"HĤȞḦḢḤḨḪĦꞪꜦǶꞍhĥȟḧḣḥḩḫħɦƕɥꜧɧẖʮʯ", name:"Hh"},
+    lat_lttr_i:{chars:"IÌÍÎÏḮĨĪĬȈȊỈİỊĮḬĲƖƗǏꞮiıìíîïḯĩīĭȉȋỉịįḭĳɩɨǐɪ", name:"Ii"},
+    lat_lttr_j:{chars:"JĴɈjȷĵǰɉɟʄʝ", name:"Jj"},
+    lat_lttr_k:{chars:"KḰǨĶḲḴƘꞰkḱǩķḳḵƙʞĸ", name:"Kk"},
+    lat_lttr_l:{chars:"LĹĻĽĿŁḶḸḺḼȽⱢꞭỺǇǈlĺļľŀłḷḹḻḽƚɫɬỻǉʪʫɮȴɭƛ", name:"Ll"},
+    lat_lttr_m:{chars:"MḾṀṂⱮƜmḿṁṃɱɯɰ", name:"Mm"},
+    lat_lttr_n:{chars:"NǸŃÑŇŅṄṆṈṊŊȠƝǊǋnǹńñňņṅṇṉṋŋƞɲɳǌȵŉ", name:"Nn"},
+    lat_lttr_o:{chars:"OÒÓǑÕṌṎȬÖȪȮȰỌỎŌṐṒŎŐȌȎǪǬØǾƟŒȢoòóǒõṍṏȭöȫȯȱọỏōṑṓŏőȍȏǫǭøǿɵœȣ", name:"Oo"},
+    lat_lttr_ô:{chars:"ÔỐỒỔỖỘôốồổỗộ", name:"Ôô"},
+    lat_lttr_ơ:{chars:"ƠỚỜỞỠỢơớờởỡợ", name:"Ơơ"},
+    lat_lttr_p:{chars:"PṔṖƤⱣpṕṗƥᵽ", name:"Pp"},
+    lat_lttr_q:{chars:"QɊqɋʠ", name:"Qq"},
+    lat_lttr_r:{chars:"RŔŖŘȐȒṘṚṜṞⱤɌƦrŕŗřȑȓṙṛṝṟɽɍʀʁɼɹɺɻɾɿʅ", name:"Rr"},
+    lat_lttr_s:{chars:"SŚṤŜŠṦṠṢṨŞȘꟅⱾƧƩẞsśṥŝšṧṡṣṩşșʂȿƨʃƪʆſẛẜẝß", name:"Sſs"},
+    lat_lttr_t:{chars:"TŤŢȚṪṬṮṰŦƬƮȾꞱꜨtťţțṫṭṯṱŧƭʈⱦʇẗƫȶʨʦʧꜩƾ", name:"Tt"},
+    lat_lttr_u:{chars:"UÙÚÛǓŨṸŪṺŬŮŰȔȖỦỤŲṲṴṶƱɄuùúûǔũṹūṻŭůűȕȗủụųṳṵṷʊʉ", name:"Uu"},
+    lat_lttr_ü:{chars:"ÜǕǗǙǛüǖǘǚǜ", name:"Üü"},
+    lat_lttr_ư:{chars:"ƯỨỪỬỮỰưứừửữự", name:"Ưư"},
+    lat_lttr_v:{chars:"VṼṾƲỼɅvṽṿʋỽʌⱱ", name:"Vv"},
+    lat_lttr_w:{chars:"WẀẂŴẄẆẈⱲǷwẁẃŵẅẘẇẉⱳƿʍʬ", name:"Ww"},
+    lat_lttr_x:{chars:"XẊẌxẋẍ", name:"Xx"},
+    lat_lttr_y:{chars:"YỲÝŶŸỸȲỶẎỴƳɎỾÞyỳýŷÿỹȳỷẙẏỵƴɏỿʎþ", name:"Yy"},
+    lat_lttr_z:{chars:"ZŹŽẐŻẒẔƵȤⱿzźžẑżẓẕƶȥɀʐʑ", name:"Zz"},
+    lat_lttr_ʒ:{chars:"ƷǮƸʒǯƹƺʓ", name:"Ʒʒ"},
+    lat_lttr_ʔ:{chars:"ʔʡʕʢʖɁɂ", name:"ʔɁɂ"},
 
 
     jouyou_gr1: { chars: "一右雨円王音下火花貝学気九休玉金空月犬見五口校左三山子四糸字耳七車手十出女小上森人水正生青夕石赤千川先早草足村大男竹中虫町天田土二日入年白八百文木本名目立力林六", nameEN: "Grade 1", nameFR: "Niveau 1", nameJP: "1年生"},
@@ -610,7 +641,7 @@ const groups = {
 
     all_glyphs:  { components: null, nameEN: "All glyphs", nameFR: "Tous les glyphes", nameJP: "すべての文字" },
     // latin-script groups
-    latin_unic: { components: ["basiclatin","latin1supp","latinext_a","latinext_b","ipa_extens"],
+    latin_unic: { components: ["basiclatin","latin1supp","latinext_a","latinext_b","ipa_extens","lat_ext_ad","latinext_c","latinext_d"],
                   nameEN: "All Unicode blocks",
                   nameFR: "Blocs Unicode",
                   nameJP: "すべてのブロック"},
@@ -618,7 +649,11 @@ const groups = {
                   nameEN: "By accent",
                   nameFR: "Par accent",
                   nameJP: "文字別"},
-    latin_lttr: { components: ["lat_lttr_a","lat_lttr_æ","lat_lttr_b","lat_lttr_c","lat_lttr_d"],
+    latin_lttr: { components: ["lat_lttr_a","lat_lttr_â","lat_lttr_ă","lat_lttr_æ","lat_lttr_b","lat_lttr_c","lat_lttr_d","lat_lttr_e","lat_lttr_ê",
+                               "lat_lttr_ɛ","lat_lttr_f","lat_lttr_g","lat_lttr_h","lat_lttr_i","lat_lttr_j","lat_lttr_k","lat_lttr_l","lat_lttr_m",
+                               "lat_lttr_n","lat_lttr_o","lat_lttr_ô","lat_lttr_ơ","lat_lttr_p","lat_lttr_q","lat_lttr_r","lat_lttr_s","lat_lttr_t",
+                               "lat_lttr_u","lat_lttr_ü","lat_lttr_ư","lat_lttr_v","lat_lttr_w","lat_lttr_x","lat_lttr_y","lat_lttr_z","lat_lttr_ʒ","lat_lttr_ʔ",
+                            ],
                   nameEN: "By letter",
                   nameFR: "Par lettre",
                   nameJP: "発音区別符号別"},
@@ -664,27 +699,38 @@ const groups = {
     
 }
 
+const bltr_ = (base,str) => Object.fromEntries([...str].map(acct => [acct,base]));
 const baseLetterFromDiacritic = {
     // A
-    "À":"A", "Á":"A", "Â":"A", "Å":"A", "Ä":"A", "Ã":"A", "Ā":"A", "Ă":"A", "Ǎ":"A",
-    "Ą":"A", "Ȧ":"A", "Ạ":"A", "Ȁ":"A", "À":"A", "Ả":"A", "Ȃ":"A", "Ȃ":"A", "Ḁ":"A", // A
-    "Ắ":"Ă", "Ặ":"Ă", "Ằ":"Ă", "Ẳ":"Ă", "Ẵ":"Ă", // A breve
-    "Ấ":"Â", "Ậ":"Â", "Ầ":"Â", "Ẩ":"Â", "Ẫ":"Â", // A ccfx
-    "Ǟ":"Ä", "Ǡ":"Ȧ", "Ǻ":"Å", // A trema, dot, ring
-    // a
-    "à":"a", "á":"a", "â":"a", "å":"a", "ä":"a", "ã":"a", "ā":"a", "ă":"a", "ǎ":"a", "ẚ":"a",
-    "ą":"a", "ȧ":"a", "ạ":"a", "ȁ":"a", "à":"a", "ả":"a", "ȃ":"a", "ȃ":"a", "ḁ":"a",
-    "ắ":"ă", "ặ":"ă", "ằ":"ă", "ẳ":"ă", "ẵ":"ă", // a breve
-    "ấ":"â", "ậ":"â", "ầ":"â", "ẩ":"â", "ẫ":"â", // a ccfx
-    "ǟ":"ä", "ǡ":"ȧ", "ǻ":"å", // a trema, dot, ring
+    ...bltr_("A","ÀÁÂÅÄÃĀĂǍĄȦẠȀÀẢȂȂḀȺⱯ"),
+    ...bltr_("a","àáâåäãāăǎąȧạȁàảȃȃḁẚⱥɐ"),
+    ...bltr_("Ă","ẮẶẰẲẴ"), // A breve
+    ...bltr_("ă","ắặằẳẵ"),
+    ...bltr_("Â","ẤẬẦẨẪ"), // A ccfx
+    ...bltr_("â","ấậầẩẫ"),
+    "Ǟ":"Ä","Ǡ":"Ȧ","Ǻ":"Å", // A trema, dot, ring
+    "ǟ":"ä","ǡ":"ȧ","ǻ":"å",
+    "Ǽ":"Æ","Ǣ":"Æ","ǽ":"æ","ǣ":"æ", // Æ
 
-    "Ǽ":"Æ", "Ǣ":"Æ", "ǽ":"æ", "ǣ":"æ", // Æ
-    "Ḃ":"B", "Ḅ":"B", "Ḇ":"B", "ḃ":"b", "ḅ":"b", "ḇ":"b", // B
-    "Ć":"C", "Č":"C", "Ç":"C", "Ḉ":"Ç", "Ĉ":"C", "Ċ":"C", "ć":"c", "č":"c", "ç":"c", "ḉ":"ç", "ĉ":"c", "ċ":"c", // C
-    // D
-    "Ď":"D", "Ḑ":"D", "Ḓ":"D", "Ḋ":"D", "Ḍ":"D", "Ḏ":"D", "Đ":"D", "Ð":"D",
-    "ď":"d", "ḑ":"d", "ḓ":"d", "ḋ":"d", "ḍ":"d", "ḏ":"d", "đ":"d",
+    ...bltr_("B","ḂḄḆƁƂƄ"), ...bltr_("b","ḃḅḇɓƃƅ"),
+    ...bltr_("C","ĆĈČĊÇƇȻƆ"), ...bltr_("c","ćĉčċçƈȼɔɕ"), "Ḉ":"Ç","ḉ":"ç", // C cedilla
+    ...bltr_("D","ĎḊḌḐḒḎĐÐƉƊǱǄǲǅ"), ...bltr_("d","ďḋḍḑḓḏđɖɗƌǳǆʣʤʥȡ"),
 
+    // E
+    ...bltr_("E","ÈÉÊËẼĒḔḖĔĚẺĖẸĘḘḚȄȆȨɆƎ"),
+    ...bltr_("e","èéêëẽēḕḗĕěẻėẹęḙḛȅȇȩɇǝəɘ"),
+    ...bltr_("Ê","ẾỀỂỄỆ"),
+    ...bltr_("ê","ếềểễệ"),
+    "Ḝ":"Ȩ","ḝ":"ȩ", // E cedilla
+    
+    "Ḟ":"F","Ƒ":"F","ḟ":"f","ƒ":"f","ʩ":"f",
+    ...bltr_("G","GǴĜǦḠĞĠĢǤƓ"),
+    ...bltr_("g","gǵĝǧḡğġģǥɠɡ"),
+    ...bltr_("H","HĤȞḦḢḤḨḪĦꞪꜦǶ"),
+    ...bltr_("h","hĥȟḧḣḥḩḫħɦƕꜧɧẖʮʯ"),
+    ...bltr_("I","IÌÍÎÏĨĪĬȈȊỈİỊĮḬĲƖƗǏꞮ"),
+    ...bltr_("i","iıìíîïĩīĭȉȋỉịįḭĳɩɨǐɪ"),
+    "Ḯ":"Ï","ḯ":"ï",
 
     
 

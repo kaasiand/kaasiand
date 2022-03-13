@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<!-- <html data-theme="stationery"> -->
-<!-- <html data-theme="kaasiand"> -->
 <html data-theme="hiratake">
 <head>
     <meta charset="UTF-8">
@@ -27,9 +25,11 @@
 <body onload="init()" ondragover="tryOpenNewFontModal(event);" ondrop="dropHandler(event);">     
 
 <div id="leftbar">
-<div id="logostuff" data-ver="v0.9.3"><svg width="14px" height="14px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<div id="logostuff"><svg width="14px" height="14px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="m12.732 1.0172a12 4 10 0 0-12.512 1.8552 12 4 10 0 0 11.123 6.0232 12 4 10 0 0 12.513-1.8557 12 4 10 0 0-11.123-6.0228zm-0.34728 1.9695a6 2 10 0 1 5.5617 3.0114 6 2 10 0 1-6.2563 0.92758 6 2 10 0 1-5.5612-3.0113 6 2 10 0 1 6.2558-0.92767zm-7.3783 7.2937-1.7427 9.8831c-0.19248 1.0878 2.2975 2.4363 5.5611 3.0118 3.2639 0.57554 6.0652 0.15998 6.2564-0.92809l1.7427-9.8831c-1.8575 0.028961-3.9276-0.14837-6.002-0.51417-2.0743-0.36577-4.08-0.9071-5.8154-1.5696z"/>
-    </svg>tophat</div>
+    </svg><span data-name="tophat" data-ver="v0.9.5"></span><button id="settingbtn" title="Settings" onclick="openSettingsModal()" ><svg width="20px" height="20px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 9.9999063,0.99993896 V 4.2855266 A 7.9999998,7.9999998 0 0 0 7.9679889,5.1397378 L 5.6358316,2.8075805 2.8075805,5.6358316 5.1335368,7.9617879 A 7.9999998,7.9999998 0 0 0 4.2684731,9.9999063 H 0.99993896 V 14.000179 H 4.2684731 a 7.9999998,7.9999998 0 0 0 0.864547,2.038118 l -2.3254396,2.32544 2.8282511,2.828768 2.3321573,-2.332158 a 7.9999998,7.9999998 0 0 0 2.0319174,0.853695 v 3.286104 h 4.0002727 v -3.282487 a 7.9999998,7.9999998 0 0 0 2.036568,-0.852144 l 2.32699,2.32699 2.828768,-2.828768 -2.317172,-2.317171 a 7.9999998,7.9999998 0 0 0 0.869198,-2.046387 h 3.255615 V 9.9999063 H 19.744531 A 7.9999998,7.9999998 0 0 0 18.875333,7.9530029 L 21.192505,5.6358316 18.363737,2.8075805 16.036747,5.1345702 A 7.9999998,7.9999998 0 0 0 14.000179,4.2824259 V 0.99993896 Z M 11.999784,8.0000283 a 3.9999999,3.9999999 0 0 1 4.000273,3.9997557 3.9999999,3.9999999 0 0 1 -4.000273,4.000273 3.9999999,3.9999999 0 0 1 -3.9997557,-4.000273 3.9999999,3.9999999 0 0 1 3.9997557,-3.9997557 z"/>
+        </svg></button></div>
 <button id="newfontbtn" class="leftbarbtn textbtn" onclick="openNewFontModal()" data-name="New..."></button>
 <div style="display: flex;">
     <div></div><div class="btnlabel" style="white-space: nowrap;">Export</div>
@@ -55,7 +55,7 @@
     <button class="block_category folded" onclick="this.classList.toggle('folded')" data-group="cat_latin"></button>
     <ul>
         <li><button data-group="latin_unic"></button></li>
-        <!-- <li><button data-group="latin_lttr"></button></li> -->
+        <li><button data-group="latin_lttr"></button></li>
 
         <li><button data-group="enlanguage"></button></li>
         <li><button data-group="frlanguage"></button></li>
@@ -327,25 +327,30 @@
 <tr>
     <td></td>
     <td class="glyphhead">
-        <span id="codepointname"></span>
         <span id="letterbox"><span id="letterboxspan"></span></span>
         <div class="btndivider" style="flex-grow: 1;"></div>
         <button onclick="flip(true)"  class="toolbtn fliph" title="Flip horizontally"></button>
         <button onclick="flip(false)" class="toolbtn flipv" title="Flip vertically"></button>
         <div class="btndivider"></div>
-        <button onclick="cut()"   class="toolbtn cut"  style="font-size: 16px;" title="Cut" aria-label="Cut">cut</button>
+        <button onclick="cut()"   class="toolbtn cut"   title="Cut" aria-label="Cut"></button>
         <button onclick="copy()"  class="toolbtn copy"  title="Copy"  aria-label="Copy" ></button>
         <button onclick="paste()" class="toolbtn paste" title="Paste" aria-label="Paste"></button>
     </td>
 </tr>
 <tr>
+    <td></td>
+    <td class="glyphnameline">
+        <span id="codepointname"></span><span id="glyphname"></span>
+    </td>
+</tr>
+<tr>
     <td id="toollist" rowspan="5">
-        <button onclick="setTool('pencil')"  id="pencil" class="toolbtn" title="Pencil"  aria-label="Pencil tool"></button>
-        <button onclick="setTool('milk')"    id="milk"   class="toolbtn" title="Spill"   aria-label="Spill tool"></button>
-        <button onclick="setTool('syringe')" id="syringe"class="toolbtn" title="Syringe" aria-label="Syringe tool"></button>
+        <button onclick="setTool('pencil')"  id="pencil" class="toolbtn" title="Pencil (1)"  aria-label="Pencil tool"></button>
+        <button onclick="setTool('milk')"    id="milk"   class="toolbtn" title="Spill (2)"   aria-label="Spill tool"></button>
+        <button onclick="setTool('syringe')" id="syringe"class="toolbtn" title="Syringe (3)" aria-label="Syringe tool"></button>
         <div class="btndivider"></div>
-        <button onclick="setTool('select')"  id="select" class="toolbtn" title="Select"  aria-label="Selection tool"></button>
-        <button onclick="setTool('move')"    id="move"   class="toolbtn" title="Move"    aria-label="Move tool"></button>
+        <button onclick="setTool('select')"  id="select" class="toolbtn" title="Select (4)"  aria-label="Selection tool"></button>
+        <button onclick="setTool('move')"    id="move"   class="toolbtn" title="Move (5)"    aria-label="Move tool"></button>
         <div class="btndivider"></div>
         <button id="cbtnt" onclick="setColour(  0,  0,  0,  0)" class="colourbtn"        style="--clr:var(--btntransp)" title="Transparent"aria-label="Transparent"></button>
         <button id="cbtnb" onclick="setColour(  0,  0,  0,255)" class="colourbtn active" style="--clr:#000"  title="Black"      aria-label="Black"></button>
@@ -493,7 +498,7 @@
             <table style="font-size:14px;">
                 <tr>
                     <td style="padding-right: 10px;" value="">Name</td>
-                    <td style="display: flex; width: 150px"><input id="newfontmodal_namein" maxlength="32" style="width: 100%"><div style="display:inline-block; padding-top: 8px;width: 20px">.fnt</div></td>
+                    <td style="display: flex; width: 150px"><input id="newfontmodal_namein" maxlength="32" style="width: 100%;text-align: left;"><div style="display:inline-block; padding-top: 8px;width: 20px">.fnt</div></td>
                 </tr>
                 <tr>
                     <td style="padding-right: 10px;">Dimensions</td>
@@ -674,11 +679,26 @@
                 <button onclick="outlineFont()" class="textbtn leftbarbtn" style="margin-left: 10px; width: auto;font-size:inherit">Outline font</button>
             </div>
         </div>
+
+        <div id="settingsmodal" class="modal hidden">
+            <h1>Settings</h1>
+            <div class="btndivider"></div>
+            <table style="font-size:14px;">
+                <tr>
+                    <td style="padding-right: 10px;">Change font name</td>
+                    <td style="display: flex; width: 200px"><input id="settingsmodal_namein" maxlength="32" onchange="settings.fontname = this.value" style="width: 100%;text-align: left;"><div style="display:inline-block; padding-top: 8px;width: 20px">.fnt</div></td>
+                </tr>
+            </table>
+            <div style="display: flex; float:right; margin-top: 10px;">
+                <button onclick="closeModal()" class="textbtn leftbarbtn" style="margin-left: 10px; width: auto;font-size:inherit">Close</button>
+            </div>
+        </div>
     </div>
 <!-- </dialog> -->
 </div>
 
 <script src="groups.js"></script>
+<script src="names.js"></script>
 <script src="tophat.js"></script>
 </body>
 </html>

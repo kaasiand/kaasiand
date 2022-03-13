@@ -403,15 +403,12 @@ function loadGroupComponentToGlyphTable(comp) {
         if (c == currentGlyph)
             makeActiveGlyph(c, g, true);
 
-        g.title = `${c} (${toCodepointString(c)})`;
+        let gn = getGlyphName(c);
+        g.title = `${c} (${toCodepointString(c) + (gn ? " "+gn.toUpperCase() : "")})`;
         glyphlist.appendChild(g);
 
         updateGlyphListBitmap(c, g, false, true);
     });
-}
-
-function toCodepointString(c) {
-    return `U+${c.codePointAt(0).toString(16).padStart(4,0).toUpperCase()}`;
 }
 function generateCharArrayFromCodepointRange(first, last) {
     let result = [];
@@ -546,6 +543,7 @@ function loadGlyph(g, el, clearPrevious = true, updateKernList = true) {
     letterboxspan.innerText = g;
     letterboxspan.classList.toggle("iswhitespace", /\s/.test(g));
     codepointname.dataset.name = toCodepointString(g);
+    glyphname.dataset.name = getGlyphName(g) || g;
 
     makeActiveGlyph(g, el, clearPrevious);
 
@@ -2404,6 +2402,10 @@ function openNewFontModal() {
 }
 function openImportFontModal() {
     openModal("importfontmodal");
+}
+function openSettingsModal() {
+    settingsmodal_namein.value = settings.fontname;
+    openModal("settingsmodal");
 }
 let fontResize = { n: 0, e: 0, s: 0, w: 0 };
 
