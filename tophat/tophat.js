@@ -2016,6 +2016,7 @@ function tryReadFile(file, obj) {
 
                 globalfontidx++;
                 // get which characters are in font
+                importfontmodal_char.value = "";
                 for (const key in font.glyphs.glyphs) {
                     let uni = font.glyphs.glyphs[key].unicode;
                     if (key > 0 && uni && isAllowedUnicode(uni)) {
@@ -2036,6 +2037,7 @@ function tryReadFile(file, obj) {
                         }
                     }
                 }
+                importfontmodal_char.value ||= (charsInUploadedFont.match(/[\S]/) && charsInUploadedFont.match(/[\S]/)[0]) ?? "";
 
                 const reader = new FileReader();
 
@@ -2043,8 +2045,8 @@ function tryReadFile(file, obj) {
                     let fface = new FontFace("TopHatOutlineFnt"+globalfontidx, "url(" + reader.result + ")");
                     document.fonts.add(fface);
                     fface.load().then(() => {
-                        importOutlineFont();
                         uploadedFontName = file.name.replace(/\.(otf|ttf|woff2?)$/, "");
+                        importOutlineFont();
                     }).catch(() => {
                         console.log("ERROR PINEAPPLE (error during FontFace loading)");
                     });
@@ -2071,7 +2073,7 @@ function importOutlineFont() {
     charsInUploadedFontToKeep = charsInUploadedFont;
     alphathresh.value = 127;
     
-    openImportFontModal();
+    openModal("importfontmodal");
     previewFont(20);
 }
 let currentUploadedFont;
@@ -2107,8 +2109,9 @@ function previewFont(size) {
     prevcanvA.height = uploadedFontH;
     prevcanvB.width  = uploadedFontW;
     prevcanvB.height = uploadedFontH;
-    importfont_cont.style.setProperty("--glyphwidth",  uploadedFontW);
-    importfont_cont.style.setProperty("--glyphheight", uploadedFontH);
+    let iftc = document.getElementById("importfont_cont").style;
+    iftc.setProperty("--glyphwidth",  uploadedFontW);
+    iftc.setProperty("--glyphheight", uploadedFontH);
     updateUploadedFontPreview();
 }
 function updateKeepGlyphs() {
@@ -2372,7 +2375,7 @@ function downloadSplit() {
     let fontname = settings.fontname || getLocalisedString("untitled");
 
     el.setAttribute("download", fontname.replace(/\s/g, "-")+".fnt");
-    el2.setAttribute("download", fontname.replace(/\s/g, "-")+"-table-"+gwidth+"-"+gheight+".fnt");
+    el2.setAttribute("download", fontname.replace(/\s/g, "-")+"-table-"+gwidth+"-"+gheight+".png");
   
     el.style.display = "none";
     el2.style.display = "none";
@@ -2400,9 +2403,7 @@ function openNewFontModal() {
 
     openModal("newfontmodal");
 }
-function openImportFontModal() {
-    openModal("importfontmodal");
-}
+
 function openSettingsModal() {
     settingsmodal_namein.value = settings.fontname;
     openModal("settingsmodal");

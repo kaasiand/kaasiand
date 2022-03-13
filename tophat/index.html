@@ -523,11 +523,11 @@
                 </tr>
                 <tr>
                     <td style="padding-right: 10px; white-space: nowrap;">Font size</td>
-                    <td><input id="importfontmodal_size" maxlength="4" oninput="this.value = Math.max(Math.min(this.value * 1 || 0,999), 0)" onchange="updateImportFontPreview()" style="width: 48px;margin-right:3px">pt</td>
+                    <td><input id="importfontmodal_size" maxlength="4" oninput="this.value = Math.max(Math.min(this.value * 1 || 0,999), 0);" onchange="updateImportFontPreview()" style="width: 48px;margin-right:3px">pt</td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <div id="importfont_cont">
+                        <div id="importfont_cont" style="">
                             <div class="importfont_glyph">
                                 <canvas id="prevcanvA"></canvas>
                             </div>
