@@ -968,6 +968,8 @@ ratio + L + dont care + didnt ask + youre british {
     --primgcontbg: var(--glcol);
     --clr: var(--primgcontbg);
     background: var(--clr);
+    resize: vertical;
+    min-height: 100px;
 }
 #preview_image_cont.greyfilter {
     filter: contrast(0.6) brightness(0.8) sepia(0.1);
@@ -987,12 +989,13 @@ ratio + L + dont care + didnt ask + youre british {
     height: 100px;
     overflow-y: auto;
     width: 400px;
-    resize: none;
     margin-top: 10px;
     box-sizing: border-box;
     background: var(--tboxcol);
     border: 1px solid var(--bordcol);
     color: var(--txtinpc);
+    resize: vertical;
+    min-height: 100px;
 }
 
 /* ******************************************************************
