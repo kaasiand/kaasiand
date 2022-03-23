@@ -964,7 +964,7 @@ ratio + L + dont care + didnt ask + youre british {
 #preview_image_cont {
     height: calc(calc(calc(var(--glyphheightpx) + var(--leadingpx)) * 5.5) + 4px);
     overflow: hidden auto;
-    max-width: 400px;
+    max-width: 404px;
     --primgcontbg: var(--glcol);
     --clr: var(--primgcontbg);
     background: var(--clr);
