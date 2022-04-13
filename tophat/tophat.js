@@ -2101,6 +2101,9 @@ function previewFont(size) {
         if (bbox.width > maxadvance) maxadvance = bbox.width;
     }
 
+    maxascent  = Math.ceil(maxascent);
+    maxdescent = Math.ceil(maxdescent);
+    
     uploadedFontB = maxascent;
     uploadedFontH = maxascent + maxdescent;
     uploadedFontW = Math.ceil(maxadvance);
