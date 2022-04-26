@@ -140,13 +140,13 @@ h1 {
     text-shadow: 0px 1px 3px black;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-#nav li a {
+:where(.leftbar, .rightbar) a {
     color: yellow;
 }
-#nav li a:hover, #nav li a:focus, #nav li p {
+:where(.leftbar, .rightbar) :is(a:hover, a:focus, p) {
     color: white;
 }
-#nav li a:active {
+:where(.leftbar, .rightbar) a:active {
     color: red;
 }
 
