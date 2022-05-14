@@ -481,7 +481,7 @@ const groupComponents = {
     
     basic_hira: { chars: "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん", nameEN: "Hiragana", nameFR: "Hiraganas", nameJP: "平仮名"},
     other_hira: { chars: "がぎぐげござじずぜぞだぢづでどばぱびぴぶぷべぺぼぽゔぁぃぅぇぉっゃゅょゎゕゖ", nameEN: "Voiced and small hiragana",  nameFR: "Hiraganas sonores et petits",  nameJP: "濁点・半濁点付きの文字と捨て仮名"},
-    basic_kata: { chars: "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン", nameEN: "Katakana", nameFR: "Katakanas", nameJP: "片仮名"},
+    basic_kata: { chars: "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンー", nameEN: "Katakana", nameFR: "Katakanas", nameJP: "片仮名"},
     other_kata: { chars: "ガギグゲゴザジズゼゾダヂヅデドバパビピブプベペボポヴァィゥェォッャュョヮヵヶ", nameEN: "Voiced and small katakana",  nameFR: "Katakanas sonores et petits",  nameJP: "濁点・半濁点付きの文字と捨て仮名"},
     
     alphab_lat: { chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",                              nameEN: "Base Latin alphabet",  nameFR: "Alphabet latin de base", nameJP: "基本ラテンアルファベット"},
