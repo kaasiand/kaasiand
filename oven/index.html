@@ -472,32 +472,32 @@
 		<canvas id="preview" width="208" height="16"></canvas>
 		
 		<span class="em">palette</span><br/>
-		<input type="radio" id="gg" name="palette" onchange="updatePreview()" checked /><label><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAYAAAB3AH1ZAAAAMElEQVRIDWPYsHb5f0qwoZ76f0owAyWWg/RSYjlI76gDRkNgNARGQ2A0BEZDYDQEAHfNiD2pZSBTAAAAAElFTkSuQmCC" style="vertical-align: middle; transform: scale(-1)"/>  grey and grey</label><br/>
-		<input type="radio" id="bw" name="palette" onchange="updatePreview()" /><label><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAYAAAB3AH1ZAAAAMElEQVRIDWP49+/ff0owAwPDf4owJZaD9FJkOcjxow4YDYHREBgNgdEQGA2BER8CALoK+D0ECPUrAAAAAElFTkSuQmCC" style="vertical-align: middle; transform: scale(-1)"/>  black and white</label><br/>
+		<input type="radio" id="gg" name="palette" onchange="updatePreview()" checked /><label for="gg"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAYAAAB3AH1ZAAAAMElEQVRIDWPYsHb5f0qwoZ76f0owAyWWg/RSYjlI76gDRkNgNARGQ2A0BEZDYDQEAHfNiD2pZSBTAAAAAElFTkSuQmCC" style="vertical-align: middle; transform: scale(-1)"/>  grey and grey</label><br/>
+		<input type="radio" id="bw" name="palette" onchange="updatePreview()" /><label for="bw"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAYAAAB3AH1ZAAAAMElEQVRIDWP49+/ff0owAwPDf4owJZaD9FJkOcjxow4YDYHREBgNgdEQGA2BER8CALoK+D0ECPUrAAAAAElFTkSuQmCC" style="vertical-align: middle; transform: scale(-1)"/>  black and white</label><br/>
 		<br/>
 		<span class="em">dither pattern</span><br/>
-		<input type="radio" id="nd" name="ditherpat" onchange="checkdpt()" /><label>no dithering</label><br/>
-		<input type="radio" id="p3" name="ditherpat" onchange="checkdpt()" /><label>3 patterns</label><br/>
-		<input type="radio" id="p5" name="ditherpat" onchange="checkdpt()" /><label>5 patterns</label><br/>
-		<input type="radio" id="p9" name="ditherpat" onchange="checkdpt()" /><label>9 patterns</label><br/>
-		<input type="radio" id="p17"name="ditherpat" onchange="checkdpt()" checked /><label>17 patterns</label><br/>
-		<input type="radio" id="bn" name="ditherpat" onchange="checkdpt()" /><label>blue noise</label><br/>
+		<input type="radio" id="nd" name="ditherpat" onchange="checkdpt()" /><label for="nd">no dithering</label><br/>
+		<input type="radio" id="p3" name="ditherpat" onchange="checkdpt()" /><label for="p3">3 patterns</label><br/>
+		<input type="radio" id="p5" name="ditherpat" onchange="checkdpt()" /><label for="p5">5 patterns</label><br/>
+		<input type="radio" id="p9" name="ditherpat" onchange="checkdpt()" /><label for="p9">9 patterns</label><br/>
+		<input type="radio" id="p17"name="ditherpat" onchange="checkdpt()" checked /><label for="p17">17 patterns</label><br/>
+		<input type="radio" id="bn" name="ditherpat" onchange="checkdpt()" /><label for="bn">blue noise</label><br/>
 		<br/>
 		<span id="dpt"><span class="em">dither pattern type</span><br/>
-		<input type="radio" id="cheq" name="dithertype" onchange="updatePreview()" checked /><label>chequered</label><br/>
-		<input type="radio" id="hatc" name="dithertype" onchange="updatePreview()" /><label>hatched</label><br/>
-		<span id="hybrid"><input type="radio" id="hybr" onchange="updatePreview()" name="dithertype" /><label>hybrid</label></span><br/>
+		<input type="radio" id="cheq" name="dithertype" onchange="updatePreview()" checked /><label for="cheq">chequered</label><br/>
+		<input type="radio" id="hatc" name="dithertype" onchange="updatePreview()" /><label for="hatc">hatched</label><br/>
+		<span id="hybrid"><input type="radio" id="hybr" onchange="updatePreview()" name="dithertype" /><label for="hybr">hybrid</label></span><br/>
 		</span>
 		<br/>
 		<span class="em">dither block size</span><br/>
-		<input type="radio" id="d11" name="dithersize" onchange="updatePreview()" checked /><label>1&times;1 pixels</label><br/>
-		<input type="radio" id="d22" name="dithersize" onchange="updatePreview()" /><label>2&times;2 pixels</label><br/>
-		<input type="radio" id="d44" name="dithersize" onchange="updatePreview()" /><label>4&times;4 pixels</label><br/><br/>
+		<input type="radio" id="d11" name="dithersize" onchange="updatePreview()" checked /><label for="d11">1&times;1 pixels</label><br/>
+		<input type="radio" id="d22" name="dithersize" onchange="updatePreview()" /><label for="d22">2&times;2 pixels</label><br/>
+		<input type="radio" id="d44" name="dithersize" onchange="updatePreview()" /><label for="d44">4&times;4 pixels</label><br/><br/>
 		
 		<span class="em">what to use for greyscale</span><br/>
-		<input type="radio" id="greylight" name="greytype" onchange="updatePreview()" /><label>lightness</label><br/>
-		<input type="radio" id="greyvalue" name="greytype" onchange="updatePreview()" /><label>value</label><br/>
-		<input type="radio" id="greylstar" name="greytype" onchange="updatePreview()" checked /><label>L* (D65/2°)</label><br/>
+		<input type="radio" id="greylight" name="greytype" onchange="updatePreview()" /><label for="greylight">lightness</label><br/>
+		<input type="radio" id="greyvalue" name="greytype" onchange="updatePreview()" /><label for="greyvalue">value</label><br/>
+		<input type="radio" id="greylstar" name="greytype" onchange="updatePreview()" checked /><label for="greylstar">L* (D65/2°)</label><br/>
 		<br/>
 		<span class="em">curves</span><br/>
 		
