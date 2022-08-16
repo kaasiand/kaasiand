@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>bandgen</title>
+    <link rel="icon" href="favicon.png">
+	<style>
+		body {
+			background-color: #222;
+			margin: 10px;
+			font-family: sans-serif;
+			color: #ccc;
+		}
+		/* @font-face {
+			font-family: "rodin";
+			src: url("Rodin Bold.ttf") format("ttf");
+		} */
+		a {
+			color: yellow;
+		}
+		a:visited {
+			color: orange;
+		}
+	</style>
+	<script>
+	let ctx, base;
+	function init() {
+		ctx = imgout.getContext("2d");
+		imgout.width = 256; imgout.height = 64;
+		base = new Image();
+		base.onload = w;
+		base.src = "blank.png";
+		ctx.textAlign = "center";
+		ctx.fillStyle = "#323232";
+		ctx.textBaseline = "middle";
+
+		let rd = new FontFace("rodin", "url('Rodin Bold.ttf')");
+		rd.load().then(f => { document.fonts.add(f); });
+	}
+	function w() {
+		ctx.drawImage(base,0,0);
+		if (check.checked) {
+			ctx.font = gnfs.value + "px rodin";
+			ctx.fillText(topline.value, 172, 22);
+			ctx.font = ryfs.value + "px rodin";
+			//ctx.fillText(btmline.value, 172, 42.5);
+			ctx.fillText([...btmline.value].join(" "), 172, 42.5); // fucking hair spaces why is this the only way
+		}
+		else {
+			ctx.font = gnfs.value + "px rodin";
+			ctx.fillText(topline.value, 172, 32);
+		}
+	}
+	</script>
+</head>
+<body onload="init()">
+		<h1>bandgen <span style="font-weight: normal;font-size: 8pt;">like "banner generator", the d is just there <a href="https://en.wikipedia.org/wiki/English_phonology">because</a></h1>
+		<p style="font-size: 9pt;"><b>intended to be used with new super ultimate injector by asdolo on gbatemp</b> <small>(it runs fine on wine but i couldn't select rodin as the banner font without it crashing which is why i made this)</small></p>
+		<p style="font-size: 9pt;">i will add support for multiline titles later (this is adhd-speak for "never")</p>
+		<br>
+		game name <input oninput="w()" onchange="w()" style="width:40px" type="number" min="8" max="32" value="15" id="gnfs"> px<br>
+		<textarea oninput="w()" id="topline">amogus</textarea><br>
+		release year <input oninput="w()" onchange="w()" style="width:40px" type="number" min="8" max="32" value="14" id="ryfs"> px<br>
+		<textarea oninput="w()" id="btmline">Released: 1984</textarea><br>
+		<input oninput="w()" onchange="w()" type="checkbox" id="check" name="check" checked><label for="check">include release year line</label><br>
+		<canvas id="imgout">output canvas</canvas><br>
+		real one for comparison<br>
+		<img src="real.png" alt="3DS Virtual Console banner: 'Super Mario World - Released: 1991'"><br>
+		<p style="font-size: 9pt;">right-click &rarr; open image in new tab because the browser won't let you download it directly from this tab i think</p>
+	</body>
+</html>
