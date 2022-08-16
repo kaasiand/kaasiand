@@ -43,8 +43,7 @@
 			ctx.font = gnfs.value + "px rodin";
 			ctx.fillText(topline.value, 172, 22);
 			ctx.font = ryfs.value + "px rodin";
-			//ctx.fillText(btmline.value, 172, 42.5);
-			ctx.fillText([...btmline.value].join(" "), 172, 42.5); // fucking hair spaces why is this the only way
+			ctx.fillText(check2.checked ? [...btmline.value].join(" ") : btmline.value, 172, 42.5); // fucking hair spaces why is this the only way
 		}
 		else {
 			ctx.font = gnfs.value + "px rodin";
@@ -63,6 +62,7 @@
 		release year <input oninput="w()" onchange="w()" style="width:40px" type="number" min="8" max="32" value="14" id="ryfs"> px<br>
 		<textarea oninput="w()" id="btmline">Released: 1984</textarea><br>
 		<input oninput="w()" onchange="w()" type="checkbox" id="check" name="check" checked><label for="check">include release year line</label><br>
+		<input oninput="w()" onchange="w()" type="checkbox" id="check2" name="check2" checked><label for="check2">wide spacing on release year line</label><br>
 		<canvas id="imgout">output canvas</canvas><br>
 		real one for comparison<br>
 		<img src="real.png" alt="3DS Virtual Console banner: 'Super Mario World - Released: 1991'"><br>
