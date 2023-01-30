@@ -52,11 +52,11 @@
             ico.height = 32;
             digits.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAQCAAAAACkIqcdAAAACXBIWXMAAA9hAAAPYQGoP6dpAAAA0ElEQVQ4jc2Uy3YGIQiDv3jm/R+ZdDFe0B/b067KxgHHECKo4DUBYNj831v747mrPTQgAPTy635iLHDyBU77WmEMrQ0QJcrf8Vbhaq0PRMZj+JPE3Jn6OnElsxfwnARifinfUYoWwWQT0Itj2/CEdQQ6ZtkIhVoNYkpy0ttXg1EnLdWADQKM3cV+6djutbqs2et4hbf9c7EhhF+1esKi5Dh86SJXmfHacTr77edZFIYnXSoimKOyzcbquk+2e7u2gM8qRyjVNLrZl/hM/u9fmy/LT0cs1od5KAAAAABJRU5ErkJggg==";
 
-            if (!localStorage || localStorage.length == 0) {
+            if (!localStorage || localStorage.length == 0 || localStorage.getItem("counterdata")) {
                 addNew();
             }
             else {
-                let data = JSON.parse(localStorage.getItem("data"));
+                let data = JSON.parse(localStorage.getItem("counterdata"));
 
                 for (let i = 0; i < data.length; i++) {
                     add(data[i].name, data[i].number, data[i].color)
@@ -95,7 +95,7 @@
                            number: item.children[2].value,
                            color:  item.style.backgroundColor});
             }
-            localStorage.setItem("data", JSON.stringify(data));
+            localStorage.setItem("counterdata", JSON.stringify(data));
         }
 
         function addNew() {
