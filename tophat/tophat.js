@@ -204,7 +204,7 @@ class KernPair {
         dcb.onclick = () => this.deletePair(true);
         d2.append(dc1, dc2, dcb);
 
-        d2.title = `${pair} (${toCodepointString(pairarr[0])} ${toCodepointString(pairarr[1])})`;
+        d2.title = `“${pair}” (${toCodepointString(pairarr[0])} ${toCodepointString(pairarr[1])})`;
         dcb.title = "Delete kerning pair";
 
         let inp = document.createElement("input");
