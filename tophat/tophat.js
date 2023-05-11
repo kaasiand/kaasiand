@@ -2217,6 +2217,7 @@ function importFnt(str,fn, obj) {
     for (let i = 0; i < data.length; i++) {
         let eqidx = data[i].indexOf("=");
         let wsidx = data[i].search(/(?!^)(\s)/);
+        if (data[i][1] == " " && data[i][2] == "	") wsidx = 2;
 
         let keyEq = eqidx == -1 ? "" : data[i].slice(0, eqidx);
         let keyWs = data[i].slice(0, wsidx); // separate slice needed in case of " =" kern pair
@@ -2318,7 +2319,7 @@ function getExportData(embedded = true) {
     // TODOOOOOO: CHECK HOW PLAYDATE CAPS AND THE SDK DEAL WITH KERNING PAIRS CONTAINING A SPACE
     for (let i = 0; i < pairlist.length; i++) {
         let pl = [...pairlist[i]];
-        if (/\s/.test(pl[1])) {
+        if (/\s/.test(pl[1]) && pl[1] != " ") {
             //outstr += "\n" + toCodepointString(pl[0]) + toCodepointString(pl[1]) + "\t" + kerningPairs[pairlist[i]].value;
             continue;
         }
