@@ -32,7 +32,8 @@ let prefs = {
 let metrics = {
     baseline: -1,
     xHeight:  -1,
-    capHeight:-1
+    capHeight:-1,
+    descent:  -1
 }
 
 let kerningPairs = {};
@@ -688,13 +689,14 @@ function getGlyphTopEdge(g) {
     return y;
 }
 function setGuide(which) {
-    metrics[which] = which == "baseline" ? getGlyphBtmEdge(currentGlyph) : getGlyphTopEdge(currentGlyph);
+    metrics[which] = (which == "baseline" || which == "descent") ? getGlyphBtmEdge(currentGlyph) : getGlyphTopEdge(currentGlyph);
     updateGuideCSS();
 }
 function updateGuideCSS() {
     guide_baseline .style.setProperty("--guidey", metrics.baseline);
     guide_xheight  .style.setProperty("--guidey", metrics.xHeight);
     guide_capheight.style.setProperty("--guidey", metrics.capHeight);
+    guide_descent  .style.setProperty("--guidey", metrics.descent);
 }
 
 
@@ -2082,15 +2084,15 @@ let uploadedFontH;
 let uploadedFontB;
 
 function updateImportFontPreview() {
-    if (importfontmodal_size.value * 1)
-        previewFont(importfontmodal_size.value * 1);
+    if (importfontmodal_size.value)
+        previewFont(importfontmodal_size.value);
 }
 function previewFont(size) {
     let maxascent  = 0;
     let maxdescent = 0;
     let maxadvance = 0;
 
-    currentUploadedFont = size+"pt TopHatOutlineFnt"+globalfontidx;
+    currentUploadedFont = (fontimportbold.checked?"bold ":"")+size+(importfontmodal_size_pt.checked?"pt":"px")+" TopHatOutlineFnt"+globalfontidx;
     tctx.font = currentUploadedFont;
 
     for (let i = 0; i < [...charsInUploadedFontToKeep].length; i++) {
@@ -2194,6 +2196,7 @@ function importFnt(str,fn, obj) {
     metrics.baseline  = -1;
     metrics.xHeight   = -1;
     metrics.capHeight = -1;
+    metrics.descent   = -1;
 
     settings.fontname = fn;
 
@@ -2231,6 +2234,7 @@ function importFnt(str,fn, obj) {
                 metrics.baseline  = obj.baseline  ?? -1;
                 metrics.xHeight   = obj.xHeight   ?? -1;
                 metrics.capHeight = obj.capHeight ?? -1;
+                metrics.descent   = obj.descent   ?? -1;
                 break;
             case "datalen":
                 break;
@@ -2351,7 +2355,7 @@ function getExportCanvasData(chars) {
 }
 
 function getExportMetrics() {
-    let met = { "baseline":metrics.baseline, "xHeight":metrics.xHeight, "capHeight":metrics.capHeight };
+    let met = { "baseline":metrics.baseline, "xHeight":metrics.xHeight, "capHeight":metrics.capHeight, "descent":metrics.descent };
 
     return "--metrics=" + JSON.stringify(met);
 }
@@ -2673,6 +2677,7 @@ function newFont(name,w,h,tr = 1,bl = -1) {
     metrics.baseline  = bl;
     metrics.xHeight   = -1;
     metrics.capHeight = -1;
+    metrics.descent   = -1;
     updateGuideCSS();
 
     setTracking(tr);
