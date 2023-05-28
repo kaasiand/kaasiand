@@ -457,14 +457,32 @@ const groupComponents = {
     lat_lttr_ʒ:{chars:"ƷǮƸʒǯƹƺʓ", name:"Ʒʒ"},
     lat_lttr_ʔ:{chars:"ʔʡʕʢʖɁɂ", name:"ʔɁɂ"},
 
+    lat_dia_xx:{chars:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzıȷØÆøæǱǲǳ",nameEN:"No diacritic", nameFR:"Pas de diacritique", nameJP:"発音区別符号なし"},
+    lat_dia_ac:{chars:"´ˊ́ÁẤẮĆḈÉẾḖǴÍḮḰĹḾŃÓŐỐṌṒỚṔŔŚÚŰṸǗỨẂÝŹǾǼǺáấắćḉéếḗǵíḯḱĺḿńóőốṍṓớṕŕśúűṹǘứẃýźǿǽǻ",nameEN:"Acute accent", nameFR:"Accent aigu", nameJP:"アキュート・アクセント"},
+    lat_dia_gr:{chars:"`ˋ̀ÀȀẦẰÈȄỀḔÌȈǸÒȌỒỜȐÙȔǛỪẀỲàȁầằèȅềḕìȉǹòȍồờȑùȕǜừẁỳ",nameEN:"Grave accent", nameFR:"Accent grave", nameJP:"グレイヴ・アクセント"},
+    lat_dia_ci:{chars:"^ˆ̂ÂĈÊĜĤÎÔŜÛŴŶẐâĉêĝĥîôŝûŵŷẑḒḘḼṊṰṶḓḙḽṋṱṷ",nameEN:"Circumflex", nameFR:"Accent circonflexe", nameJP:"サーカムフレックス"},
+    lat_dia_di:{chars:"¨̈ÄËḦÏÖÜṺẄẌŸäëḧïöẗüṻẅẍÿṲṳ",nameEN:"Diaeresis/umlaut", nameFR:"Tréma", nameJP:"トレマ"},
+    lat_dia_ti:{chars:"~˜̃˷̰ÃẴẪẼỄĨÑÕỖỠŨỮṼỸãẵẫẽễĩñõỗỡũữṽỹḚḬṴḛḭṵ",nameEN:"Tilde", nameFR:"Tilde", nameJP:"チルダ"},
+    lat_dia_há:{chars:"ˇ̌ǍČĎĚǦȞǏǨĽŇǑŘŠŤǓǙŽǮǎčďěǧȟǐǰǩľňǒřšťǔǚžǯǄǅǆ",nameEN:"Háček", nameFR:"Háček", nameJP:"ハーチェク"},
+    lat_dia_do:{chars:"˙̣ȦḂĊḊĖḞĠḢİĿṀṄȮȰṖṘṠṤṦṪẆẊẎŻȧḃċḋėḟġḣŀṁṅȯȱṗṙṡṥṧṫẇẋẏżẛṨṩẠẬẶḄḌẸỆḤỊḲḶḸṂṆỌỘỢṚṜṢṬỤỰṾẈỴẒạậặḅḍẹệḥịḳḷḹṃṇọộợṛṝṣṭụựṿẉỵẓ",nameEN:"Dot", nameFR:"Point", nameJP:"ドット"},
+    //lat_dia_da:{chars:"ȦḂĊḊĖḞĠḢİṀṄȮȰṖṘṠṪẆẊẎŻĿŀṨ",nameEN:"Dot above", nameFR:"Point suscrit", nameJP:"上ドット"},
+    //lat_dia_db:{chars:"ẠḄḌẸḤỊḲḶḸṂṆỌỘỢṚṜṢṬỤṾẈỴẒĿŀṨ",nameEN:"Dot below", nameFR:"Point souscrit", nameJP:"下ドット"},
+    lat_dia_ma:{chars:"¯ˉ̄ĀǞǠǢĒḠĪŌȪȬǬŪǕȲāǟǡǣēḡīōȫȭǭūǖȳ",nameEN:"Macron", nameFR:"Macron", nameJP:"マクロン"},
+    lat_dia_br:{chars:"˘̆ĂĔḜĞĬŎŬăĕḝğĭŏŭḪḫȂȆȊȎȒȖȃȇȋȏȓȗ",nameEN:"Breve", nameFR:"Brève", nameJP:"ブレーヴェ"},
+    lat_dia_ha:{chars:"̉ẢẨẲẺỂỈỎỔỞỦỬỶảẩẳẻểỉỏổởủửỷ",nameEN:"Hook above", nameFR:"Crochet en chef", nameJP:"上フック"},
+    lat_dia_ho:{chars:"̡̢ƁƊꞪƤƬƇƓƘⱲƳɓƈɗɠɦƙƥʠƭⱳƴƑꜦⱮƝŊȤƒꜧɧᶅɱɲŋȥɊⱤƮɖɭꞎɳɋɽɻʈʐʮʯ",nameEN:"Hook", nameFR:"Crochet", nameJP:"フック"},
+    lat_dia_hn:{chars:"̛ƠƯơư",nameEN:"Horn", nameFR:"Corne", nameJP:"ホーン"},
+    lat_dia_ce:{chars:"¸̧̦ÇḐȨĢḨĶĻŅŖŞȘŢȚçḑȩģḩķļņŗşșţț",nameEN:"Cedilla/comma", nameFR:"Cédille/virgule", nameJP:"セディーユ・コンマ"},
+    lat_dia_og:{chars:"˛̨ĄĘĮǪŲąęįǫų",nameEN:"Ogonek", nameFR:"Ogonek", nameJP:"オゴネク"},
 
-    jouyou_gr1: { chars: "一右雨円王音下火花貝学気九休玉金空月犬見五口校左三山子四糸字耳七車手十出女小上森人水正生青夕石赤千川先早草足村大男竹中虫町天田土二日入年白八百文木本名目立力林六", nameEN: "Grade 1", nameFR: "Niveau 1", nameJP: "1年生"},
-    jouyou_gr2: { chars: "引羽雲園遠何科夏家歌画回会海絵外角楽活間丸岩顔汽記帰弓牛魚京強教近兄形計元言原戸古午後語工公広交光考行高黄合谷国黒今才細作算止市矢姉思紙寺自時室社弱首秋週春書少場色食心新親図数西声星晴切雪船線前組走多太体台地池知茶昼長鳥朝直通弟店点電刀冬当東答頭同道読内南肉馬売買麦半番父風分聞米歩母方北毎妹万明鳴毛門夜野友用曜来里理話",　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 nameEN: "Grade 2", nameFR: "Niveau 2", nameJP: "2年生"},
-    jouyou_gr3: { chars: "悪安暗医委意育員院飲運泳駅央横屋温化荷開界階寒感漢館岸期起客究急級宮球去橋業曲局銀区苦具君係軽血決研県庫湖向幸港号根祭皿仕死使始指歯詩次事持式実写者主守取酒受州拾終習集住重宿所暑助昭消商章勝乗植申身神真深進世整昔全相送想息速族他打対待代第題炭短談着注柱丁帳調追定庭笛鉄転都度投豆島湯登等動童農波配倍箱畑発反坂板皮悲美鼻筆氷表秒病品負部服福物平返勉放味命面問役薬由油有遊予羊洋葉陽様落流旅両緑礼列練路和",　　 nameEN: "Grade 3", nameFR: "Niveau 3", nameJP: "3年生"},
-    jouyou_gr4: { chars: "愛案以衣位茨印英栄媛塩岡億加果貨課芽賀改械害街各覚潟完官管関観願岐希季旗器機議求泣給挙漁共協鏡競極熊訓軍郡群径景芸欠結建健験固功好香候康佐差菜最埼材崎昨札刷察参産散残氏司試児治滋辞鹿失借種周祝順初松笑唱焼照城縄臣信井成省清静席積折節説浅戦選然争倉巣束側続卒孫帯隊達単置仲沖兆低底的典伝徒努灯働特徳栃奈梨熱念敗梅博阪飯飛必票標不夫付府阜富副兵別辺変便包法望牧末満未民無約勇要養浴利陸良料量輪類令冷例連老労録", nameEN: "Grade 4", nameFR: "Niveau 4", nameJP: "4年生"},
-    jouyou_gr5: { chars: "圧囲移因永営衛易益液演応往桜可仮価河過快解格確額刊幹慣眼紀基寄規喜技義逆久旧救居許境均禁句型経潔件険検限現減故個護効厚耕航鉱構興講告混査再災妻採際在財罪殺雑酸賛士支史志枝師資飼示似識質舎謝授修述術準序招証象賞条状常情織職制性政勢精製税責績接設絶祖素総造像増則測属率損貸態団断築貯張停提程適統堂銅導得毒独任燃能破犯判版比肥非費備評貧布婦武復複仏粉編弁保墓報豊防貿暴脈務夢迷綿輸余容略留領",　　　　　　　　　　 nameEN: "Grade 5", nameFR: "Niveau 5", nameJP: "5年生"},
-    jouyou_gr6: { chars: "胃異遺域宇映延沿恩我灰拡革閣割株干巻看簡危机揮貴疑吸供胸郷勤筋系敬警劇激穴券絹権憲源厳己呼誤后孝皇紅降鋼刻穀骨困砂座済裁策冊蚕至私姿視詞誌磁射捨尺若樹収宗就衆従縦縮熟純処署諸除承将傷障蒸針仁垂推寸盛聖誠舌宣専泉洗染銭善奏窓創装層操蔵臓存尊退宅担探誕段暖値宙忠著庁頂腸潮賃痛敵展討党糖届難乳認納脳派拝背肺俳班晩否批秘俵腹奮並陛閉片補暮宝訪亡忘棒枚幕密盟模訳郵優預幼欲翌乱卵覧裏律臨朗論",　　　　　　　　　　　 nameEN: "Grade 6", nameFR: "Niveau 6", nameJP: "6年生"},
-    jouyou_grS: { chars: "亜哀挨曖握扱宛嵐依威為畏尉萎偉椅彙違維慰緯壱逸芋咽姻淫陰隠韻唄鬱畝浦詠影鋭疫悦越謁閲炎怨宴援煙猿鉛縁艶汚凹押旺欧殴翁奥憶臆虞乙俺卸穏佳苛架華菓渦嫁暇禍靴寡箇稼蚊牙瓦雅餓介戒怪拐悔皆塊楷潰壊懐諧劾崖涯慨蓋該概骸垣柿核殻郭較隔獲嚇穫岳顎掛括喝渇葛滑褐轄且釜鎌刈甘汗缶肝冠陥乾勘患貫喚堪換敢棺款閑勧寛歓監緩憾還環韓艦鑑含玩頑企伎忌奇祈軌既飢鬼亀幾棋棄毀畿輝騎宜偽欺儀戯擬犠菊吉喫詰却脚虐及丘朽臼糾嗅窮巨拒拠虚距御凶叫狂享況峡挟狭恐恭脅矯響驚仰暁凝巾斤菌琴僅緊錦謹襟吟駆惧愚偶遇隅串屈掘窟繰勲薫刑茎契恵啓掲渓蛍傾携継詣慶憬稽憩鶏迎鯨隙撃桁傑肩倹兼剣拳軒圏堅嫌献遣賢謙鍵繭顕懸幻玄弦舷股虎孤弧枯雇誇鼓錮顧互呉娯悟碁勾孔巧甲江坑抗攻更拘肯侯恒洪荒郊貢控梗喉慌硬絞項溝綱酵稿衡購乞拷剛傲豪克酷獄駒込頃昆恨婚痕紺魂墾懇沙唆詐鎖挫采砕宰栽彩斎債催塞歳載剤削柵索酢搾錯咲刹拶撮擦桟惨傘斬暫旨伺刺祉肢施恣脂紫嗣雌摯賜諮侍慈餌璽軸𠮟疾執湿嫉漆芝赦斜煮遮邪蛇酌釈爵寂朱狩殊珠腫趣寿呪需儒囚舟秀臭袖羞愁酬醜蹴襲汁充柔渋銃獣叔淑粛塾俊瞬旬巡盾准殉循潤遵庶緒如叙徐升召匠床抄肖尚昇沼宵症祥称渉紹訟掌晶焦硝粧詔奨詳彰憧衝償礁鐘丈冗浄剰畳壌嬢錠譲醸拭殖飾触嘱辱尻伸芯辛侵津唇娠振浸紳診寝慎審震薪刃尽迅甚陣尋腎須吹炊帥粋衰酔遂睡穂随髄枢崇据杉裾瀬是姓征斉牲凄逝婿誓請醒斥析脊隻惜戚跡籍拙窃摂仙占扇栓旋煎羨腺詮践箋潜遷薦繊鮮禅漸膳繕狙阻租措粗疎訴塑遡礎双壮荘捜挿桑掃曹曽爽喪痩葬僧遭槽踪燥霜騒藻憎贈即促捉俗賊遜汰妥唾堕惰駄耐怠胎泰堆袋逮替滞戴滝択沢卓拓託濯諾濁但脱奪棚誰丹旦胆淡嘆端綻鍛弾壇恥致遅痴稚緻畜逐蓄秩窒嫡抽衷酎鋳駐弔挑彫眺釣貼超跳徴嘲澄聴懲勅捗沈珍朕陳鎮椎墜塚漬坪爪鶴呈廷抵邸亭貞帝訂逓偵堤艇締諦泥摘滴溺迭哲徹撤添塡殿斗吐妬途渡塗賭奴怒到逃倒凍唐桃透悼盗陶塔搭棟痘筒稲踏謄藤闘騰洞胴瞳峠匿督篤凸突屯豚頓貪鈍曇丼那謎鍋軟尼弐匂虹尿妊忍寧捻粘悩濃把覇婆罵杯排廃輩培陪媒賠伯拍泊迫剝舶薄漠縛爆箸肌鉢髪伐抜罰閥氾帆汎伴畔般販斑搬煩頒範繁藩蛮盤妃彼披卑疲被扉碑罷避尾眉微膝肘匹泌姫漂苗描猫浜賓頻敏瓶扶怖附訃赴浮符普腐敷膚賦譜侮舞封伏幅覆払沸紛雰噴墳憤丙併柄塀幣弊蔽餅壁璧癖蔑偏遍哺捕舗募慕簿芳邦奉抱泡胞俸倣峰砲崩蜂飽褒縫乏忙坊妨房肪某冒剖紡傍帽貌膨謀頰朴睦僕墨撲没勃堀奔翻凡盆麻摩磨魔昧埋膜枕又抹慢漫魅岬蜜妙眠矛霧娘冥銘滅免麺茂妄盲耗猛網黙紋冶弥厄躍闇喩愉諭癒唯幽悠湧猶裕雄誘憂融与誉妖庸揚揺溶腰瘍踊窯擁謡抑沃翼拉裸羅雷頼絡酪辣濫藍欄吏痢履璃離慄柳竜粒隆硫侶虜慮了涼猟陵僚寮療瞭糧厘倫隣瑠涙累塁励戻鈴零霊隷齢麗暦劣烈裂恋廉錬呂炉賂露弄郎浪廊楼漏籠麓賄脇惑枠湾腕",
+
+    jouyou_gr1:{chars:"一右雨円王音下火花貝学気九休玉金空月犬見五口校左三山子四糸字耳七車手十出女小上森人水正生青夕石赤千川先早草足村大男竹中虫町天田土二日入年白八百文木本名目立力林六", nameEN: "Grade 1", nameFR: "Niveau 1", nameJP: "1年生"},
+    jouyou_gr2:{chars:"引羽雲園遠何科夏家歌画回会海絵外角楽活間丸岩顔汽記帰弓牛魚京強教近兄形計元言原戸古午後語工公広交光考行高黄合谷国黒今才細作算止市矢姉思紙寺自時室社弱首秋週春書少場色食心新親図数西声星晴切雪船線前組走多太体台地池知茶昼長鳥朝直通弟店点電刀冬当東答頭同道読内南肉馬売買麦半番父風分聞米歩母方北毎妹万明鳴毛門夜野友用曜来里理話",　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 nameEN: "Grade 2", nameFR: "Niveau 2", nameJP: "2年生"},
+    jouyou_gr3:{chars:"悪安暗医委意育員院飲運泳駅央横屋温化荷開界階寒感漢館岸期起客究急級宮球去橋業曲局銀区苦具君係軽血決研県庫湖向幸港号根祭皿仕死使始指歯詩次事持式実写者主守取酒受州拾終習集住重宿所暑助昭消商章勝乗植申身神真深進世整昔全相送想息速族他打対待代第題炭短談着注柱丁帳調追定庭笛鉄転都度投豆島湯登等動童農波配倍箱畑発反坂板皮悲美鼻筆氷表秒病品負部服福物平返勉放味命面問役薬由油有遊予羊洋葉陽様落流旅両緑礼列練路和",　　 nameEN: "Grade 3", nameFR: "Niveau 3", nameJP: "3年生"},
+    jouyou_gr4:{chars:"愛案以衣位茨印英栄媛塩岡億加果貨課芽賀改械害街各覚潟完官管関観願岐希季旗器機議求泣給挙漁共協鏡競極熊訓軍郡群径景芸欠結建健験固功好香候康佐差菜最埼材崎昨札刷察参産散残氏司試児治滋辞鹿失借種周祝順初松笑唱焼照城縄臣信井成省清静席積折節説浅戦選然争倉巣束側続卒孫帯隊達単置仲沖兆低底的典伝徒努灯働特徳栃奈梨熱念敗梅博阪飯飛必票標不夫付府阜富副兵別辺変便包法望牧末満未民無約勇要養浴利陸良料量輪類令冷例連老労録", nameEN: "Grade 4", nameFR: "Niveau 4", nameJP: "4年生"},
+    jouyou_gr5:{chars:"圧囲移因永営衛易益液演応往桜可仮価河過快解格確額刊幹慣眼紀基寄規喜技義逆久旧救居許境均禁句型経潔件険検限現減故個護効厚耕航鉱構興講告混査再災妻採際在財罪殺雑酸賛士支史志枝師資飼示似識質舎謝授修述術準序招証象賞条状常情織職制性政勢精製税責績接設絶祖素総造像増則測属率損貸態団断築貯張停提程適統堂銅導得毒独任燃能破犯判版比肥非費備評貧布婦武復複仏粉編弁保墓報豊防貿暴脈務夢迷綿輸余容略留領",　　　　　　　　　　 nameEN: "Grade 5", nameFR: "Niveau 5", nameJP: "5年生"},
+    jouyou_gr6:{chars:"胃異遺域宇映延沿恩我灰拡革閣割株干巻看簡危机揮貴疑吸供胸郷勤筋系敬警劇激穴券絹権憲源厳己呼誤后孝皇紅降鋼刻穀骨困砂座済裁策冊蚕至私姿視詞誌磁射捨尺若樹収宗就衆従縦縮熟純処署諸除承将傷障蒸針仁垂推寸盛聖誠舌宣専泉洗染銭善奏窓創装層操蔵臓存尊退宅担探誕段暖値宙忠著庁頂腸潮賃痛敵展討党糖届難乳認納脳派拝背肺俳班晩否批秘俵腹奮並陛閉片補暮宝訪亡忘棒枚幕密盟模訳郵優預幼欲翌乱卵覧裏律臨朗論",　　　　　　　　　　　 nameEN: "Grade 6", nameFR: "Niveau 6", nameJP: "6年生"},
+    jouyou_grS:{chars:"亜哀挨曖握扱宛嵐依威為畏尉萎偉椅彙違維慰緯壱逸芋咽姻淫陰隠韻唄鬱畝浦詠影鋭疫悦越謁閲炎怨宴援煙猿鉛縁艶汚凹押旺欧殴翁奥憶臆虞乙俺卸穏佳苛架華菓渦嫁暇禍靴寡箇稼蚊牙瓦雅餓介戒怪拐悔皆塊楷潰壊懐諧劾崖涯慨蓋該概骸垣柿核殻郭較隔獲嚇穫岳顎掛括喝渇葛滑褐轄且釜鎌刈甘汗缶肝冠陥乾勘患貫喚堪換敢棺款閑勧寛歓監緩憾還環韓艦鑑含玩頑企伎忌奇祈軌既飢鬼亀幾棋棄毀畿輝騎宜偽欺儀戯擬犠菊吉喫詰却脚虐及丘朽臼糾嗅窮巨拒拠虚距御凶叫狂享況峡挟狭恐恭脅矯響驚仰暁凝巾斤菌琴僅緊錦謹襟吟駆惧愚偶遇隅串屈掘窟繰勲薫刑茎契恵啓掲渓蛍傾携継詣慶憬稽憩鶏迎鯨隙撃桁傑肩倹兼剣拳軒圏堅嫌献遣賢謙鍵繭顕懸幻玄弦舷股虎孤弧枯雇誇鼓錮顧互呉娯悟碁勾孔巧甲江坑抗攻更拘肯侯恒洪荒郊貢控梗喉慌硬絞項溝綱酵稿衡購乞拷剛傲豪克酷獄駒込頃昆恨婚痕紺魂墾懇沙唆詐鎖挫采砕宰栽彩斎債催塞歳載剤削柵索酢搾錯咲刹拶撮擦桟惨傘斬暫旨伺刺祉肢施恣脂紫嗣雌摯賜諮侍慈餌璽軸𠮟疾執湿嫉漆芝赦斜煮遮邪蛇酌釈爵寂朱狩殊珠腫趣寿呪需儒囚舟秀臭袖羞愁酬醜蹴襲汁充柔渋銃獣叔淑粛塾俊瞬旬巡盾准殉循潤遵庶緒如叙徐升召匠床抄肖尚昇沼宵症祥称渉紹訟掌晶焦硝粧詔奨詳彰憧衝償礁鐘丈冗浄剰畳壌嬢錠譲醸拭殖飾触嘱辱尻伸芯辛侵津唇娠振浸紳診寝慎審震薪刃尽迅甚陣尋腎須吹炊帥粋衰酔遂睡穂随髄枢崇据杉裾瀬是姓征斉牲凄逝婿誓請醒斥析脊隻惜戚跡籍拙窃摂仙占扇栓旋煎羨腺詮践箋潜遷薦繊鮮禅漸膳繕狙阻租措粗疎訴塑遡礎双壮荘捜挿桑掃曹曽爽喪痩葬僧遭槽踪燥霜騒藻憎贈即促捉俗賊遜汰妥唾堕惰駄耐怠胎泰堆袋逮替滞戴滝択沢卓拓託濯諾濁但脱奪棚誰丹旦胆淡嘆端綻鍛弾壇恥致遅痴稚緻畜逐蓄秩窒嫡抽衷酎鋳駐弔挑彫眺釣貼超跳徴嘲澄聴懲勅捗沈珍朕陳鎮椎墜塚漬坪爪鶴呈廷抵邸亭貞帝訂逓偵堤艇締諦泥摘滴溺迭哲徹撤添塡殿斗吐妬途渡塗賭奴怒到逃倒凍唐桃透悼盗陶塔搭棟痘筒稲踏謄藤闘騰洞胴瞳峠匿督篤凸突屯豚頓貪鈍曇丼那謎鍋軟尼弐匂虹尿妊忍寧捻粘悩濃把覇婆罵杯排廃輩培陪媒賠伯拍泊迫剝舶薄漠縛爆箸肌鉢髪伐抜罰閥氾帆汎伴畔般販斑搬煩頒範繁藩蛮盤妃彼披卑疲被扉碑罷避尾眉微膝肘匹泌姫漂苗描猫浜賓頻敏瓶扶怖附訃赴浮符普腐敷膚賦譜侮舞封伏幅覆払沸紛雰噴墳憤丙併柄塀幣弊蔽餅壁璧癖蔑偏遍哺捕舗募慕簿芳邦奉抱泡胞俸倣峰砲崩蜂飽褒縫乏忙坊妨房肪某冒剖紡傍帽貌膨謀頰朴睦僕墨撲没勃堀奔翻凡盆麻摩磨魔昧埋膜枕又抹慢漫魅岬蜜妙眠矛霧娘冥銘滅免麺茂妄盲耗猛網黙紋冶弥厄躍闇喩愉諭癒唯幽悠湧猶裕雄誘憂融与誉妖庸揚揺溶腰瘍踊窯擁謡抑沃翼拉裸羅雷頼絡酪辣濫藍欄吏痢履璃離慄柳竜粒隆硫侶虜慮了涼猟陵僚寮療瞭糧厘倫隣瑠涙累塁励戻鈴零霊隷齢麗暦劣烈裂恋廉錬呂炉賂露弄郎浪廊楼漏籠麓賄脇惑枠湾腕",
                   nameEN: "Secondary school kanji", nameFR: "Jōyō kanji du secondaire", nameJP: "中学生で習う漢字"},
 
     jouyou_r01:{chars:"一七丁下三上丈不世且丘丙中串丸丹主丼久乏乗乙九乞乱乳乾了事",nameEN:"1 stroke", nameFR:"1 trait", nameJP:"1画"},
@@ -493,6 +511,7 @@ const groupComponents = {
     alphab_gaj: { chars: "ABCČĆDǄǅĐEFGHIJKLǇǈMNǊǋOPQRSŠTUVWXYZŽabcčćdǆđefghijklǉmnǌopqrsštuvwxyzž",      nameEN: "Gaj’s Latin alphabet", nameFR: "Alphabet Gaj",           nameJP: "ガイ式ラテン・アルファベット"},
     alphab_cnr: { chars: "ABCČĆDǄǅĐEFGHIJKLǇǈMNǊǋOPQRSŠŚTUVWXYZŽŹabcčćdǆđefghijklǉmnǌopqrsšśtuvwxyzžź",  nameEN: "Montenegrin alphabet", nameFR: "Alphabet monténégrin",   nameJP: "モンテネグロ語アルファベット"},
     alphab_slk: { chars: "AÁÄBCČDĎEÉFGHIÍJKLĹĽMNŇOÓÔPQRŔSŠTŤUÚVWXYÝZŽaáäbcčdďeéfghiíjklĺľmnňoóôpqrŕsštťuúvwxyýzž",nameEN: "Slovak alphabet",  nameFR: "Alphabet slovaque",      nameJP: "スロバキア語アルファベット"},
+    alphab_vie: { chars: "AĂÂBCDĐEÊFGHIJKLMNOÔƠPQRSTUƯVWXYZ",nameEN: "Vietnamese alphabet",  nameFR: "Alphabet vietnamien",      nameJP: "ベトナム語アルファベット"},
     
     alphab_rus: { chars: "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя",nameEN: "Russian alphabet",          nameFR: "Alphabet russe",            nameJP: "ロシア語アルファベット"},
     alphab_ukr: { chars: "АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюя",nameEN: "Ukrainian alphabet",        nameFR: "Alphabet ukrainien",        nameJP:"ウクライナ語アルファベット"},
@@ -512,7 +531,12 @@ const groupComponents = {
     accent_svf: { chars: "ÉŠÜŽéšüž",                         ...accnt_comm},
     accent_dkn: { chars: "ÀÁÈÉÊÍÒÓÔÙÚÜǼǾǺàáèéêíòóôùúüǽǿǻ",   ...accnt_comm},
     accent_smi: { chars: "ÁÂČƷǮĐǦǤÏǨŊÕŠŦÜŽÆØÅÄÖáâčʒǯđǧǥïǩŋõšŧüžæøåäö",...accnt_comm},
-
+    accent_vi2: { chars: "ÁẮẤÉẾÍÓỐỚÚỨÝáắấéếíóốớúứý",nameEN:"Acute accent", nameFR:"Accent aigu",  nameJP:"アキュート・アクセント"},
+    accent_vi3: { chars: "ÀẰẦÈỀÌÒỒỜÙỪỲàằầèềìòồờùừỳ",nameEN:"Grave accent", nameFR:"Accent grave", nameJP:"グレイヴ・アクセント"},
+    accent_vi4: { chars: "ẢẲẨẺỂỈỎỔỞỦỬỶảẳẩẻểỉỏổởủửỷ",nameEN:"Hook",         nameFR:"Crochet",      nameJP:"フック"},
+    accent_vi5: { chars: "ÃẴẪẼỄĨÕỖỠŨỮỸãẵẫẽễĩõỗỡũữỹ",nameEN:"Tilde",        nameFR:"Tilde",        nameJP:"チルダ"},
+    accent_vi6: { chars: "ẠẶẬẸỆỊỌỘỢỤỰỴạặậẹệịọộợụựỵ",nameEN:"Dot below",    nameFR:"Point souscrit",nameJP:"下ドット"},
+     
     punctu_eng: { chars: " .,?!'\":;-/&()“”‘’",              ...punct_comm},
     punctu_fra: { chars: " .,?!'\":;-/&()«»“”",              ...punct_comm},
     punctu_ger: { chars: " .,?!'\":;-/&()„“‚‘«»‹›",          ...punct_comm},
@@ -529,7 +553,7 @@ const groupComponents = {
     punctu_bel: { chars: " .,?!'\":;-/&()«»„“",              ...punct_comm},
     punctu_bul: { chars: " .,?!'\":;-/&()„“’",               ...punct_comm},
 
-    punctu_jpn: { chars: "　。、？！.,:…・〜/（）「」゠※々円",   ...punct_comm},
+    punctu_jpn: { chars: "　。、?!？！.,:⋯⋮…・゠〜/（）「」『』【】※々円", ...punct_comm},
 
     more_punct: { chars: " []{}~*_@#%€£$¢…–—―•©®™‼�",        nameEN: "Extra symbols", nameFR: "Symboles supplémentaires", nameJP: "より多くの記号"},
     punc_no_em: { chars: " []{}~*_@#%№€£$¢…–―•©®™‼�",        nameEN: "Extra symbols", nameFR: "Symboles supplémentaires", nameJP: "より多くの記号"},
@@ -645,10 +669,11 @@ const groups = {
                   nameEN: "All Unicode blocks",
                   nameFR: "Blocs Unicode",
                   nameJP: "すべてのブロック"},
-    latin_acct: { components: ["lat_lttr_a","lat_lttr_æ","latinext_a","latinext_b","ipa_extens"],
-                  nameEN: "By accent",
-                  nameFR: "Par accent",
-                  nameJP: "文字別"},
+    latin_acct: { components: ["lat_dia_xx","lat_dia_ac","lat_dia_gr","lat_dia_ci","lat_dia_di","lat_dia_ti","lat_dia_há",
+                               "lat_dia_do","lat_dia_ma","lat_dia_br","lat_dia_ha","lat_dia_ho","lat_dia_hn","lat_dia_ce","lat_dia_og"],
+                  nameEN: "By diacritic",
+                  nameFR: "Par diacritique",
+                  nameJP: "発音区別符号"},
     latin_lttr: { components: ["lat_lttr_a","lat_lttr_â","lat_lttr_ă","lat_lttr_æ","lat_lttr_b","lat_lttr_c","lat_lttr_d","lat_lttr_e","lat_lttr_ê",
                                "lat_lttr_ɛ","lat_lttr_f","lat_lttr_g","lat_lttr_h","lat_lttr_i","lat_lttr_j","lat_lttr_k","lat_lttr_l","lat_lttr_m",
                                "lat_lttr_n","lat_lttr_o","lat_lttr_ô","lat_lttr_ơ","lat_lttr_p","lat_lttr_q","lat_lttr_r","lat_lttr_s","lat_lttr_t",
@@ -656,7 +681,7 @@ const groups = {
                             ],
                   nameEN: "By letter",
                   nameFR: "Par lettre",
-                  nameJP: "発音区別符号別"},
+                  nameJP: "文字別"},
 
     math_group: { components: ["mathnumber","arithmetop","relationop"], nameEN:"Mathematical symbols", nameFR: "Symboles mathématiques",  nameJP: "数学記号"},
 
@@ -678,6 +703,7 @@ const groups = {
     bs_cr_lang: { components: ["alphab_gaj","punctu_src",...group_comm],              nameEN: "Bosnian and Croatian", nameFR: "Bosnien et croate", nameJP:"ボスニア語とクロアチア語"},
     cnlanguage: { components: ["alphab_cnr","punctu_src",...group_comm],              nameEN:"Montenegrin",nameFR: "Monténégrin",  nameJP:"モンテネグロ語"},
     sklanguage: { components: ["alphab_slk","punctu_cze",...group_comm],              nameEN: "Slovak",    nameFR: "Slovaque",     nameJP:"スロバキア語"},
+    vilanguage: { components: ["alphab_vie","accent_vi2","accent_vi3","accent_vi4","accent_vi5","accent_vi6","punctu_eng",...group_comm], nameEN:"Vietnamese",nameFR: "Vietnamien",nameJP:"ベトナム語"},
     
     rulanguage: { components: ["alphab_rus","punctu_rus","numeral_en","punc_no_em","basic_math","buttonicon"],nameEN: "Russian",   nameFR: "Russe", nameJP:"ロシア語", unsup: ["А́","Е́","И́","О́","У́","Ы́","Э́","Ю́","Я́","а́","е́","и́","о́","у́","ы́","э́","ю́","я́"]},
     uklanguage: { components: ["alphab_ukr","punctu_ukr",...group_comm],              nameEN: "Ukrainian", nameFR: "Ukrainien",    nameJP:"ウクライナ語"},
@@ -690,7 +716,7 @@ const groups = {
 
     lat_cyr_gr: { components: ["alphab_lat","alphab_rus","alphab_grk"], nameEN: "Latin/Cyrillic/Greek", nameFR: "Latin, cyrillique, grec", nameJP: "ラテン文字、キリル文字、ギリシア文字"},
 
-    kana_punct: { components: ["basic_hira","other_hira","basic_kata","other_kata","punctu_jpn","numeral_en","buttonicon"], nameEN: "Kana and punctuation", nameFR: "Kana et ponctuation", nameJP:"仮名と句読点"},
+    kana_punct: { components: ["basic_hira","other_hira","basic_kata","other_kata","punctu_jpn","numeral_en","buttonicon"], nameEN: "Kana & punctuation", nameFR: "Kana et ponctuation", nameJP:"仮名と句読点"},
     kanji_comm: { components: ["kanji_nums","kanji_time","kanji_lang","kanji_peop"], nameEN: "Kanji by meaning", nameFR: "Kanji par sens", nameJP:"意味別の漢字"},
     kyouiku_kj: { components: ["jouyou_gr1","jouyou_gr2","jouyou_gr3","jouyou_gr4","jouyou_gr5","jouyou_gr6"], nameEN: "Kyōiku kanji", nameFR: "Kyōiku kanji", nameJP:"教育漢字"},
     jouyou_kji: { components: ["jouyou_grS"], nameEN: "Grade S jōyō kanji", nameFR: "Jōyō kanji du secondaire", nameJP:"中学校で習う漢字"},
@@ -770,7 +796,7 @@ let stringL10n = {
     capheight:   { nameEN: "Cap height",      nameFR: "Hauteur de capitale", nameJP: "大文字の高さ"      },
     
     copyover1: { nameEN: "Copy over", nameFR: "Copier",    nameJP: "文字の" },
-    copyoverg: { nameEN: "Glyph",     nameFR: "Glyphe",    nameJP: "らグリフ" },
+    copyoverg: { nameEN: "Glyph",     nameFR: "Glyphe",    nameJP: "グリフ" },
     copyoverk: { nameEN: "Kerning",   nameFR: "Crénage",   nameJP: "カーニング" },
     copyover2: { nameEN: "from",      nameFR: "du glyphe", nameJP: "をコピー" },
 
@@ -783,8 +809,14 @@ let stringL10n = {
 
     spacestr:    { nameEN: "'space'",   nameFR: "'espace'", nameJP: "'スペース'" },
     emptystr:    { nameEN: "'(no items)'", nameFR: "'(vide)'", nameJP: "'(空っぽ)'" },
-    countstr:    { nameEN: "Glyph count: ", nameFR: "Nombre de glyphes : ", nameJP: "文字の数: " },
+    countstr:    { nameEN: n=>n+" glyph"+(n==1?"":"s"), nameFR: n=>n+" glyphe"+(n<=1?"":"s"), nameJP: _=>"文字" },
     untitled:    { nameEN: "untitled", nameFR: "sans titre", nameJP: "無題" },
+
+    every5minutes: { nameEN: "every 5 minutes", nameFR: "toutes les 5 minutes", nameJP: "5分ごと" },
+    ongroupchange: { nameEN: "when changing to another glyph", nameFR: "", nameJP: "" },
+    onglyphchange: { nameEN: "when changing glyph groups", nameFR: "", nameJP: "" },
+    autosavesplit: { nameEN: ", ", nameFR: ", ", nameJP: "、" },
+    autosave_isON: { nameEN: "Autosave is ON (_)", nameFR: "La sauvegarde automatique est activée (_)", nameJP: "自動保存がONになっている（_）" },
 }
 
 function getLocalisedString(key) {
