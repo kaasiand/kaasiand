@@ -9,9 +9,9 @@ let gamedata = {};
 
 function copyresults() {
     let nr = (sessionseed - Date.UTC(2022,0,-29)) / 86400000;
-    let str = `Lingle ${nr + (nr % 100 == 69? " (nice)" : "")} ${gamedata.voltooid ? gamedata.regel + 1 : 'X'}/6\n`;
+    let str = `Lingle ${nr} ${gamedata.voltooid ? gamedata.regel + 1 : 'X'}/6\r\n`;
     if (true)
-        str += "https://kaasiand.cool/lingle/\n";
+        str += "https://kaasiand.cool/lingle/\r\n";
 
     let trs = document.querySelectorAll("#speelveld tr");
 
@@ -19,7 +19,7 @@ function copyresults() {
         if (!gamedata.veld[i]) {
             break;
         }
-        str += "\n";
+        str += "\r\n";
         let res = checkWoord(gamedata.veld[i]);
 
         res.forEach(r => {
