@@ -2189,6 +2189,8 @@ function importUploadedFont() {
     updateGlyphCount();
 }
 
+const graphemeSegmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
+
 function importFnt(str,fn, obj) {
     // does not deal with importing bitmap!
     let data = str.split("\n").filter(str => str);
@@ -2252,9 +2254,10 @@ function importFnt(str,fn, obj) {
                 }
                 let real = keyWs.replace(/space/g, " ").replace(/U\+([0-9a-f]+)/ig, (_,p) => String.fromCodePoint("0x"+p));
 
-                if ([...real].length == 1) {
+                const segments = Array.from(graphemeSegmenter.segment(real));
+                if (segments.length == 1) {
                     charorder.push({ ch: real, adv: afterWs * 1 || 0 });
-                } else if ([...real].length == 2) {
+                } else if (segments.length == 2) {
                     makeKerningPair(real, afterWs * 1 || 0, false);
                     kerningPairCount++;
                 }
