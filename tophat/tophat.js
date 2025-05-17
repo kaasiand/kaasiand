@@ -2256,7 +2256,7 @@ function importFnt(str,fn, obj) {
 
                 const segments = Array.from(graphemeSegmenter.segment(real));
                 if (segments.length == 1) {
-                    charorder.push({ ch: real, adv: afterWs * 1 || 0 });
+                    charorder.push({ ch: [...real][0], adv: afterWs * 1 || 0 });
                 } else if (segments.length == 2) {
                     makeKerningPair(real, afterWs * 1 || 0, false);
                     kerningPairCount++;
