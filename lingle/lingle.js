@@ -17,7 +17,7 @@ function renderImage() {
     resultcanvas.height = 220;
     ctx.fillStyle = "#393434"; ctx.fillRect(0,0,resultcanvas.width,resultcanvas.height);
     ctx.drawImage(img_logomini, 54,29);
-    ctx.fillStyle = "#D1D1D1"; ctx.fillRect(43,87,210,1);
+    ctx.fillStyle = "#CCCCCC"; ctx.fillRect(43,87,210,1);
     
     let tileWidth = 30, tileHeight = 26, tileGap = 3;
     let tileY = 24;
@@ -324,7 +324,6 @@ function getIdx(seed) {
 
 function handleWin() {
     gamedata.voltooid = true;
-    doaflip();
     console.log("win");
 
     gamedata.gespeeld++;
@@ -333,6 +332,8 @@ function handleWin() {
     gamedata.wins++;
     if (gamedata.streak > gamedata.maxstreak) gamedata.maxstreak = gamedata.streak;
     save();
+
+    doaflip();
 }
 
 function checkWoord(poging) {
