@@ -22,12 +22,14 @@
 
 <body onload="init()">
 <div class="top">
-    <div id="helpscreen" class="overlayscreen hidden">
+    <dialog id="helpscreen" closedby="any">
+        <div class="modalbg">
         <h1>Hoe werkt <img src="lingle.png" alt="Lingle" class="logo">?</h1>
 
-        <p>Raad het woord in 6 pogingen.
+        <p>Raad het woord in zes pogingen.
         Vul telkens een bestaand Nederlands woord van 5 letters in, en druk dan op enter.</p>
         <p>Na iedere beurt krĳg je te zien of de letters correct zĳn of niet.</p>
+        <p>Eigennamen en woorden met accenten, trema's of interpunctie zĳn niet geldig; werkwoords&shy;vervoegingen en verbogen woordvormen wel.</p>
 
         <hr>
 
@@ -37,54 +39,58 @@
 
         <p>De <span class="boxred">L</span> zit in het woord, en staat op de juiste plek.</p>
         <p>De <span class="boxyellow">V</span> zit in het woord, maar staat niet op de juiste plek.</p>
-        <p>De <span class="boxblue">IJ</span> zit niet in het woord.</p>
+        <p>De <span class="boxblue">Ĳ</span> zit niet in het woord.</p>
 
-        <p>Met een fysiek toetsenbord kun je de IJ typen als een I gevolgd door een J, of met <span style="white-space: nowrap;">de <span class="keycap">;</span>&#x2011;toets.</span></p>
+        <p>Met een fysiek toetsenbord kun je de&nbsp;IJ typen als een&nbsp;I gevolgd door&nbsp;een&nbsp;J, of met <span style="white-space: nowrap;">de&nbsp;<span class="keycap">;</span>&#x2011;toets.</span></p>
         
         <hr>
 
         Er is iedere dag een nieuwe Lingle!
-        <button class="redbtn" onclick="hideHelp()">Begrepen!</button>
-    </div>
+        <form method="dialog">
+            <button class="redbtn">Begrepen!</button>
+        </form>
+        </div>
+    </dialog>
 
-    <div id="settscreen" class="overlayscreen hidden">
+    <dialog id="settscreen" closedby="any">
+        <div class="modalbg">
         <h1>Instellingen</h1>
 
         <div class="settitem">
             <div class="settitemdesc">Verminderde beweging</div>
-            <div class="settitemright" role="radiogroup" style="min-width:70px">
-                 <button   id="reduceanimbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.reduceanim = true;  setReducedAnimation(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
-                ><button id="noreduceanimbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.reduceanim = false; setReducedAnimation(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
+            <div class="settitemright">
+                 <button   id="reduceanimbtn" role="checkbox" onclick="gamedata.reduceanim = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setReducedAnimation(); save();" class="linglebal" aria-checked="false" autofocus></button
+                ><label id="lbl_sett_reduce" for="reduceanimbtn"></label>
             </div>
         </div>
         <div class="settitem">
-            <div class="settitemdesc">Donkerdere blauwe vakjes (hoger contrast)</div>
-            <div class="settitemright" role="radiogroup" style="min-width:70px">
-                 <button id="donkerblauwbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.donkerblauw = true;  setDonkerblauw(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
-                ><button id="gewoonblauwbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.donkerblauw = false; setDonkerblauw(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
+            <div class="settitemdesc">Donkerder blauwe vakjes (hoger contrast)</div>
+            <div class="settitemright">
+                 <button id="donkerblauwbtn" role="checkbox" onclick="gamedata.donkerblauw = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setDonkerblauw(); save();" class="linglebal" aria-checked="false"></button
+                ><label id="lbl_sett_dblauw" for="donkerblauwbtn"></label>
             </div>
         </div>
         <div class="settitem">
             <div class="settitemdesc">
-                Vervang <span style="white-space: nowrap;"><span class="boxblue">I</span><span class="boxblue">J</span> door <span class="boxblue">IJ</span></span> (alleen fysiek toetsenbord)
+                Vervang <span style="white-space: nowrap;"><span class="boxblue">I</span><span class="boxblue">J</span> door <span class="boxblue">IJ</span></span> (alleen fysiek toetsenbord)<abbr title="Let op: in woorden zoals &quot;bijou&quot; (uit het Frans) horen de I en J apart te blijven – dit is geen lange IJ! Gebruik het schermtoetsenbord als je dit woord wil kunnen&nbsp;intypen.">*</abbr>
             </div>
-            <div class="settitemright" role="radiogroup" style="min-width:70px">
-                 <button id="vervangĳbtn"     role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.vervangĲ = true;  save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
-                ><button id="vervangĳnietbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.vervangĲ = false; save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
+            <div class="settitemright">
+                 <button id="vervangĳbtn"     role="checkbox" onclick="gamedata.vervangĲ = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); save();" class="linglebal" aria-checked="false"></button
+                ><label id="lbl_sett_vervang" for="vervangĳbtn"></label>
             </div>
         </div>
         <div class="settitem">
             <div class="settitemdesc">Letterbord blurren</div>
-            <div class="settitemright" role="radiogroup" style="min-width:70px">
-                 <button id="blurbtn"     role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.blur = true;  setBlur(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
-                ><button id="blurnietbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.blur = false; setBlur(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
+            <div class="settitemright">
+                 <button id="blurbtn"     role="checkbox" onclick="gamedata.blur = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setBlur(); save();" class="linglebal" aria-checked="false"></button
+                ><label id="lbl_sett_blur" for="blurbtn"></label>
             </div>
         </div>
         <div class="settitem">
-            <div class="settitemdesc">Dit scherm ietwat doorzichtig maken</div>
-            <div class="settitemright" role="radiogroup" style="min-width:70px">
-                 <button id="transpbtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.transp = true;  setOpaque(); save();" class="linglebal" style="--squish: 0.9"  data-lbl="Ja" aria-checked="false"></button
-                ><button id="opaquebtn" role="radio" onclick="uncheckAll(this.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.transp = false; setOpaque(); save();" class="linglebal" style="--squish: 0.66" data-lbl="Nee" aria-checked="false"></button>
+            <div class="settitemdesc">Dit scherm laten doorschĳnen</div>
+            <div class="settitemright">
+                 <button id="transpbtn" role="checkbox" onclick="gamedata.transp = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setOpaque(); save();" class="linglebal" aria-checked="false"></button
+                ><label id="lbl_sett_transp" for="transpbtn"></label>
             </div>
         </div>
 
@@ -96,10 +102,10 @@
             </div>
             <div class="settitemright" role="radiogroup">
                 <ul style="list-style-type:none">
-                    <li><button id="btnthemadark"     role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="1" data-value="dark"     aria-labelledby="lbl_thema_dnkr" aria-checked="false"></button><label id="lbl_thema_dnkr">Donker</label></li>
-                    <li><button id="btnthemadarker"   role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="2" data-value="darker"   aria-labelledby="lbl_thema_dkdr" aria-checked="false"></button><label id="lbl_thema_dkdr">Donkerder</label></li>
-                    <li><button id="btnthemalight"    role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="3" data-value="light"    aria-labelledby="lbl_thema_lcht" aria-checked="false"></button><label id="lbl_thema_lcht">Licht</label></li>
-                    <li><button id="btnthemakaasiand" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="4" data-value="kaasiand" aria-labelledby="lbl_thema_ksnd" aria-checked="false"></button><label id="lbl_thema_ksnd">Kaasiand</label></li>
+                    <li><button id="btnthemadark"     role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="1" data-value="dark"     aria-labelledby="lbl_thema_dnkr" aria-checked="false"></button><label id="lbl_thema_dnkr" for="btnthemadark">Donker</label></li>
+                    <li><button id="btnthemadarker"   role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="2" data-value="darker"   aria-labelledby="lbl_thema_dkdr" aria-checked="false"></button><label id="lbl_thema_dkdr" for="btnthemadarker">Donkerder</label></li>
+                    <li><button id="btnthemalight"    role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="3" data-value="light"    aria-labelledby="lbl_thema_lcht" aria-checked="false"></button><label id="lbl_thema_lcht" for="btnthemalight">Licht</label></li>
+                    <li><button id="btnthemakaasiand" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="4" data-value="kaasiand" aria-labelledby="lbl_thema_ksnd" aria-checked="false"></button><label id="lbl_thema_ksnd" for="btnthemakaasiand">Kaasiand</label></li>
                 </ul>
             </div>
         </div>
@@ -112,8 +118,8 @@
             </div>
             <div class="settitemright" role="radiogroup">
                 <ul style="list-style-type:none">
-                    <li><button id="btnstyle00s" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.stĳl = this.dataset.value; setStyle(); save();" class="linglebal" style="--squish: 1" data-lbl="1" data-value="00s" aria-labelledby="lbl_style_00s" aria-checked="false"></button><label id="lbl_style_00s">Standaard</label></li>
-                    <li><button id="btnstyle90s" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.stĳl = this.dataset.value; setStyle(); save();" class="linglebal" style="--squish: 1" data-lbl="2" data-value="90s" aria-labelledby="lbl_style_90s" aria-checked="false"></button><label id="lbl_style_90s">Nineties</label></li>
+                    <li><button id="btnstyle00s" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.stĳl = this.dataset.value; setStyle(); save();" class="linglebal" style="--squish: 1" data-lbl="1" data-value="00s" aria-labelledby="lbl_style_00s" aria-checked="false"></button><label id="lbl_style_00s" for="btnstyle00s">Lingle '00</label></li>
+                    <li><button id="btnstyle90s" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.stĳl = this.dataset.value; setStyle(); save();" class="linglebal" style="--squish: 1" data-lbl="2" data-value="90s" aria-labelledby="lbl_style_90s" aria-checked="false"></button><label id="lbl_style_90s" for="btnstyle90s">Lingle '90</label></li>
                 </ul>
             </div>
         </div>
@@ -122,19 +128,24 @@
 
         <span tabindex="0" id="resetdatalabel" style="font-size: small;" onclick="promptResetData()">Alle opgeslagen data verwijderen...</span>
         
-        <button class="redbtn" onclick="hideSett()">Terug</button>
-        <p style="font-size: small; opacity: 0.8; margin: 20px 0 -10px">Gemaakt door Daniël (<a href="https://twitter.com/kaasIand">@kaasIand</a> op Twitter)<br>
-            Met dank aan <a href="https://twitter.com/Aspharon">Aspharon</a> voor de naam<br>
-            Geïnspireerd door (maar op geen enkele wĳze verbonden met) <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> en Lingo.<br><br>
-            Bug gevonden? Stuur me een DM op Twitter (ik heb meldingen uitstaan voor niet-volgers)
+        <form method="dialog">
+        <button class="redbtn">Terug</button>
+        </form>
+        <p style="font-size: small; opacity: 0.8; margin: 20px 0 10px">Gemaakt door <a href="https://kaasiand.cool/">Daniël</a>. Met speciale dank aan <a href="https://bsky.app/profile/asph.me">Aspharon</a> voor de naam.<br>
+            Geïnspireerd door (maar niet gelieerd aan) Wordle en Lingo.
         </p>
-    </div>
+        <p style="font-size: small; opacity: 0.8; margin: 5px 0 -10px">
+            Lingle draait volledig client-side; alle opgeslagen gegevens blĳven alleen op je eigen apparaat staan.
+            Je kunt de website ook downloaden om offline te spelen.
+        </p>
+        </div>
+    </dialog>
 
     
     <div class="header">
-        <button id="helpbtn" aria-label="Uitleg" title="Uitleg" onclick="toggleHelpScreen()"></button>
-        <button id="settbtn" aria-label="Instellingen" title="Instellingen" onclick="toggleSettScreen()"><div></div><div></div><div></div><div></div></button>
-        <img src="lingle.png" alt="Lingle logo" class="logo">
+        <button id="helpbtn" aria-label="Uitleg" title="Uitleg" onclick="helpscreen.showModal()"></button>
+        <div style="flex-grow:1"></div>
+        <button id="settbtn" aria-label="Instellingen" title="Instellingen" onclick="settscreen.showModal()"><div></div><div></div><div></div><div></div></button>
     </div>
     <div class="wrap blur">
     <table id="speelveld">
@@ -189,46 +200,48 @@
         </tr>
     </table>
     </div>
-    <div class="btmwrap kbwrap">
-        <div class="keybline">
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'q'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'w'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'e'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'r'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'t'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'y'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'u'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'i'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'o'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'p'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-        </div>
-        <div class="keybline">
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'a'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'s'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'d'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'f'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'g'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'h'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'j'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'k'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'l'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'ĳ'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-        </div>
-        <div class="keybline">
-            <button onclick="tryEnter()" class="wide enter" style="--letter:'enter'"><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'z'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'x'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'c'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'v'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'b'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'n'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'m'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
-            <button onclick="doBackspace()" aria-label="backspace" class="wide bsp" style="--letter:'Õ';font-family: 'wingdings'"><div class="btnletter"></div></button>
-        </div>
-    </div>
+<div class="btmwrap kbwrap">
+<div class="keybline">
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'q'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'w'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'e'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'r'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'t'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'y'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'u'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'i'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'o'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'p'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+</div>
+<div class="keybline">
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'a'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'s'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'d'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'f'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'g'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'h'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'j'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'k'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'l'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'ĳ'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+</div>
+<div class="keybline">
+    <button onclick="tryEnter()" class="wide enter" style="--letter:'enter'"><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'z'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'x'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'c'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'v'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'b'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'n'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="typLetter(this.style.getPropertyValue('--letter')[1])" style="--letter:'m'" data-bg=""><div class="btncircle"></div><div class="btnletter"></div></button>
+    <button onclick="doBackspace()" aria-label="backspace" class="wide bsp" style="--letter:'Õ';font-family: 'wingdings'"><div class="btnletter"></div></button>
+</div>
+</div>
     <div class="btmwrap wincardwrap">
-        
-        <button class="redbtn sharebtn" onclick="copyresults()">Deel resultaten</button>
+        <div id="wincardbtmrow">
+            <button class="redbtn sharebtn"  onclick="copyresults()"   aria-label="Kopieer resultaten als tekst" title="Kopieer resultaten als tekst">Deel resultaten</button>
+            <img id="shareimg" role="button" onclick="copyresultImg()" aria-label="Kopieer resultaten als afbeelding" title="Kopieer resultaten als afbeelding"/>
+        </div>
     </div>
     <div id="notifbox">
         <span id="notiftext"></span>

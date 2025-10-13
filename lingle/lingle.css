@@ -7,12 +7,12 @@
     --btncolorsolid: #cfc6c6;
 }
 :root[data-theme="darker"] {
-    background: #1f1f20;
+    background: #131315;
     --btncolor: #cfc6c6e0;
     --btncolorsolid: #cfc6c6;
 }
 :root[data-theme="light"] {
-    background: #cfc6c6;
+    background: #e6e0e0;
     --btncolor: #3a3535e0;
     --btncolorsolid: #3a3535;
 }
@@ -488,6 +488,23 @@ body {
     pointer-events: all;
 }
 
+#wincardbtmrow {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    height: 60px;
+}
+#shareimg {
+    height: 100%;
+    border: 2px solid #777;
+    border-radius: 2px;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    &:hover { filter: brightness(1.2); }
+    &:active { filter: brightness(1); }
+}
+
 /* **************************************************************
     KEYBOARD
 ************************************************************** */
@@ -703,36 +720,43 @@ body {
     max-width: calc(100vw - 20px);
     height: var(--hdrheight);
     position: absolute;
+    display: flex;
+    flex-direction: row;
+    background: center / contain url(lingle.png) no-repeat content-box;
+    padding: 10px 0 5px;
+    box-sizing: border-box;
+    filter: drop-shadow(2px 2px 2px #0006);
+
+    :root[data-theme="light"] & { filter: saturate(1.1) brightness(0.9) drop-shadow(2px 2px 2px #0003); }
 }
 #helpbtn {
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
+    position: relative;
     border: 2px solid var(--btncolor);
     background: transparent;
     cursor: pointer;
-    filter: drop-shadow(2px 2px 2px #0004);
-}
-#helpbtn::after {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-53%);
-    content: "?";
-    color: var(--btncolor);
-    font-size: 25px;
-    font-family: "tahoma";
+    margin-top: 10px;
+
+    &::after {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-53%);
+        content: "?";
+        color: var(--btncolor);
+        font-size: 25px;
+        font-family: "tahoma";
+    }
 }
 @media (any-hover: hover) {
     #helpbtn:hover {
         background: #88888840;
     }
     #helpbtn:hover, #settbtn:hover {
-        filter: brightness(120%) drop-shadow(2px 2px 2px #0004);
+        filter: brightness(120%);
+        :root[data-theme="light"] & { filter: brightness(90%); };
     }
 }
 
@@ -741,55 +765,37 @@ body {
     height: 30px;
     box-sizing: border-box;
     border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    right: 3px;
-    transform: translateY(-50%);
+    position: relative;
+    margin: 13px 3px 0 0;
     border: 4px solid var(--btncolorsolid);
     background: transparent;
     
     cursor: pointer;
-    filter: drop-shadow(2px 2px 2px #0004) opacity(0.9);
-}
-#settbtn div {
-    position: absolute;
-    width: 6px;
-    top: -8px;
-    left: 50%;
-    height: 38px;
-    transform: translateX(-50%);
-}
-#settbtn div::after, #settbtn div::before {
-    content: "";
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 7px;
-    background: var(--btncolorsolid);
-}
-#settbtn div::before {
-    bottom: 0;
-}
-#settbtn div:nth-child(2) { transform: translateX(-50%) rotate( 45deg) ; }
-#settbtn div:nth-child(3) { transform: translateX(-50%) rotate( 90deg); }
-#settbtn div:nth-child(4) { transform: translateX(-50%) rotate(135deg); }
+    filter: opacity(0.9);
 
+    & div {
+        position: absolute;
+        width: 6px;
+        top: -8px;
+        left: 50%;
+        height: 38px;
+        transform: translateX(-50%);
 
-.header .logo {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
+        &::after, &::before {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 100%;
+            height: 7px;
+            background: var(--btncolorsolid);
+        }
+        &::before { bottom: 0; }
+        &:nth-child(2) { transform: translateX(-50%) rotate( 45deg) ; }
+        &:nth-child(3) { transform: translateX(-50%) rotate( 90deg); }
+        &:nth-child(4) { transform: translateX(-50%) rotate(135deg); }
+    }
 }
-.logo {
-    height:100%;
-    padding: 10px 0 5px; 
-    box-sizing: border-box;
-    filter: drop-shadow(2px 2px 2px #0004);
-}
-:root[data-theme="light"] .logo {
-    filter: saturate(1.1) brightness(0.85) drop-shadow(2px 2px 2px #0004);
-}
+
 
 #notifbox {
     position: fixed;
@@ -895,91 +901,52 @@ body {
 .hidden {
     display: none !important;
 }
-.overlayscreen {
-    position: absolute;
-    margin-top: 50vh;
-    transform: translateY(-50%);
-    display: block;
-    z-index: 10;
+dialog {
+    border: none;
     border-radius: 30px;
-    width: 600px;
-    box-sizing: border-box;
-    padding: 20px 30px 30px;
-    max-width: 95vw;
     font-family: "tahoma";
     text-shadow: 2px 2px 2px #0004;
     box-shadow: 2px 6px 20px #0006;
-
-    /* no firefox */
+    background: none;
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
-}
-:root[data-theme="dark"] .overlayscreen {
-    color: #f1eaea;
-    background-color: #4e4444e0;
-}
-:root[data-opaque="true"][data-theme="dark"] .overlayscreen  {
-    background-color: #4e4444;
-}
-:root[data-theme="darker"] .overlayscreen {
-    color: #f1eaea;
-    background-color: #312a2ae0;
-}
-:root[data-opaque="true"][data-theme="darker"] .overlayscreen  {
-    background-color: #312a2a;
-}
-:root[data-theme="kaasiand"] .overlayscreen {
-    color: #fdf7f7;
-}
-:root[data-theme="kaasiand"] .overlayscreen::after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    border-radius: 30px;
-    background: #A3642A url(../assets/wood.jpg);
-    filter: opacity(0.8) brightness(0.9);
-}
-:root[data-opaque="true"][data-theme="kaasiand"] .overlayscreen::after  {
-    filter: brightness(0.9);
-}
-:root[data-theme="light"] .overlayscreen {
-    color: #d7c9c9;
-    background-color: #443c3ce0;
-}
-:root[data-opaque="true"][data-theme="light"] .overlayscreen  {
-    background-color: #443c3c;
-}
-.overlayscreen .logo {
-    height: 40px;
-    vertical-align: -9px;
-    margin: 0px -6px;
     padding: 0;
-    filter: drop-shadow(2px 2px 2px #0004);
+    max-width: 600px;
+
+    :root[data-theme="dark"]   & { color: #f1eaea; background-color: #4e4444e0; }
+    :root[data-theme="darker"] & { color: #f1eaea; background-color: #312a2ae0; }
+    :root[data-theme="light"]  & { color: #d7c9c9; background-color: #443c3ce0; }
+    :root[data-opaque="true"][data-theme="dark"]   & { background-color: #4e4444; }
+    :root[data-opaque="true"][data-theme="darker"] & { background-color: #312a2a; }
+    :root[data-opaque="true"][data-theme="light"]  & { background-color: #443c3c; }
+    :root[data-theme="kaasiand"] & { color: #fdf7f7; }
+
+    & .logo {
+        height: 40px;
+        vertical-align: -9px;
+        margin: 0px -6px;
+        padding: 0;
+        filter: drop-shadow(2px 2px 2px #0006);
+
+        :root[data-theme="kaasiand"] & { filter: brightness(1.2) drop-shadow(2px 2px 2px #0004); }
+    }
+    & h1 { font-weight: normal; text-align: center; }
+    & h2 { font-weight: normal; font-size: 20px; }
 }
-:root[data-theme="kaasiand"] .overlayscreen .logo {
-    filter: brightness(1.2) drop-shadow(2px 2px 2px #0004);
+.modalbg {
+    padding: 20px 30px 30px 30px;
+        
+    :root[data-theme="kaasiand"] & { background: url(wood.png) repeat; }
+    :root[data-opaque="true"][data-theme="kaasiand"] & { background: url(wood.jpg) repeat; }
 }
-.overlayscreen h1 {
-    text-align: center;
-    font-weight: normal;
-}
-.overlayscreen h2 {
-    font-size: 20px;
-    font-weight: normal;
-}
-.overlayscreen .example {
+dialog .example {
     height: 4em;
     display: block;
     margin-left: auto;
     margin-right: auto;
     max-width: 100%;
 }
-.overlayscreen .redbtn {
+dialog .redbtn {
     height: 2em;
     width: auto;
     padding: 0px 30px;
@@ -1013,7 +980,7 @@ hr {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 0 5px;
+    padding: 1px 0 0;
 }
 .settitemdesc p {
     padding: 0;
@@ -1032,7 +999,7 @@ hr {
     min-width: 30px;
     width: 30px;
     height: 30px;
-    background: radial-gradient(50% 50% at 40% 30%, #5673F1 30%, #5673F101 100%),
+    background: radial-gradient(50% 50% at 40% 35%, #5673F1 30%, #5673F101 100%),
                 radial-gradient(50% 50% at 40% 40%, #173DA6 30%, #173DA601 100%),
                 radial-gradient(50% 50% at 30% 60%, #0a2a83 30%, #091B5E 100%);
     border-radius: 50%;
@@ -1042,34 +1009,48 @@ hr {
     cursor: pointer;
     position: relative;
     margin: 0 0 5px 5px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: FreeSans,Helvetica,Arial, sans-serif;
     font-weight: bold;
-    box-shadow: 1px 2px 3px #0008;
+    box-shadow: 1px 2px 3px #000C;
+    
+    & + label { padding-left: 10px; }
+    &[role="checkbox"] {
+        background: radial-gradient(20% 20% at 40% 35%, #DE888B80 30%, #DE888B01 100%),
+                    radial-gradient(60% 50% at 45% 30%, #D63919 30%, #D6391901 100%),
+                    radial-gradient(50% 50% at 30% 60%, #971914 30%, #721514 100%);
+        & + label { width: 40px; display: inline-block; }
+        & + label::after { content: "Nee"; }
+    }
+    &[role="checkbox"][aria-checked="true"] {
+        background: radial-gradient(40% 40% at 40% 35%, #67C8AB 30%, #67C8AB01 100%),
+                    radial-gradient(60% 55% at 45% 30%, #00AF6F 30%, #00AF6F01 100%),
+                    radial-gradient(50% 50% at 30% 60%, #006831 30%, #004521 100%);
+        & + label::after { content: "Ja"; }
+    }
 }
+
 .linglebal::after {
     content: attr(data-lbl);
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-51%) scaleX(var(--squish));
+    transform: translate(-50%,-47%) scaleX(var(--squish));
     font-size: 20px;
+    
 }
-.linglebal[aria-checked="true"]::before {
+.linglebal[role="radio"][aria-checked="true"]::before {
     content: "";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-52%);
     width: 0;
-    height: 17px;
-    border-top: 5px solid #dfca63;
-    border-bottom: 5px solid #dfca63;
+    height: 15px;
+    border-top: 5px solid #F3BA00;
+    border-bottom: 5px solid #F3BA00;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     z-index: 1;
-}
-.linglebal + label {
-    padding-left: 10px;
 }
 
 a, #resetdatalabel {
