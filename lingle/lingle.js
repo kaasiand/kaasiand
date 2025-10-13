@@ -50,7 +50,7 @@ function renderImage() {
     ctx.fillText(nr,184,73);
     let d = new Date(gamedata.datum);
     ctx.fillStyle = "#AAAAAA";
-    ctx.font = 'bold 19px "tahomacanvas"';
+    ctx.font = '19px "tahomacanvas"';
     ctx.fillText(`${sessiondate} ${maanden[sessionmonth]} ${d.getFullYear()}`,54,121);
     let streaktxt = `winreeks ${gamedata.streak} `;
     ctx.fillText(streaktxt,54,148);
