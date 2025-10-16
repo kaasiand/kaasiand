@@ -58,40 +58,40 @@
 
         <div class="settitem">
             <div class="settitemdesc">Verminderde beweging</div>
-            <div class="settitemright">
-                 <button   id="reduceanimbtn" role="checkbox" onclick="gamedata.reduceanim = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setReducedAnimation(); save();" class="linglebal" aria-checked="false" autofocus></button
+            <div class="settitemright"><div>
+                 <button   id="reduceanimbtn" role="checkbox" onclick="gamesett.reduceanim = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setReducedAnimation(); save();" class="linglebal" aria-checked="false"></button
                 ><label id="lbl_sett_reduce" for="reduceanimbtn"></label>
-            </div>
+            </div></div>
         </div>
         <div class="settitem">
             <div class="settitemdesc">Donkerder blauwe vakjes (hoger contrast)</div>
-            <div class="settitemright">
-                 <button id="donkerblauwbtn" role="checkbox" onclick="gamedata.donkerblauw = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setDonkerblauw(); save();" class="linglebal" aria-checked="false"></button
+            <div class="settitemright"><div>
+                 <button id="donkerblauwbtn" role="checkbox" onclick="gamesett.donkerblauw = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setDonkerblauw(); save();" class="linglebal" aria-checked="false"></button
                 ><label id="lbl_sett_dblauw" for="donkerblauwbtn"></label>
-            </div>
+            </div></div>
         </div>
         <div class="settitem">
             <div class="settitemdesc">
                 Vervang <span style="white-space: nowrap;"><span class="boxblue">I</span><span class="boxblue">J</span> door <span class="boxblue">IJ</span></span> (alleen fysiek toetsenbord)<abbr title="Let op: in woorden zoals &quot;bijou&quot; (uit het Frans) horen de I en J apart te blijven – dit is geen lange IJ! Gebruik het schermtoetsenbord als je dit woord wil kunnen&nbsp;intypen.">*</abbr>
             </div>
-            <div class="settitemright">
-                 <button id="vervangĳbtn"     role="checkbox" onclick="gamedata.vervangĲ = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); save();" class="linglebal" aria-checked="false"></button
+            <div class="settitemright"><div>
+                 <button id="vervangĳbtn"     role="checkbox" onclick="gamesett.vervangĲ = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); save();" class="linglebal" aria-checked="false"></button
                 ><label id="lbl_sett_vervang" for="vervangĳbtn"></label>
-            </div>
+            </div></div>
         </div>
         <div class="settitem">
             <div class="settitemdesc">Letterbord blurren</div>
-            <div class="settitemright">
-                 <button id="blurbtn"     role="checkbox" onclick="gamedata.blur = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setBlur(); save();" class="linglebal" aria-checked="false"></button
+            <div class="settitemright"><div>
+                 <button id="blurbtn"     role="checkbox" onclick="gamesett.blur = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setBlur(); save();" class="linglebal" aria-checked="false"></button
                 ><label id="lbl_sett_blur" for="blurbtn"></label>
-            </div>
+            </div></div>
         </div>
         <div class="settitem">
             <div class="settitemdesc">Dit scherm laten doorschĳnen</div>
-            <div class="settitemright">
-                 <button id="transpbtn" role="checkbox" onclick="gamedata.transp = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setOpaque(); save();" class="linglebal" aria-checked="false"></button
+            <div class="settitemright"><div>
+                 <button id="transpbtn" role="checkbox" onclick="gamesett.transp = this.ariaChecked == 'true' ? false : true; this.setAttribute('aria-checked', this.ariaChecked == 'true' ? 'false' : 'true'); setOpaque(); save();" class="linglebal" aria-checked="false"></button
                 ><label id="lbl_sett_transp" for="transpbtn"></label>
-            </div>
+            </div></div>
         </div>
 
         <hr>
@@ -101,12 +101,10 @@
                 Achtergrond&shy;thema
             </div>
             <div class="settitemright" role="radiogroup">
-                <ul style="list-style-type:none">
-                    <li><button id="btnthemadark"     role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="1" data-value="dark"     aria-labelledby="lbl_thema_dnkr" aria-checked="false"></button><label id="lbl_thema_dnkr" for="btnthemadark">Donker</label></li>
-                    <li><button id="btnthemadarker"   role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="2" data-value="darker"   aria-labelledby="lbl_thema_dkdr" aria-checked="false"></button><label id="lbl_thema_dkdr" for="btnthemadarker">Donkerder</label></li>
-                    <li><button id="btnthemalight"    role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="3" data-value="light"    aria-labelledby="lbl_thema_lcht" aria-checked="false"></button><label id="lbl_thema_lcht" for="btnthemalight">Licht</label></li>
-                    <li><button id="btnthemakaasiand" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="4" data-value="kaasiand" aria-labelledby="lbl_thema_ksnd" aria-checked="false"></button><label id="lbl_thema_ksnd" for="btnthemakaasiand">Kaasiand</label></li>
-                </ul>
+                <div><button id="btnthemadark"     role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamesett.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="1" data-value="dark"     aria-labelledby="lbl_thema_dnkr" aria-checked="false"></button><label id="lbl_thema_dnkr" for="btnthemadark">Donker</label></div>
+                <div><button id="btnthemadarker"   role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamesett.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="2" data-value="darker"   aria-labelledby="lbl_thema_dkdr" aria-checked="false"></button><label id="lbl_thema_dkdr" for="btnthemadarker">Donkerder</label></div>
+                <div><button id="btnthemalight"    role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamesett.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="3" data-value="light"    aria-labelledby="lbl_thema_lcht" aria-checked="false"></button><label id="lbl_thema_lcht" for="btnthemalight">Licht</label></div>
+                <div><button id="btnthemakaasiand" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamesett.thema = this.dataset.value; setTheme(); save();" class="linglebal" style="--squish: 1" data-lbl="4" data-value="kaasiand" aria-labelledby="lbl_thema_ksnd" aria-checked="false"></button><label id="lbl_thema_ksnd" for="btnthemakaasiand">Kaasiand</label></div>
             </div>
         </div>
 
@@ -117,10 +115,8 @@
                 Linglestĳl
             </div>
             <div class="settitemright" role="radiogroup">
-                <ul style="list-style-type:none">
-                    <li><button id="btnstyle00s" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.stĳl = this.dataset.value; setStyle(); save();" class="linglebal" style="--squish: 1" data-lbl="1" data-value="00s" aria-labelledby="lbl_style_00s" aria-checked="false"></button><label id="lbl_style_00s" for="btnstyle00s">Lingle '00</label></li>
-                    <li><button id="btnstyle90s" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamedata.stĳl = this.dataset.value; setStyle(); save();" class="linglebal" style="--squish: 1" data-lbl="2" data-value="90s" aria-labelledby="lbl_style_90s" aria-checked="false"></button><label id="lbl_style_90s" for="btnstyle90s">Lingle '90</label></li>
-                </ul>
+                <div><button id="btnstyle00s" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamesett.stĳl = this.dataset.value; setStyle(); save();" class="linglebal" style="--squish: 1" data-lbl="1" data-value="00s" aria-labelledby="lbl_style_00s" aria-checked="false"></button><label id="lbl_style_00s" for="btnstyle00s">Lingle&nbsp;'00</label></div>
+                <div><button id="btnstyle90s" role="radio" onclick="uncheckAll(this.parentElement.parentElement); this.setAttribute('aria-checked', 'true'); gamesett.stĳl = this.dataset.value; setStyle(); save();" class="linglebal" style="--squish: 1" data-lbl="2" data-value="90s" aria-labelledby="lbl_style_90s" aria-checked="false"></button><label id="lbl_style_90s" for="btnstyle90s">Lingle&nbsp;'90</label></div>
             </div>
         </div>
 
@@ -238,6 +234,27 @@
 </div>
 </div>
     <div class="btmwrap wincardwrap">
+        <div id="statswrap">
+            <div class="statstext">
+                <div id="stats_speel" class="statcard" data-num="" data-label="gespeeld"></div>
+                <div id="stats_reeks" class="statcard" data-num="" data-label="winreeks"></div>
+            </div>
+            <div class="statstext">
+                <div id="stats_ratio" class="statcard" data-num="" data-label="gewonnen"></div>
+                <div id="stats_maxrx" class="statcard" data-num="" data-label="topreeks"></div>
+            </div>
+            <div class="statcard" id="statschartwrap" data-label="verdeling van pogingen">
+                <div id="statschart">
+                    <div class="chartkolom"><div class="linglebal" data-lbl="1"></div><div class="staaf" id="bar0a" style="flex-grow: 1"></div><div id="bar0b" style="flex-grow: 1"></div></div>
+                    <div class="chartkolom"><div class="linglebal" data-lbl="2"></div><div class="staaf" id="bar1a" style="flex-grow: 1"></div><div id="bar1b" style="flex-grow: 1"></div></div>
+                    <div class="chartkolom"><div class="linglebal" data-lbl="3"></div><div class="staaf" id="bar2a" style="flex-grow: 1"></div><div id="bar2b" style="flex-grow: 1"></div></div>
+                    <div class="chartkolom"><div class="linglebal" data-lbl="4"></div><div class="staaf" id="bar3a" style="flex-grow: 1"></div><div id="bar3b" style="flex-grow: 1"></div></div>
+                    <div class="chartkolom"><div class="linglebal" data-lbl="5"></div><div class="staaf" id="bar4a" style="flex-grow: 1"></div><div id="bar4b" style="flex-grow: 1"></div></div>
+                    <div class="chartkolom"><div class="linglebal" data-lbl="6"></div><div class="staaf" id="bar5a" style="flex-grow: 1"></div><div id="bar5b" style="flex-grow: 1"></div></div>
+                    <div class="chartkolom"><div class="linglebal rood">        </div><div class="staaf" id="bar6a" style="flex-grow: 1"></div><div id="bar6b" style="flex-grow: 1"></div></div>
+                </div>
+            </div>
+        </div>
         <div id="wincardbtmrow">
             <button class="redbtn sharebtn"  onclick="copyresults()"   aria-label="Kopieer resultaten als tekst" title="Kopieer resultaten als tekst">Deel resultaten</button>
             <img id="shareimg" role="button" onclick="copyresultImg()" aria-label="Kopieer resultaten als afbeelding" title="Kopieer resultaten als afbeelding"/>

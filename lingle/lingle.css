@@ -471,12 +471,145 @@ body {
 .btmwrap {
     max-height: var(--btmheight);
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     bottom: 8px;
     opacity: 1;
     pointer-events: all;
     transition: transform 2s cubic-bezier(.25,.1,.25,1),
                 opacity 0.6s step-end;
+    gap: 5px;
+
+    &>div{
+        display: flex;
+        flex-direction: row;
+    }
 }
+#statswrap {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    gap: 10px;
+
+    .statstext {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .statcard {
+        min-width: 65px;
+        color: var(--btncolorsolid);
+        padding: 4px 6px 3px 5px;
+        border-radius: 3px;
+        background-color: #8658;
+        font-family: "tahoma";
+        :root[data-style="90s"] & { font-family: "avantgarde"; }
+
+        :root[data-theme="dark"]   & { background-color: #4e4444e0; }
+        :root[data-theme="darker"] & { background-color: #312a2ae0; }
+        :root[data-theme="light"]  & { background-color: #bb98; }
+        :root[data-theme="kaasiand"]  & { background-color: #9528; }
+
+        &::before {
+            content: attr(data-label);
+            display: block;
+            font-size: small;
+            opacity: 0.9;
+        }
+        &::after {
+            content: attr(data-num);
+            display: block;
+            font-size: x-large;
+            transform: translateY(-1px);
+        }
+        
+        :root[data-style="90s"] &::after { transform: translateY(2px); }
+            
+        box-shadow: 2px 2px 4px #0002;
+    }
+    #statschartwrap {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+
+        #statschart {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: center;
+            gap: 5px;
+
+            .chartkolom {
+                flex: 1;
+                
+                text-align: center;
+                display: flex;
+                flex-direction: column-reverse;
+                justify-content: end;
+                align-items: center;
+
+                & div {
+                    display: block;
+                    padding: 2px 0;
+                }
+                & div:first-child {
+                    height: 23px !important;
+                    width: 23px !important;
+                }
+                & div:last-child {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-end;
+                    justify-content: center;
+                    font-size: small;
+                    
+                    &::after {
+                        content: attr(data-lbl);
+                    }
+                }
+                & .linglebal {
+                    height: 23px !important;
+                    width: 23px !important;
+                    max-height: 23px !important;
+                    max-width: 23px !important;
+                    min-height: 20px !important;
+                    min-width: 20px !important;
+                    box-sizing: border-box;
+                    box-shadow: 1px 2px 3px #0008;
+                    margin-top: 4px;
+                    &::after {
+                        font-size: 16px;
+                        top: 13%;
+                        left: 30%;
+                    }
+                    &.geknepen::before {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%,-54%);
+                        width: 0;
+                        height: 12px;
+                        border-top: 4px solid #F3BA00;
+                        border-bottom: 4px solid #F3BA00;
+                        border-left: 5px solid transparent;
+                        border-right: 5px solid transparent;
+                        z-index: 1;
+                    }
+                }
+                .staaf {
+                    background: var(--btncolorsolid);
+                    border-radius: 2px;
+                    opacity: 0.9;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
 .kbwrap.flip, .wincardwrap:not(.flip) {
     transform: rotateY(180deg);
     opacity: 0;
@@ -512,10 +645,9 @@ body {
 .keybline {
     height: 70px;
     max-height: calc(var(--btmheight) / 3);
-    display: flex;
     justify-content: center;
-    padding-top: 5px;
     box-sizing: border-box;
+    gap: calc(min(calc(100vw - 10px), 500px) * 0.01);
 }
 
 .keybline button {
@@ -526,7 +658,6 @@ body {
     height: 100%;
     padding: 0;
     cursor: pointer;
-    margin: 0 calc(min(calc(100vw - 10px), 500px) * 0.005) 0;
 
     text-align: center;
     text-transform: uppercase;
@@ -883,7 +1014,7 @@ body {
     
     font-size: 24px;
 
-    font-family: "tahoma";
+    font-family: "avantgarde";
     color: #eee;
     text-shadow: 1px 1px 2px #000C;
 }
@@ -986,14 +1117,23 @@ hr {
     padding: 0;
     margin: 0;
 }
-.settitemright ul {
-    padding: 0;
-    margin: 0;
+.settitemright {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+
+    &>div {
+        display: flex;
+        flex-direction: row;
+        align-items: top;
+        gap: 10px;
+        &:last-child:first-child { margin-bottom: 5px; }
+    }
 }
 
-
 .linglebal {
-    display: inline-block;
+    display: block;
     vertical-align: middle;
     
     min-width: 30px;
@@ -1006,15 +1146,13 @@ hr {
     color: rgb(230, 230, 230);
     user-select: none;
     border: none;
-    cursor: pointer;
     position: relative;
-    margin: 0 0 5px 5px;
     font-family: FreeSans,Helvetica,Arial, sans-serif;
     font-weight: bold;
     box-shadow: 1px 2px 3px #000C;
     
-    & + label { padding-left: 10px; }
-    &[role="checkbox"] {
+    & + label { padding-top: 5px; }
+    &[role="checkbox"], &.rood {
         background: radial-gradient(20% 20% at 40% 35%, #DE888B80 30%, #DE888B01 100%),
                     radial-gradient(60% 50% at 45% 30%, #D63919 30%, #D6391901 100%),
                     radial-gradient(50% 50% at 30% 60%, #971914 30%, #721514 100%);
@@ -1027,31 +1165,34 @@ hr {
                     radial-gradient(50% 50% at 30% 60%, #006831 30%, #004521 100%);
         & + label::after { content: "Ja"; }
     }
+    &[role="radio"], &[role="checkbox"] {    
+        cursor: pointer;
+    }
+
+    &::after {
+        content: attr(data-lbl);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-47%) scaleX(var(--squish));
+        font-size: 20px;
+    }
+    &[role="radio"][aria-checked="true"]::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-52%);
+        width: 0;
+        height: 15px;
+        border-top: 5px solid #F3BA00;
+        border-bottom: 5px solid #F3BA00;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        z-index: 1;
+    }
 }
 
-.linglebal::after {
-    content: attr(data-lbl);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-47%) scaleX(var(--squish));
-    font-size: 20px;
-    
-}
-.linglebal[role="radio"][aria-checked="true"]::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-52%);
-    width: 0;
-    height: 15px;
-    border-top: 5px solid #F3BA00;
-    border-bottom: 5px solid #F3BA00;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    z-index: 1;
-}
 
 a, #resetdatalabel {
     color: #f9c418;

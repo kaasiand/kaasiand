@@ -9,6 +9,7 @@ const logomini = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHcAAAAyCAYAAABm
 let img_logomini;
 
 let gamedata = {};
+let gamesett = {};
 let resultcanvas;
 
 function renderImage() {
@@ -17,7 +18,7 @@ function renderImage() {
     resultcanvas.height = 220;
     ctx.fillStyle = "#393434"; ctx.fillRect(0,0,resultcanvas.width,resultcanvas.height);
     ctx.drawImage(img_logomini, 54,29);
-    ctx.fillStyle = "#CCCCCC"; ctx.fillRect(43,87,210,1);
+    ctx.fillStyle = "#AAAAAA"; ctx.fillRect(43,87,210,1);
     
     let tileWidth = 30, tileHeight = 26, tileGap = 3;
     let tileY = 24;
@@ -26,7 +27,7 @@ function renderImage() {
         let res = checkWoord(gamedata.veld[i] ? gamedata.veld[i] : gamedata.veld[0]);
 
         res.forEach(r => {
-            if (!gamedata.veld[i]) ctx.fillStyle = "#006CAD72";
+            if (!gamedata.veld[i]) ctx.fillStyle = "#006CAD50";
             else if (r == "rood")  ctx.fillStyle = "#F25A2C";
             else                   ctx.fillStyle = "#006CAD";
 
@@ -66,7 +67,7 @@ function renderImage() {
 function copyresults() {
     let nr = (sessionseed - Date.UTC(2022,0,-29)) / 86400000;
     if (nr >= 1488) nr++;
-    let str = `Lingle ${nr} ${gamedata.voltooid ? gamedata.regel + 1 : 'X'}/6\n`;
+    let str = `Lingle ${nr} ${gamedata.voltooid ? gamedata.regel + 1 : "🔴"}/6\n`;
     if (true)
         str += "https://kaasiand.cool/lingle/\n";
 
@@ -130,19 +131,61 @@ function copyresultImg() {
 }
 
 function save() {
-    localStorage.setItem("data", JSON.stringify(gamedata));
+    localStorage.setItem("lingle-data-5",   JSON.stringify(gamedata));
+    localStorage.setItem("lingle-settings", JSON.stringify(gamesett));
+    if (localStorage.getItem("data")) {
+        localStorage.removeItem("data");
+    }
 }
-function tryRetrieveData() {
-    if (!localStorage || !localStorage.getItem("data")) {
-        makeFirstGameData();
-        helpscreen.showModal();
+function tryRetrieveSettings() {
+    if (localStorage.getItem("lingle-settings")) {
+        gamesett = JSON.parse(localStorage.getItem("lingle-settings"));
     }
     else {
-        gamedata = JSON.parse(localStorage.getItem("data"));
+        let redanim = false;
+        let matchmedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+        if (!matchmedia || matchmedia.matches) { redanim = true; }
+
+        let temp_sett = {};
+        if (localStorage.getItem("data")) {
+            tempsett = JSON.parse(localStorage.getItem("data"));
+        }
+        gamesett = {
+            thema:      temp_sett.thema       ?? "dark",
+            stĳl:       temp_sett.stĳl        ?? "00s",
+            vervangĲ:   temp_sett.vervangĲ    ?? true,
+            reduceanim: temp_sett.reduceanim  ?? redanim,
+            donkerblauw:temp_sett.donkerblauw ?? false,
+            blur:       temp_sett.blur        ?? true,
+            transp:     temp_sett.transp      ?? true,
+        };
+    }
+}
+function tryRetrieveGameData() {
+    if (localStorage.getItem("lingle-data-5")) {
+        gamedata = JSON.parse(localStorage.getItem("lingle-data-5"));
 
         if (gamedata.datum != sessionseed) {
             makeGameDataNewDay();
         }
+    }
+    else if (localStorage.getItem("data")) {
+        gamedata = JSON.parse(localStorage.getItem("data"));
+        delete gamedata.thema;
+        delete gamedata.stĳl;
+        delete gamedata.vervangĲ;
+        delete gamedata.reduceanim;
+        delete gamedata.donkerblauw;
+        delete gamedata.blur;
+        delete gamedata.transp;
+        
+        if (gamedata.datum != sessionseed) {
+            makeGameDataNewDay();
+        }
+    }
+    else {
+        makeFirstGameData();
+        helpscreen.showModal();
     }
     save();
 }
@@ -163,25 +206,25 @@ function uncheckAll(el) {
 }
 function initSett() {
     // update IJ dinges
-    document.getElementById("vervangĳbtn"   ).setAttribute("aria-checked", gamedata.vervangĲ    ? "true" : "false");
-    document.getElementById("blurbtn"       ).setAttribute("aria-checked", gamedata.blur        ? "true" : "false");
-    document.getElementById("donkerblauwbtn").setAttribute("aria-checked", gamedata.donkerblauw ? "true" : "false");
-    document.getElementById("reduceanimbtn" ).setAttribute("aria-checked", gamedata.reduceanim  ? "true" : "false");
-    document.getElementById("transpbtn"     ).setAttribute("aria-checked", gamedata.transp      ? "true" : "false");
+    document.getElementById("vervangĳbtn"   ).setAttribute("aria-checked", gamesett.vervangĲ    ? "true" : "false");
+    document.getElementById("blurbtn"       ).setAttribute("aria-checked", gamesett.blur        ? "true" : "false");
+    document.getElementById("donkerblauwbtn").setAttribute("aria-checked", gamesett.donkerblauw ? "true" : "false");
+    document.getElementById("reduceanimbtn" ).setAttribute("aria-checked", gamesett.reduceanim  ? "true" : "false");
+    document.getElementById("transpbtn"     ).setAttribute("aria-checked", gamesett.transp      ? "true" : "false");
 
     let dosave = false;
-    let el = document.getElementById("btnthema" + gamedata.thema);
+    let el = document.getElementById("btnthema" + gamesett.thema);
     if (!el) {
         el = document.getElementById("btnthemadark");
-        gamedata.thema = "dark";
+        gamesett.thema = "dark";
         dosave = true;
     }
     el.setAttribute("aria-checked", "true");
 
-    let el2 = document.getElementById("btnstyle" + gamedata.stĳl);
+    let el2 = document.getElementById("btnstyle" + gamesett.stĳl);
     if (!el2) {
         el2 = document.getElementById("btnstyle00s");
-        gamedata.stĳl = "00s";
+        gamesett.stĳl = "00s";
         dosave = true;
     }
     el2.setAttribute("aria-checked", "true");
@@ -196,21 +239,21 @@ function initSett() {
     setReducedAnimation();
     setOpaque();
 }
-function setTheme()             { document.documentElement.dataset.theme       = gamedata.thema; }
-function setStyleInit()         { document.documentElement.dataset.style       = gamedata.stĳl; }
-function setBlur()              { document.documentElement.dataset.blur        = gamedata.blur; }
-function setReducedAnimation()  { document.documentElement.dataset.redanim     = gamedata.reduceanim; }
-function setOpaque()            { document.documentElement.dataset.opaque      =!gamedata.transp; }
+function setTheme()             { document.documentElement.dataset.theme       = gamesett.thema; }
+function setStyleInit()         { document.documentElement.dataset.style       = gamesett.stĳl; }
+function setBlur()              { document.documentElement.dataset.blur        = gamesett.blur; }
+function setReducedAnimation()  { document.documentElement.dataset.redanim     = gamesett.reduceanim; }
+function setOpaque()            { document.documentElement.dataset.opaque      =!gamesett.transp; }
 function setDonkerblauw()       {
-    document.documentElement.dataset.donkerblauw = gamedata.donkerblauw;
+    document.documentElement.dataset.donkerblauw = gamesett.donkerblauw;
     updateExamplePicture();
 }
 function setStyle() {
     // to avoid weird graphical stuff when switching styles
-    let orig = gamedata.reduceanim;
+    let orig = gamesett.reduceanim;
     document.documentElement.dataset.redanim = "true";
 
-    document.documentElement.dataset.style = gamedata.stĳl;
+    document.documentElement.dataset.style = gamesett.stĳl;
     updateExamplePicture();
 
     setTimeout(() => {
@@ -221,12 +264,12 @@ function setStyle() {
 
 function updateExamplePicture() {
     let filename = "example.png";
-    switch (gamedata.stĳl) {
+    switch (gamesett.stĳl) {
         case "90s":
-            filename = gamedata.donkerblauw ? "example90sdark.png" : "example90s.png";
+            filename = gamesett.donkerblauw ? "example90sdark.png" : "example90s.png";
             break;
         case "00s": default:
-            filename = gamedata.donkerblauw ? "exampledark.png" : "example.png";
+            filename = gamesett.donkerblauw ? "exampledark.png" : "example.png";
             break;
     }
     examplepic.src = filename;
@@ -234,42 +277,17 @@ function updateExamplePicture() {
 
 function resetData() {
     localStorage.removeItem("data");
+    localStorage.removeItem("lingle-data-5");
+    localStorage.removeItem("lingle-settings");
 }
 function makeGameDataNewDay() {
     gamedata.datum = sessionseed;
     gamedata.voltooid = false;
     gamedata.veld = ["","","","","",""];
     gamedata.regel = 0;
-
-    if (!("reduceanim" in gamedata)) {
-        let matchmedia = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-        if (!matchmedia || matchmedia.matches) {
-            gamedata.reduceanim = true;
-        } else {
-            gamedata.reduceanim = false;
-        }
-    }
-    if (!("donkerblauw" in gamedata)) {
-        gamedata.donkerblauw = false;
-    }
-    if (!("blur" in gamedata)) {
-        gamedata.blur = true;
-    }
-    if (!("transp" in gamedata)) {
-        gamedata.transp = true;
-    }
 }
 function makeFirstGameData() {
-    let redanim = false;
-    let matchmedia = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    if (!matchmedia || matchmedia.matches) {
-        redanim = true;
-    }
-
     gamedata = {
-
         // today's
 
         datum: sessionseed,
@@ -284,16 +302,6 @@ function makeFirstGameData() {
         streak: 0,
         maxstreak: 0,
         wins: 0,
-
-        // settings / preferences
-
-        thema: "dark",
-        stĳl: "00s",
-        vervangĲ: true,
-        reduceanim: redanim,
-        donkerblauw: false,
-        blur: true,
-        transp: true,
     };
 }
 
@@ -315,6 +323,23 @@ function closeNotif() {
 function doaflip() {
     //console.log("flip");
     renderImage();
+    let ratio = Math.floor(gamedata.wins * 100 / gamedata.gespeeld);
+    if (gamedata.wins && !ratio) ratio = 1;
+    document.getElementById("stats_speel").dataset.num = gamedata.gespeeld;
+    document.getElementById("stats_reeks").dataset.num = gamedata.streak;
+    document.getElementById("stats_maxrx").dataset.num = gamedata.maxstreak;
+    document.getElementById("stats_ratio").dataset.num = ratio+"%";
+
+    let verdelingmax = 0;
+    for (let i = 0; i < 7; i++) { if (gamedata.verdeling[i] > verdelingmax) verdelingmax = gamedata.verdeling[i]; }
+    for (let i = 0; i < 7; i++) {
+        document.getElementById(`bar${i}a`).style.flexGrow = gamedata.verdeling[i];
+        document.getElementById(`bar${i}b`).style.flexGrow = verdelingmax - gamedata.verdeling[i];
+        document.getElementById(`bar${i}b`).dataset.lbl = gamedata.verdeling[i];
+    }
+    if (gamedata.streak)
+        document.getElementById(`bar${gamedata.regel}a`).previousElementSibling.classList.add("geknepen");
+    
     [...document.querySelectorAll(".btmwrap")].forEach(e => e.classList.add("flip"));
 }
 
@@ -324,7 +349,7 @@ function getIdx(seed) {
 
 function handleWin() {
     gamedata.voltooid = true;
-    console.log("win");
+    //console.log("win");
 
     gamedata.gespeeld++;
     gamedata.streak++;
@@ -369,7 +394,7 @@ function tryEnter() {
         return;
     }
 
-    let animFactor = gamedata.reduceanim ? 0 : 1;
+    let animFactor = gamesett.reduceanim ? 0 : 1;
     let firstletter = typwoord[0];
     if (allewoorden[firstletter].includes(typwoord)) {
         refuseInput = true;
@@ -395,7 +420,7 @@ function tryEnter() {
 
         if (res.every(a => a == "rood")) {
             // if win
-            if (gamedata.reduceanim) {
+            if (gamesett.reduceanim) {
                 handleWin();
             }
             else {
@@ -437,7 +462,7 @@ function tryEnter() {
 }
 
 function revealOplossing(fast = false) {
-    let animFactor = gamedata.reduceanim ? 0 : 1;
+    let animFactor = gamesett.reduceanim ? 0 : 1;
 
     let wrd = mogelĳkewoorden[getIdx(gamedata.datum)];
     let faster = fast ? 1200 : 0;
@@ -446,7 +471,7 @@ function revealOplossing(fast = false) {
         speelveld.classList.add("revealantwoord");
     }, (250 * maxlen + 100 - faster) * animFactor);
 
-    if (gamedata.stĳl == "90s") faster -= 1000;
+    if (gamesett.stĳl == "90s") faster -= 1000;
 
     [...document.querySelectorAll("#speelveld tr")[6].children].forEach((el,m) => {
         setTimeout(() => {
@@ -472,7 +497,7 @@ function typLetter(ltr, echttoetsenbord = false) {
     if (refuseInput)
         return;
     if (typwoord[typwoord.length - 1] == "i" &&
-        gamedata.vervangĲ && ltr == "j" && echttoetsenbord) {
+        gamesett.vervangĲ && ltr == "j" && echttoetsenbord) {
         
         typwoord = typwoord.slice(0, typwoord.length - 1);
         typwoord += "ĳ";
@@ -498,7 +523,7 @@ function updateWoord() {
     let s = typwoord;
     let n = gamedata.regel;
     let el = document.querySelectorAll("#speelveld tr")[n].children[i];
-    if (gamedata.reduceanim || gamedata.stĳl == "90s") {
+    if (gamesett.reduceanim || gamesett.stĳl == "90s") {
         el.querySelector(".letter").style.opacity = 1;
         write(n,s);
     } else {
@@ -552,7 +577,8 @@ function init() {
     sessionmonth = d.getMonth();
     sessionseed = Date.UTC(d.getFullYear(),sessionmonth,sessiondate);
 
-    tryRetrieveData();
+    tryRetrieveSettings();
+    tryRetrieveGameData();
     populateKeybObject();
 
     initSett();
@@ -569,7 +595,7 @@ function init() {
         else if (e.target == settscreen)
             settscreen.close();
 
-        // the modalbg div covers the whole dialog window, so helpscreen/settscreen
+        // ^ the modalbg div covers the whole dialog window, so helpscreen/settscreen
         // are only targeted if you click outside the dialog
     };
 
@@ -609,7 +635,7 @@ daarmee alleen maar voor jezelf en anderen.");
 }
 
 function revealStart() {
-    let orig = gamedata.reduceanim;
+    let orig = gamesett.reduceanim;
     document.documentElement.dataset.redanim = "true";
 
     let trs = document.querySelectorAll("#speelveld tr");
@@ -650,7 +676,7 @@ function revealStart() {
             let delay = 0;
             if (i == 5) {
                 addzesdebeurt = true;
-                delay = gamedata.reduceanim ? 0 : 600;
+                delay = gamesett.reduceanim ? 0 : 600;
             }
             setTimeout(() => {
                 doaflip();
@@ -668,7 +694,7 @@ function revealStart() {
     }
     gamedata.voltooid = haswon;
 
-    if (gamedata.reduceanim) {
+    if (gamesett.reduceanim) {
         if (!hasended)
             revealDots(gamedata.regel);
         if (addzesdebeurt)
@@ -690,9 +716,9 @@ function revealStart() {
 }
 
 function delayVerschuifBord() {
-    if (gamedata.reduceanim) return 0;
+    if (gamesett.reduceanim) return 0;
 
-    switch (gamedata.stĳl) {
+    switch (gamesett.stĳl) {
         case "90s":
             return 1400;
         case "00s": default:
@@ -701,7 +727,7 @@ function delayVerschuifBord() {
 }
 
 function revealDots(n) {
-    let animFactor = gamedata.reduceanim ? 0 : 1;
+    let animFactor = gamesett.reduceanim ? 0 : 1;
     let delay = 0;
     if (gamedata.regel == 5) {
         delay = delayVerschuifBord();
@@ -716,7 +742,7 @@ function revealDots(n) {
         speelveld.classList.add("zesdebeurt");
     
     let a = (maxlen-1) * 50 + delay + 100;
-    if (gamedata.stĳl == "90s") a -= (maxlen-1) * 50;
+    if (gamesett.stĳl == "90s") a -= (maxlen-1) * 50;
 
     setTimeout(() => {
         document.querySelectorAll("#speelveld tr")[n].classList.remove("dotreveal");
