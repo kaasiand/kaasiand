@@ -470,6 +470,7 @@ body {
 
 .btmwrap {
     max-height: var(--btmheight);
+    max-width: 95vw;
     position: absolute;
     display: flex;
     flex-direction: column;
