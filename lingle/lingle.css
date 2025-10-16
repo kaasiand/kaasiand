@@ -581,7 +581,7 @@ body {
                     margin-top: 4px;
                     &::after {
                         font-size: 16px;
-                        top: 13%;
+                        top: 10%;
                         left: 30%;
                     }
                     &.geknepen::before {
@@ -600,6 +600,7 @@ body {
                     }
                 }
                 .staaf {
+                    flex-grow: 0;
                     background: var(--btncolorsolid);
                     border-radius: 2px;
                     opacity: 0.9;
