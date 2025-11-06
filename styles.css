@@ -26,6 +26,9 @@ div {
     box-sizing: border-box;
     width: 30%;
 }
+.rightbar li {   
+    margin-bottom: 10px;
+}
 .rightbar, .leftbar {
     background: #A3642A url(assets/wood.jpg);
     min-height: 300px;
@@ -34,6 +37,11 @@ div {
     border-color: burlywood maroon maroon burlywood;
     box-shadow: 2px 2px 5px black;
     color:ivory;
+    
+    hr {
+        clear: both;
+        color: ivory;
+    }
 }
 .leftbar {
     position: fixed;
@@ -50,11 +58,6 @@ div {
     box-shadow: 2px 2px 5px black;
     width: 70%;
 }
-.cheese {
-    background: 66% -14% / 50px 50px no-repeat url(assets/fire.gif);
-    width: 60px;
-    vertical-align: bottom;
-}
 #main {
     display: flex;
     align-items: flex-start;
@@ -67,19 +70,6 @@ div {
 #top {
     text-align: center;
 }
-#topgradient {
-    background-image: linear-gradient(to top, darkorange, gold);
-    background-clip: text;
-    color: transparent;
-    overflow: visible;
-}
-#topshadow {
-    color: transparent;
-    text-shadow: 1px 2px 5px black;
-    display: inline-block;
-    width: 0;
-    overflow: visible;
-}
 #top small {
     color: sienna;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -89,23 +79,35 @@ div {
     transform: translateY(-6px);
     margin-top: 6px;
 }
-#top img {
-    display: inline;
-    transform: scale(0.7);
-    transform-origin: 50% 100%;
-    margin: 0 -10px 0;
-}
-#top img.flip {
-    transform: scale(-0.7,0.7);
-}
 h1 {
-    display: inline;
+    display: block;
     font-style: italic;
     font-weight: bold;
     font-size: 36px;
-    padding: 0;
     margin: 0;
 }
+h1 span {
+    filter: drop-shadow(1px 2px 3px black);
+
+    background-image: linear-gradient(to top, darkorange, gold);
+    text-decoration: underline solid darkorange 2px;
+    background-clip: text;
+    color: transparent;
+    overflow: visible;
+    padding: 0 3px;
+}
+h1::before, h1::after {
+    content: "";
+    display: inline-block;
+    width: 60px;
+    height: 67.5px;
+    background: 50% 50% no-repeat url(assets/firecheese.gif);
+    background-size: cover;
+    vertical-align: bottom;
+    transform-origin: 50% 100%;
+}
+h1::before { transform: scale(-0.7,0.7); }
+h1::after  { transform: scale( 0.7,0.7); }
 
 .left {
     float: left;
@@ -177,7 +179,6 @@ h1 {
     color: red;
 }
 
-
 #cont img {
     margin-bottom: 10px;
     border: double 3px brown;
@@ -236,16 +237,13 @@ h2 {
     body {
         padding-top: 0;
     }
-    h1 {
-        font-size: 48px;
+    h1         { font-size: 48px; }
+    h1 span    {
+        padding: 0 17px;
     }
-    #top img {
-        transform: scale(1);
-        margin: 0;
-    }
-    #top img.flip {
-        transform: scale(-1,1);
-    }
+    h1::before { transform: scale(-1,1); }
+    h1::after  { transform: scale( 1,1); }
+
     .pconly {
         display: inherit;
     }
@@ -263,17 +261,17 @@ h2 {
         height: unset;
     }
     #nav ul {
-        list-style-image: url('assets/arrow.gif');
+        list-style-image: url('assets/icon/arrow.gif');
         margin-left: -10px;
         margin-top: 0;
     }
     #nav li {
-        list-style-image: url('assets/arrow.gif');
+        list-style-image: url('assets/icon/arrow.gif');
         float: none;
         white-space: nowrap;
     }
     #nav li.new {
-        list-style-image: url('assets/new.gif') !important;
+        list-style-image: url('assets/icon/new.gif') !important;
     }
 
 }
