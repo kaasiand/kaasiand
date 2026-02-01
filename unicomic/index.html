@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Unicomic</title>
+	<!-- <link rel="icon" type="image/icon" href="icon.ico"> -->
+	<style>
+		@font-face {
+			font-family: "Unicomic";
+			src: url("Unicomic-VF.ttf");
+		}
+
+		body {
+			background-color: #eee;
+			margin: 0;
+			
+			font: 18px "Unicomic";
+			font-variation-settings: "MONO" 0;
+			font-stretch: 100%;
+			color: #333;
+			--wght: 400;
+			--wdth: 100%;
+			--size: 18px;
+            font-variant-emoji: unicode;
+		}   
+        * {
+            box-sizing: border-box;
+        }
+        b {
+            font-weight: calc(var(--wght) + 300);
+        }
+        highlight {
+            background: #6f88;
+        }
+
+		a, abbr {
+			text-underline-position: from-font;
+		}
+
+		cv01  { font-feature-settings: 'cv01'; }
+		cv02  { font-feature-settings: 'cv02'; }
+		cv03  { font-feature-settings: 'cv03'; }
+		cv04  { font-feature-settings: 'cv04'; }
+		cv05  { font-feature-settings: 'cv05'; }
+		cv06  { font-feature-settings: 'cv06'; }
+		cv07  { font-feature-settings: 'cv07'; }
+		cv08  { font-feature-settings: 'cv08'; }
+		zero1 { font-feature-settings: 'zero' 1; }
+		zero2 { font-feature-settings: 'zero' 2; }
+		zero3 { font-feature-settings: 'zero' 3; }
+		/* tnum  { font-feature-settings: 'tnum'; } */
+		
+		.monoonly {
+				display: none;
+			}
+		.mono {
+			font-variation-settings: "MONO" 1;
+			&#fontwrap {
+				font-variation-settings: "MONO" 1;
+			}
+			.monoonly {
+				display: unset !important;
+			}
+			.excludefrommono {
+				display: none;
+			}
+		}
+		code {
+			font: inherit;
+			white-space: pre;
+			font-variation-settings: "MONO" 1;
+			color: green;
+		}
+		green {
+			color: green;
+		}
+		red {
+			color: #c00;
+        }
+		#settings red {
+            position: relative;
+            display: inline-block;
+            box-shadow: 0px 0px 0px #eff1f1;
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, padding 0.3s, z-index 0.3s;
+            transform: scale(1);
+            background: #eff1f100;
+            padding: 0px 0px;
+            z-index: 0;
+            
+            &:hover {
+                transform: scale(3);
+                box-shadow: 0px 0px 10px #eff1f1;
+                background: #eff1f1;
+                padding: 0px 5px;
+                z-index: 10;
+            }
+		}
+
+		#settings {
+			font-size: 16.5px;
+			z-index: 2;
+            width: 380px;
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			background-color: #eff1f1;
+			border: 2px solid #404040;
+			border-radius: 4px;
+			box-shadow: 0px 5px 6px #0001;
+			padding: 15px 20px 10px;
+            >ul {
+                font-size: 80%;
+            }
+			& ul {
+				margin: 5px 0 10px;
+				line-height: normal;
+				list-style-type: none;
+				list-style-position: inside;
+				padding: 0;
+                & ul {
+				    margin: 0 0 0 30px;
+                }
+			}
+		}
+
+		/* u::before, u::after {
+			content: " ";
+		} */
+
+		input[type=radio],input[type=checkbox] {
+			margin-right: 5px;
+		}
+		input[type=range] {
+			margin-left:  5px;
+			margin-right: 5px;
+		}
+		small {
+			font-size: 13.3px;
+		}
+		cond {
+			font-stretch: 75%;
+		}
+		note {
+			font-size: 70%;
+			font-stretch: 90%;
+            line-height: 140%;
+			font-variation-settings: "MONO" 0, "wght" var(--wght);
+			padding: 5px 0;
+			display: inline-block;
+
+			&::before {
+				content: "Note: ";
+				font-variation-settings: "MONO" 0, "wght" calc(var(--wght) + 300);
+			}
+		}
+		#settings small {
+			font-size: 13.3px;
+			font-feature-settings: 'tnum';
+		}
+
+		ul.changelog {
+			margin: 0;
+			line-height: normal;
+			list-style-type: none;
+			list-style-position: inside;
+			font-size: 13.3px;
+			padding: 0;
+			>li {
+				padding: 0;
+				line-height: normal;
+				font-variation-settings: "MONO" 0, "wdth" 90, "wght" 450;
+				font-feature-settings: inherit;
+				
+				&[data-d]::before {
+					content: attr(data-d) "   ";
+					display: inline;
+					white-space: pre;
+					font-variation-settings: "MONO" 1, "wdth" 90, "wght" 700;
+
+				}
+				&[data-v]::marker {
+					content: "v" attr(data-v) "   ";
+					display: inline;
+					white-space: pre;
+					font-variation-settings: "MONO" 0, "wdth" 90, "wght" 450;
+				}
+			}
+		}
+
+		.smalldivider {
+			display: block;
+			margin-bottom: calc(-1 * var(--size));
+		}
+
+		right {
+			float: right;
+		}
+		sup { 
+		    vertical-align: top; 
+		    position: relative;
+		    top:  -0.2em; 
+		}
+        
+        #fontname {
+            font-weight: var(--wght);
+            font-stretch: var(--wdth);
+        }
+		#fontregu, #fontbold, #fontthin, #fontlight, #fontcond, #semibold {
+			display: none;
+		}
+		[style*="wght: 4"]:not([style*="wdth: 7"]):not([style*="wdth:7"]) #fontname.mono #fontregu, [style*="wght: 1"] #fontthin, [style*="wght: 2"] #fontlight,[style*="wght: 3"] #fontlight, [style*="wght: 5"] #semibold, [style*="wght: 6"] #fontbold, [style*="wght: 7"] #fontbold,
+		[style*="wght:4"]  #fontname.mono #fontregu, [style*="wght:1"] #fontthin, [style*="wght:2"] #fontlight,[style*="wght:3"] #fontlight, [style*="wght:5"]  #semibold, [style*="wght:6"]  #fontbold, [style*="wght:7"]  #fontbold,
+		[style*="wdth: 7"] #fontcond,
+		[style*="wdth:7"]  #fontcond {
+			display: inline;
+		}
+		#fontversion {
+			font-feature-settings: "tnum";
+		}
+        #downloadtable, #fontvartable {
+            border: none;
+        }
+        #downloadtable td {
+            padding-right: 10px;
+        }
+        #fontvartable td {
+            padding-right: 5px;
+        }
+        .fontlbl {
+            font-size: 90%;
+            padding-left: 5px;
+        }
+
+        #fontwidlbl::after {
+            content: "%";
+            color: #3334;
+            font-size: 80%;
+            padding-left: 1px;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            width: 230px;
+            padding: 20px 15px;
+            left: 0px;
+            top: 0px;
+			background-color: #eff1f1;
+            border-right: 2px solid #404040;
+            z-index: 1000;
+
+            >input {
+                visibility: invisible;
+            }
+            >button {
+                background: #6f88;
+                border: 1px solid #444;
+                font-size: 80%;
+                margin: 2px 0;
+                padding: 0 3px;
+                font-family: "unicomic";
+                font-variation-settings: 'MONO' 0;
+                cursor: pointer;
+                &::before {
+                    content: attr(data-chars);
+                    float: left;
+                    font-variation-settings: 'MONO' 1;
+                    color: #041;
+                    font-weight: 400;
+                }
+                &[aria-selected=true] {
+                    background: #6f8d;
+                    font-weight: bold;
+                    cursor: unset;
+                }
+            }
+            .fontlbl {
+                transform: translateY(2px);
+                font-feature-settings: 'tnum';
+            }
+            & font-var-item {
+                margin: 3px 0 5px;
+            }
+            h3 {
+                font-size: 100%;
+                margin: 15px 0 5px;
+            }
+        }
+		#fontwrap {
+			z-index: 1;
+			font-variation-settings: "MONO" 0;
+			font-weight: var(--wght);
+			font-stretch: var(--wdth);
+			font-size: var(--size);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 10px 20px 250px;
+		}
+		#fontwrap.mono {
+			font-variation-settings: "MONO" 1;
+		}
+        font-tab {
+            display: flex;
+            flex-direction: column;
+            &[hidden] {
+                display: none;
+            }
+        }
+        font-block {
+            display: flex;
+            flex-direction: column;
+
+            & block-title {
+                color: green;
+                font-size: calc(200% / 3);
+                transition: font-stretch 0.3s ease-out;
+                font-stretch: 100%;
+            }
+            & small, block-note {
+                font-size: calc(200% / 3);
+            }
+            & block-note {
+                font-variation-settings: 'MONO' 0;
+                white-space: pre;
+                font-stretch: 90%;
+            }
+            .mono & block-title:not([data-proportional]) {
+                font-stretch: 75%;
+            }
+            & block-glyphs {
+                white-space: pre;
+            }
+            &:not(:first-child) block-title:first-child {
+                margin-top: calc(0.4 * var(--size));
+            }
+            &:not(:first-child) block-glyphs:first-child {
+                margin-top: calc(0.5 * var(--size));
+            }
+        }
+
+        download-grid {
+            white-space: nowrap;
+            display: inline-grid;
+            grid-template-rows: 1.2fr repeat(4, 1fr);
+            grid-template-columns: calc(8 * var(--size)) repeat(3, 1fr);
+            margin-bottom: calc(0.5 * var(--size));
+        }
+	</style>
+	<script>
+		let OpenTypeSettings = {};
+		let acc1, acc2;
+
+		function updateOpenTypeCSS() {
+			fontwrap.style.fontFeatureSettings = getCSSFontFeatureString();
+		}
+		function setStyle(which, idx = '') {
+			if (idx) {
+				[].forEach.call(settings.querySelectorAll(`.OTfeaturecheckbox[id ^= chk_${which}]:not([id = chk_${which}${idx}])`), elem => {
+					if (elem.id != `chk_${which}${idx}`)
+						elem.checked = false;
+				});
+			}
+			OpenTypeSettings[which] = document.getElementById("chk_"+which+idx).checked ? idx || true : false;
+			updateOpenTypeCSS();
+		}
+
+		function getCSSFontFeatureString() {
+			let out = "";
+			for (const k in OpenTypeSettings) {
+				if (OpenTypeSettings[k])
+					out += `'${k}' ${ OpenTypeSettings[k] * 1 }, `;
+			}
+			out = out.replace(/, $/, "");
+			return out || "normal";
+		}
+
+		function setWeight(val) {
+			document.body.style.setProperty("--wght",val);
+            fontwtlbl.innerText = val;
+		}
+		function setSize(val) {
+			document.body.style.setProperty("--size",val+"px");
+            fontsizelbl.innerText = val + "px";
+		}
+		function setWidth(val) {
+			document.body.style.setProperty("--wdth",val + "%");
+            fontwidlbl.innerText = val;
+		}
+
+		function toggleFontStyle(mono,cond) {
+			fontwrap.classList.toggle("mono", mono ?? font2.checked);
+			fontname.classList.toggle("mono", mono ?? font2.checked);
+		}
+		function toggleFontMono() {
+			fontwrap.classList.toggle("mono", font2.checked);
+			fontname.classList.toggle("mono", font2.checked);
+            fontmonolbl.innerText = font2.checked ? 1 : 0;
+		}
+		function playAccordionSound() {
+			(font2.checked ? acc1 : acc2).play();
+		}
+
+		function init() {
+			[].forEach.call(settings.getElementsByClassName("OTfeaturecheckbox"), elem => {
+				elem.checked = false;
+				elem.onchange();
+			});
+			fontwt.onchange();
+			fontwid.onchange();
+			fontsize.onchange();
+			//font2.checked = true;
+			toggleFontMono();
+			toggleFontStyle();
+			acc1 = new Audio('acc1.mp3');
+			acc2 = new Audio('acc2.mp3');
+			setTimeout(() => {
+				fontwrap.style.transition = "font-variation-settings 0.5s";
+			}, 50);
+			fontversion.innerText = document.body.dataset.version;
+            switchtab('overview');
+		}
+
+		function setinput(which,towhat) {
+			which.value = towhat;
+			which.onchange();
+		}
+        function switchtab(name) {
+            [].forEach.call(document.querySelectorAll("font-tab"), el => { el.hidden = true; });
+            [].forEach.call(document.querySelectorAll("nav [role=tab]"), el => { el.ariaSelected = false; });
+            document.getElementById("btn_" + name).ariaSelected = "true";
+            let elem = document.getElementById("tab_" + name);
+            if (elem) elem.hidden = false;
+        }
+	</script>
+</head>
+<body onload="init()" data-version="2.519">
+
+<nav id="sidebar">
+<div style="font-variation-settings: 'MONO' 1, 'wght' 700"><b>Unicomic</b><small> v<span id="fontversion"></span></small></div>
+<small id="fontname">
+    <span class="excludefrommono">Proportional </span>
+    <span id="fontcond">Condensed </span>
+    <span id="fontregu">Regular</span>
+    <span id="fontthin">Thin</span>
+    <span id="fontlight">Light</span>
+    <span id="fontbold">Bold</span>
+    <span id="semibold">Medium</span>
+</small>
+<div style="flex-grow: 0.2"></div>
+<h3>Font size</h3>
+<font-var-item>
+    <div style="display: flex; flex-direction: row; font-size: 85%">
+        <div style="display:block">
+        <input type="range" style="width: calc(100% - 10px);" id="fontsize" value=21 min=10 max=50 onmousemove="setSize(this.value)" onchange="setSize(this.value)" list="fontsizes"><datalist id="fontsizes"><option>10</option><option>20</option><option>30</option><option>40</option><option>50</option></datalist>
+        </div>
+        <label for="fontsize" id="fontsizelbl" class="fontlbl"></label>
+    </div>
+</font-var-item>
+<h3>Font variation settings</h3>
+<font-var-item>
+    <div style="display: flex; flex-direction: row; font-size: 85%">
+        <code>'wght'</code>
+        <span style="flex-grow: 1;">&nbsp;Weight</span>
+        <code id="fontwtlbl" class="fontlbl"></code>
+    </div>
+    <div style="margin-left: 50px; display: block;">
+        <input style="width: calc(100% - 10px); margin-bottom: -3px;" type="range" id="fontwt" value=400 min=100 max=700 onmousemove="setWeight(this.value)" onchange="setWeight(this.value)" list="weights"><datalist id="weights"><option>100</option><option>400</option><option>700</option></datalist>
+        <div style="display: flex; flex-direction: row; font-size: 75%;">
+            <label for="fontwt" onclick="setinput(fontwt, 100)" style="flex-grow: 1; font-weight: 100;">Thin</label>
+            <label for="fontwt" onclick="setinput(fontwt, 400)" style="flex-grow: 1; font-weight: 400; text-align:center;">Regular</label>
+            <label for="fontwt" onclick="setinput(fontwt, 700)" style="flex-grow: 1; font-weight: 700; text-align:right;">Bold</label>
+        </div>
+    </div>
+</font-var-item>
+<font-var-item>
+    <div style="display: flex; flex-direction: row; font-size: 85%">
+        <code>'wdth'</code>
+        <label style="flex-grow: 1;">&nbsp;Width</label>
+        <code id="fontwidlbl" class="fontlbl"></code>
+    </div>
+    <div style="margin-left: 50px; display: block;">
+        <input style="width: calc(100% - 10px); margin-bottom: -3px;" type="range" id="fontwid" value=100 min=75 max=100 onmousemove="setWidth(this.value)" onchange="setWidth(this.value)">
+        <div style="display: flex; flex-direction: row; font-size: 75%;">
+            <label for="fontwid" onclick="setinput(fontwid,  75)" style="flex-grow: 1; font-stretch: 75%;">Condensed</label>
+            <label for="fontwid" onclick="setinput(fontwid, 100)" style="flex-grow: 1; text-align:right;">Normal</label>
+        </div>
+    </div>
+</font-var-item>
+<font-var-item>
+    <div style="display: flex; flex-direction: row; font-size: 85%">
+        <code>'MONO'</code>
+        <label style="flex-grow: 1;" for="font2">&nbsp;Monospaced</label>
+        <input type="checkbox" onchange="toggleFontMono(); playAccordionSound()" checked id="font2">
+        <code id="fontmonolbl" class="fontlbl"></code>
+    </div>
+</font-var-item>
+
+<div style="flex-grow: 1"></div>
+<button role="tab" id="btn_overview" onclick="switchtab('overview')">Font overview</button>
+<button role="tab" id="btn_latin"    data-chars="abc" onclick="switchtab('latin')">Latin script</button>
+<button role="tab" id="btn_greek"    data-chars="ξπφ" onclick="switchtab('greek')">Greek script</button>
+<button role="tab" id="btn_cyrillic" data-chars="эюя" onclick="switchtab('cyrillic')">Cyrillic script</button>
+<button role="tab" id="btn_phonetic" data-chars="˘ʤː" onclick="switchtab('phonetic')">Diacritics & phonetics</button>
+<button role="tab" id="btn_symbols"  data-chars="‽⅒∈" onclick="switchtab('symbols')">Punctuation & maths</button>
+<button role="tab" id="btn_japanese" data-chars="あア" onclick="switchtab('japanese')">Japanese</button>
+</nav><div id="settings"><b>OpenType features</b><ul>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('tnum')" id="chk_tnum"><label for="chk_tnum"><code>'tnum'   </code>Tabular (monospaced) numbers</label></li>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('zero',1)" id="chk_zero1"><label for="chk_zero1"><code>'zero' 1 </code>Alternate zero <zero1><red>0</red></zero1> (slashed)</label></li>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('zero',2)" id="chk_zero2"><label for="chk_zero2"><code>'zero' 2 </code>Alternate zero <zero2><red>0</red></zero2> (dotted)</label></li>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('zero',3)" id="chk_zero3"><label for="chk_zero3"><code>'zero' 3 </code>Alternate zero <zero3><red>0</red></zero3> (backslashed)</label></li>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('cv01')" id="chk_cv01"><label for="chk_cv01"><code>'cv01'   </code>Alternate <cv01><red>a</red></cv01> (replacing <red>a</red>)<abbr title="Recommended for IPA transcriptions to avoid confusion with U+0251&nbsp;LATIN&nbsp;SMALL&nbsp;LETTER&nbsp;ALPHA&nbsp;(ɑ).">*</abbr></label></li>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('cv02')" id="chk_cv02"><label for="chk_cv02"><code>'cv02'   </code>Alternate <cv02><red>g</red></cv02> (replacing <red>g</red>)<abbr title="Fine to use in conjunction with IPA transcriptions, as those should use the different (and unaffected) Unicode character U+0261&nbsp;LATIN&nbsp;SMALL&nbsp;LETTER&nbsp;SCRIPT&nbsp;G&nbsp;instead.">*</abbr></label></li>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('ital')" id="chk_ital"><label for="chk_ital"><code>'ital'   </code>Italic variants:</label></li>
+<ul>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('cv03')" id="chk_cv03"><label for="chk_cv03"><code>'cv03'   </code>Alternate <cv03><red>t</red></cv03> (replacing <red>t</red>)</label></li>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('cv04')" id="chk_cv04"><label for="chk_cv04"><code>'cv04'   </code>Alternate Greek <cv04><red>α</red></cv04> (replacing <red>α</red>)</label></li>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('cv05')" id="chk_cv05"><label for="chk_cv05"><code>'cv05'   </code>Alternate Greek <cv05><red>γ</red></cv05> (replacing <red>γ</red>)</label></li>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('cv06')" id="chk_cv06"><label for="chk_cv06"><code>'cv06'   </code>Alternate Greek <cv06><red>ι</red></cv06> (replacing <red>ι</red>)</label></li>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('cv07')" id="chk_cv07"><label for="chk_cv07"><code>'cv07'   </code>Alternate Greek <cv07><red>κ</red></cv07> (replacing <red>κ</red>)</label></li>
+<li><input type="checkbox" class="OTfeaturecheckbox" onchange="setStyle('cv08')" id="chk_cv08"><label for="chk_cv08"><code>'cv08'   </code>Alternate Greek <cv08><red>λ</red></cv08> (replacing <red>λ</red>)</label></li>
+</ul>
+</ul><!-- <abbr title=""><sup>How to enable these in VS Code</sup></abbr>
+--></div>
+<!-- OpenType design-variation axis 'MONO'; value is 0 if disabled and 1 if enabled -->
+<div id="fontwrap">
+
+<font-tab role="tabpanel" id="tab_overview" aria-labelledby="btn_overview" hidden>
+<font-block>
+    <block-title data-proportional style="font-size: 150%; color: #333; font-weight: calc(var(--wght) + 300); margin-bottom: calc(0.5 * var(--size));">Unicomic</block-title>
+    <block-glyphs>ABCDEFGHIJKLMNOPQRSTUVWXYZ .,:;'"()[]{}&lt;&gt;
+abcdefghijklmnopqrstuvwxyz 1234567890!?+-</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-glyphs>/ˌɔː.tə.baɪˈɒɡ.ɹə.fi/</block-glyphs>
+    <block-glyphs>Æbletræer og smørrebrød</block-glyphs>
+    <block-glyphs>日本語も対応</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title data-proportional>Downloads</block-title>
+    <block-glyphs style="font-size: 75%"><download-grid>
+<div>Variable font:&nbsp;</div>
+<div><a href="Unicomic-VF.ttf">Unicomic.ttf</a></div>
+<div></div><div></div>
+<div>Static instances:&nbsp;</div>
+<div><a href="Unicomic-Light.ttf"             style="font-variation-settings: 'wght' 100, 'MONO' 1, 'wdth' 100;">Unicomic Thin</a></div>
+<div><a href="Unicomic-CondensedLight.ttf" style="font-variation-settings: 'wght' 100, 'MONO' 1, 'wdth'  75;">.. Condensed Thin</a></div>
+<div><a href="Unicomic-ProportionalLight.ttf" style="font-variation-settings: 'wght' 100, 'MONO' 0, 'wdth' 100;">.. Proportional Thin</a></div>
+<div></div>
+<div><a href="Unicomic-Light.ttf"             style="font-variation-settings: 'wght' 250, 'MONO' 1, 'wdth' 100;">Unicomic Light</a></div>
+<div><a href="Unicomic-CondensedLight.ttf" style="font-variation-settings: 'wght' 250, 'MONO' 1, 'wdth'  75;">.. Condensed Light</a></div>
+<div><a href="Unicomic-ProportionalLight.ttf" style="font-variation-settings: 'wght' 250, 'MONO' 0, 'wdth' 100;">.. Proportional Light</a></div>
+<div></div>
+<div><a href="Unicomic-Regular.ttf"           style="font-variation-settings: 'wght' 400, 'MONO' 1, 'wdth' 100;">Unicomic</a></div>
+<div><a href="Unicomic-Condensed.ttf"      style="font-variation-settings: 'wght' 400, 'MONO' 1, 'wdth'  75;">.. Condensed</a></div>
+<div><a href="Unicomic-Proportional.ttf"      style="font-variation-settings: 'wght' 400, 'MONO' 0, 'wdth' 100;">.. Proportional</a></div>
+<div></div>
+<div><a href="Unicomic-Bold.ttf"              style="font-variation-settings: 'wght' 700, 'MONO' 1, 'wdth' 100;">Unicomic Bold</a></div>
+<div><a href="Unicomic-CondensedBold.ttf"  style="font-variation-settings: 'wght' 700, 'MONO' 1, 'wdth'  75;">.. Condensed Bold</a></div>
+<div><a href="Unicomic-ProportionalBold.ttf"  style="font-variation-settings: 'wght' 700, 'MONO' 0, 'wdth' 100;">.. Proportional Bold</a></div>
+</download-grid></block-glyphs>
+
+    <block-note>Variable fonts are pretty well supported when embedded on the web, but support in other desktop software is often poor.
+The static-instance font files below are better suited for these purposes.
+Note that the default variation of the font is monospaced, not proportional (to facilitate the condensed width).</block-note>
+</font-block>
+
+<font-block>
+    <block-title data-proportional>Changelog</block-title>
+    <ul class="changelog">
+<li data-v="2.519" data-d="2025       ">Now a variable font! Also adds proper combining mark support, kumimoji (㌀ ㌁ ㌂ etc), Phonetic Extensions</li>
+<li data-v="2.184" data-d="2024 Aug 26">Add Halfwidth and Fullwidth Forms coverage (Latin/JP only)</li>
+<li data-v="2.111" data-d="2024 Aug 24">Better CJK Symbols and Punctuation coverage</li>
+<li data-v="2.003" data-d="2024 Aug 23">First version live. Kana complete</li>
+</ul>
+</font-block>
+</font-tab>
+
+<font-tab role="tabpanel" id="tab_latin" aria-labelledby="btn_latin" hidden>
+<font-block>
+    <block-title>Basic Latin</block-title>
+    <block-glyphs><highlight> !"#$%&'()*+,-./0123456789:;&lt;=&gt;?
+@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_
+`abcdefghijklmnopqrstuvwxyz{|}~ </highlight>
+#️⃣*️⃣0&#xfe0f;&#x20e3;1&#xfe0f;&#x20e3;2&#xfe0e;&#x20e3;2️⃣3️⃣4️⃣5️⃣6️⃣7️⃣8️⃣9️⃣</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Latin-1 Supplement</block-title>
+    <block-glyphs><highlight>&nbsp;¡¢£¤¥¦§¨©ª«¬-®¯°±²³´µ¶·¸¹º»¼½¾¿
+ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß
+àáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ</highlight>
+©&#xfe0f;</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Latin Extended-A</block-title>
+    <block-glyphs><highlight>ĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğ
+ĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿ
+ŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞş
+ŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ</highlight></block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Latin Extended-B</block-title>
+    <block-glyphs>ƀƁƂƃƄƅƆƇƈƉƊƋƌƍƎƏƐƑ<highlight>ƒ</highlight>ƓƔƕƖƗƘƙƚƛƜƝƞƟ
+ƠơƢƣƤƥƦƧƨƩƪƫƬƭƮƯưƱƲƳƴƵƶƷƸƹƺƻƼƽƾƿ
+ǀǁǂǃǄǅǆǇǈǉǊǋǌǍǎǏǐǑǒǓǔǕǖǗǘǙǚǛǜǝǞǟ
+ǠǡǢǣǤǥǦǧǨǩǪǫǬǭǮǯǰǱǲǳǴǵǶǷǸǹ<highlight>ǺǻǼǽǾǿ</highlight>
+ȀȁȂȃȄȅȆȇȈȉȊȋȌȍȎȏȐȑȒȓȔȕȖȗ<highlight>ȘșȚț</highlight>ȜȝȞȟ
+ȠȡȢȣȤȥȦȧȨȩȪȫȬȭȮȯȰȱȲȳȴȵȶ<highlight>ȷ</highlight>ȸȹȺȻȼȽȾȿ
+ɀɁɂɃɄɅɆɇɈɉɊɋɌɍɎɏ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Latin Extended Additional</block-title>
+    <block-glyphs>ḀḁḂḃḄḅḆḇḈḉḊḋḌḍḎḏḐḑḒḓḔḕḖḗḘḙḚḛḜḝḞḟ
+ḠḡḢḣḤḥḦḧḨḩḪḫḬḭḮḯḰḱḲḳḴḵḶḷḸḹḺḻḼḽḾḿ
+ṀṁṂṃṄṅṆṇṈṉṊṋṌṍṎṏṐṑṒṓṔṕṖṗṘṙṚṛṜṝṞṟ
+ṠṡṢṣṤṥṦṧṨṩṪṫṬṭṮṯṰṱṲṳṴṵṶṷṸṹṺṻṼṽṾṿ
+<highlight>ẀẁẂẃẄẅ</highlight>ẆẇẈẉẊẋẌẍẎẏẐẑẒẓẔẕẖẗẘẙẚẛẜẝẞẟ
+ẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾế
+ỀềỂểỄễỆệỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞở
+ỠỡỢợỤụỦủỨứỪừỬửỮữỰự<highlight>Ỳỳ</highlight>ỴỵỶỷỸỹỺỻỼỽỾỿ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Latin Extended-C</block-title>
+    <block-glyphs>ⱠⱡⱢⱣⱤⱥⱦⱧⱨⱩⱪⱫⱬⱭⱮⱯⱰⱱⱲⱳⱴⱵⱶⱷⱸⱹⱺⱻⱼⱽⱾⱿ</block-glyphs>
+</font-block>
+</font-tab>
+
+<font-tab role="tabpanel" id="tab_greek" aria-labelledby="btn_greek" hidden>
+<font-block>
+    <block-title>Greek and Coptic</block-title>
+    <block-glyphs>ͰͱͲͳʹ͵Ͷͷ  ͺͻͼͽ<highlight>;</highlight>Ϳ    <highlight>΄΅Ά·ΈΉΊ Ό ΎΏ</highlight>
+<highlight>ΐΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡ ΣΤΥΦΧΨΩΪΫάέήί
+ΰαβγδεζηθικλμνξοπρςστυφχψωϊϋόύώ</highlight>Ϗ
+ϐϑϒϓϔϕϖϗϘϙϚϛϜϝϞϟϠϡϢϣϤϥϦϧϨϩϪϫϬϭϮϯ
+ϰϱϲϳϴϵ϶ϷϸϹϺϻϼϽϾϿ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Greek Extended</block-title>
+    <block-glyphs>ἀἁἂἃἄἅἆἇἈἉἊἋἌἍἎἏἐἑἒἓἔἕ  ἘἙἚἛἜἝ  
+ἠἡἢἣἤἥἦἧἨἩἪἫἬἭἮἯἰἱἲἳἴἵἶἷἸἹἺἻἼἽἾἿ
+ὀὁὂὃὄὅ  ὈὉὊὋὌὍ  ὐὑὒὓὔὕὖὗ Ὑ Ὓ Ὕ Ὗ
+ὠὡὢὣὤὥὦὧὨὩὪὫὬὭὮὯὰάὲέὴήὶίὸόὺύὼώ  
+ᾀᾁᾂᾃᾄᾅᾆᾇᾈᾉᾊᾋᾌᾍᾎᾏᾐᾑᾒᾓᾔᾕᾖᾗᾘᾙᾚᾛᾜᾝᾞᾟ
+ᾠᾡᾢᾣᾤᾥᾦᾧᾨᾩᾪᾫᾬᾭᾮᾯᾰᾱᾲᾳᾴ ᾶᾷᾸᾹᾺΆᾼ᾽ι᾿
+῀῁ῂῃῄ ῆῇῈΈῊΉῌ῍῎῏ῐῑῒΐ  ῖῗῘῙῚΊ ῝῞῟
+ῠῡῢΰῤῥῦῧῨῩῪΎῬ῭΅`  ῲῳῴ ῶῷῸΌῺΏῼ´῾ </block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>the Greek letters from Phonetic Extensions & Phonetic Extensions Supplement</block-title>
+    <block-glyphs>ᴦᴧᴨᴩᴪᵝᵞᵟᵠᵡᵦᵧᵨᵩᵪᶿ</block-glyphs>
+</font-block>
+</font-tab>
+
+<font-tab role="tabpanel" id="tab_cyrillic" aria-labelledby="btn_cyrillic" hidden>
+<font-block>
+    <block-title>Cyrillic</block-title>
+    <block-glyphs>Ѐ<highlight>ЁЂЃЄЅІЇЈЉЊЋЌ</highlight>Ѝ<highlight>ЎЏАБВГДЕЖЗИЙКЛМНОП</highlight>
+<highlight>РСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмноп
+рстуфхцчшщъыьэюя</highlight>ѐ<highlight>ёђѓєѕіїјљњћќ</highlight>ѝ<highlight>ўџ</highlight>
+ѠѡѢѣѤѥѦѧѨѩѪѫѬѭѮѯѰѱѲѳѴѵѶѷѸѹѺѻѼѽѾѿ
+Ҁҁ҂◌҃◌҄◌҅◌҆◌҇◌҈◌҉ҊҋҌҍҎҏ<highlight>Ґґ</highlight>ҒғҔҕҖҗҘҙҚқҜҝҞҟ
+ҠҡҢңҤҥҦҧҨҩҪҫҬҭҮүҰұҲҳҴҵҶҷҸҹҺһҼҽҾҿ
+ӀӁӂӃӄӅӆӇӈӉӊӋӌӍӎӏӐӑӒӓӔӕӖӗӘәӚӛӜӝӞӟ
+ӠӡӢӣӤӥӦӧӨөӪӫӬӭӮӯӰӱӲӳӴӵӶӷӸӹӺӻӼӽӾӿ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Cyrillic Supplement</block-title>
+    <block-glyphs>ԀԁԂԃԄԅԆԇԈԉԊԋԌԍԎԏԐԑԒԓԔԕԖԗԘԙԚԛԜԝԞԟ
+ԠԡԢԣԤԥԦԧԨԩԪԫԬԭԮԯ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>the two Cyrillic letters from Phonetic Extensions</block-title>
+    <block-glyphs>ᴫᵸ</block-glyphs>
+</font-block>
+</font-tab>
+
+<font-tab role="tabpanel" id="tab_symbols" aria-labelledby="btn_symbols" hidden>
+<font-block>
+    <block-title>General Punctuation</block-title>
+    <block-glyphs>                ‐‑‒<highlight>–—―</highlight>‖<highlight>‗‘’‚‛“”„</highlight>‟
+<highlight>†‡•</highlight>‣․‥<highlight>…</highlight>‧        <highlight>‰</highlight>‱<highlight>′″</highlight>‴‵‶‷‸<highlight>‹›</highlight>※<highlight>‼</highlight>‽<highlight>‾</highlight>‿
+⁀⁁⁂⁃<highlight>⁄</highlight>⁅⁆⁇⁈⁉⁊⁋⁌⁍⁎⁏⁐⁑⁒⁓⁔⁕⁖⁗⁘⁙⁚⁛⁜⁝⁞ </block-glyphs>
+<small>the character ※ uses CJK character spacing</small>
+</font-block>
+
+<font-block>
+    <block-title>Number Forms</block-title>
+    <block-glyphs>⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚<highlight>⅛⅜⅝⅞</highlight>⅟ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅪⅫⅬⅭⅮⅯ
+ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹⅺⅻⅼⅽⅾⅿↀↁↂↃↄↅↆↇↈ↉↊↋</block-glyphs>
+</font-block>
+</font-tab>
+
+<font-tab role="tabpanel" id="tab_phonetic" aria-labelledby="btn_phonetic" hidden>
+<font-block>
+    <block-title>IPA Extensions</block-title>
+    <block-glyphs>ɐɑɒɓɔɕɖɗɘəɚɛɜɝɞɟɠɡɢɣɤɥɦɧɨɩɪɫɬɭɮɯ
+ɰɱɲɳɴɵɶɷɸɹɺɻɼɽɾɿʀʁʂʃʄʅʆʇʈʉʊʋʌʍʎʏ
+ʐʑʒʓʔʕʖʗʘʙʚʛʜʝʞʟʠʡʢʣʤʥʦʧʨʩʪʫʬʭʮʯ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Spacing Modifier Letters</block-title>
+    <block-glyphs>ʰʱʲʳʴʵʶʷʸʹʺʻʼʽʾʿˀˁ˂˃˄˅<highlight>ˆˇ</highlight>ˈ<highlight>ˉ</highlight>ˊˋˌˍˎˏ
+ːˑ˒˓˔˕˖˗<highlight>˘˙˚˛˜˝</highlight>˞˟ˠˡˢˣˤ<!--˥˦˧˨˩˪˫ˬ˭ˮ˯
+˰˱˲˳˴˵˶˷˸˹˺˻˼˽˾˿--></block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Combining Diacritical Marks</block-title>
+    <block-glyphs>◌̀◌́◌̂◌̃◌̄◌̅◌̆◌̇◌̈◌̉◌̊◌̋◌̌◌̍◌̎◌̏◌̐◌̑◌̒◌̓◌̔◌̕◌̖◌̗◌̘◌̙◌̚◌̛◌̜◌̝◌̞◌̟
+◌̠◌̡◌̢◌̣◌̤◌̥◌̦◌̧◌̨◌̩◌̪◌̫◌̬◌̭◌̮◌̯◌̰◌̱◌̲◌̳◌̴◌̵◌̶◌̷◌̸◌̹◌̺◌̻◌̼◌̽◌̾◌̿
+◌̀◌́◌͂◌̓◌̈́◌ͅ◌͆◌͇◌͈◌͉◌͊◌͋◌͌◌͍◌͎ ◌͐◌͑◌͒◌͓◌͔◌͕◌͖◌͗◌͘◌͙◌͚◌͛◌͜◌͝◌͞◌͟
+◌͠◌͡◌͢◌ͣ◌ͤ◌ͥ◌ͦ◌ͧ◌ͨ◌ͩ◌ͪ◌ͫ◌ͬ◌ͭ◌ͮ◌ͯ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Phonetic Extensions</block-title>
+    <block-glyphs>ᴀᴁᴂᴃᴄᴅᴆᴇᴈᴉᴊᴋᴌᴍᴎᴏᴐᴑᴒᴓᴔᴕᴖᴗᴘᴙᴚᴛᴜᴝᴞᴟ
+ᴠᴡᴢᴣᴤᴥᴦᴧᴨᴩᴪᴫᴬᴭᴮᴯᴰᴱᴲᴳᴴᴵᴶᴷᴸᴹᴺᴻᴼᴽᴾᴿ
+ᵀᵁᵂᵃᵄᵅᵆᵇᵈᵉᵊᵋᵌᵍᵎᵏᵐᵑᵒᵓᵔᵕᵖᵗᵘᵙᵚᵛᵜᵝᵞᵟ
+ᵠᵡᵢᵣᵤᵥᵦᵧᵨᵩᵪᵫᵬᵭᵮᵯᵰᵱᵲᵳᵴᵵᵶᵷᵸᵹᵺᵻᵼᵽᵾᵿ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Phonetic Extensions Supplement</block-title>
+    <block-glyphs>ᶀᶁᶂᶃᶄᶅᶆᶇᶈᶉᶊᶋᶌᶍᶎᶏᶐᶑᶒᶓᶔᶕᶖᶗᶘᶙᶚᶛᶜᶝᶞᶟ
+ᶠᶡᶢᶣᶤᶥᶦᶧᶨᶩᶪᶫᶬᶭᶮᶯᶰᶱᶲᶳᶴᶵᶶᶷᶸᶹᶺᶻᶼᶽᶾᶿ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title>Superscripts and Subscripts</block-title>
+    <block-glyphs><highlight>⁰</highlight>ⁱ  <highlight>⁴⁵⁶⁷⁸⁹</highlight>⁺⁻⁼⁽⁾<highlight>ⁿ₀₁₂₃₄₅₆₇₈₉</highlight>₊₋₌₍₎ 
+ₐₑₒₓₔₕₖₗₘₙₚₛₜ₝₞₟</block-glyphs>
+</font-block>
+</font-tab>
+
+
+<font-tab role="tabpanel" id="tab_japanese" aria-labelledby="btn_japanese" hidden>
+<font-block>
+    <block-title data-proportional>Hiragana</block-title>
+    <block-glyphs>　ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞた
+だちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみ
+むめもゃやゅゆょよらりるれろゎわゐゑをんゔゕゖ　　〇゙〇゚゛゜ゝゞゟ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title data-proportional>Katakana</block-title>
+    <block-glyphs>゠ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタ
+ダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミ
+ムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶヷヸヹヺ・ーヽヾヿ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title data-proportional>CJK Symbols and Punctuation</block-title>
+    <block-glyphs>　、。〃〄々〆〇〈〉《》「」『』【】〒〓〔〕〖〗〘〙〚〛〜〝〞〟
+〠〡〢〣〤〥〦〧〨〩〇〪〇〫〇〬〇〭〇〮〇〯〰〱〲〳〴〵〶〷〸〹〺〻〼〽〾〿</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title data-proportional>Katakana Phonetic Extensions</block-title>
+    <block-glyphs>ㇰㇱㇲㇳㇴㇵㇶㇷㇸㇹㇺㇻㇼㇽㇾㇿ</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title data-proportional>Small Kana Extension</block-title>
+    <block-glyphs>𛄲𛅐𛅑𛅒𛅕𛅤𛅥𛅦𛅧</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title data-proportional>CJK Compatibility</block-title>
+    <block-glyphs>㌀㌁㌂㌃㌄㌅㌆㌇㌈㌉㌊㌋㌌㌍㌎㌏㌐㌑㌒㌓㌔㌕㌖㌗㌘㌙㌚㌛㌜㌝㌞㌟
+㌠㌡㌢㌣㌤㌥㌦㌧㌨㌩㌪㌫㌬㌭㌮㌯㌰㌱㌲㌳㌴㌵㌶㌷㌸㌹㌺㌻㌼㌽㌾㌿
+㍀㍁㍂㍃㍄㍅㍆㍇㍈㍉㍊㍋㍌㍍㍎㍏㍐㍑㍒㍓㍔㍕㍖㍗㍘㍙㍚㍛㍜㍝㍞㍟
+㍠㍡㍢㍣㍤㍥㍦㍧㍨㍩㍪㍫㍬㍭㍮㍯㍰㍱㍲㍳㍴㍵㍶㍷㍸㍹㍺㍻㍼㍽㍾㍿
+㎀㎁㎂㎃㎄㎅㎆㎇㎈㎉㎊㎋㎌㎍㎎㎏㎐㎑㎒㎓㎔㎕㎖㎗㎘㎙㎚㎛㎜㎝㎞㎟
+㎠㎡㎢㎣㎤㎥㎦㎧㎨㎩㎪㎫㎬㎭㎮㎯㎰㎱㎲㎳㎴㎵㎶㎷㎸㎹㎺㎻㎼㎽㎾㎿
+㏀㏁㏂㏃㏄㏅㏆㏇㏈㏉㏊㏋㏌㏍㏎㏏㏐㏑㏒㏓㏔㏕㏖㏗㏘㏙㏚㏛㏜㏝㏞㏟
+㏠㏡㏢㏣㏤㏥㏦㏧㏨㏩㏪㏫㏬㏭㏮㏯㏰㏱㏲㏳㏴㏵㏶㏷㏸㏹㏺㏻㏼㏽㏾㏿</block-glyphs>
+</font-block>
+
+<font-block>
+    <block-title data-proportional>Halfwidth and Fullwidth Forms</block-title>
+    <block-note>In regular <u>Unicomic</u>, fullwidth characters are 1.5x as wide as halfwidth ones because this was the most legible compromise.
+<u>Unicomic Condensed</u> only condenses halfwidth characters, so that they become exactly half as wide as fullwidth ones.</block-note>
+    <block-glyphs>　！＂＃＄％＆＇（）＊＋，－．／０１２３４５６７８９：；＜＝＞？
+＠ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ［＼］＾＿
+｀ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ｛｜｝～
+｡｢｣､･ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝﾞﾟ</block-glyphs>
+</font-block>
+
+</font-tab>
+
+<!--
+℅ℓℕ№ℝ℠™ℤÅ℮      ₣₤₧€₸₹₺₻₼₽₾
+
+if (foo[1].value <= 570 + 2 * Math.PI)
+  console.log("Hello World!");
+console.log(2 + 5 * Math.floor(3.7 - 49));
+
+Combining character support! ÁB́ĆD́É<!-e- F́ǴH́ÍJ́áb́ćd́é -e->f́ǵh́íj́ z̧̈̊̆́́̄̇̉
+
+<green>Japanese</green>🈀
+＊　そしてもちろん、ZUNさんの『東方Project』とか。
+　、。〃々〆〇〈〉《》「」『』【】〒〓〔〕〖〗〜〝〞〟<div class="smalldivider"></div>j
+🈁🈂<div class="smalldivider"></div><div class="smalldivider"></div>
+<b>Kanji:</b>　一二三人力加区吾字形描文方日本東次欧見言語貫追
+don't expect a usable amount of these ↑<div class="smalldivider"></div>
+<b>Combining character support!! </b>わ゙ゐ゙ゔゑ゙を゙　ア゙イ゙ヴエ゙オ゙　か゚き゚く゚け゚こ゚　じし゚ㇷ゚ゝ゚
+
+<div style="writing-mode: vertical-rl; display: block; height: 5em; border: 2px solid #333; padding: 10px 20px">ねえ、
+兄ちゃーん
+ボクの
+アクショ…</div>
+バビブベボパピプペポ ﾊ゙ﾋ゙ﾌ゙ﾍ゙ﾎ゙ﾊ゚ﾋ゚ﾌ゚ﾍ゚ﾎ゚
+-->
+<!-- 𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳𝐴𝐵𝐶𝐷𝐸𝐹𝐺𝐻𝐼𝐽𝐾𝐿
+𝑀𝑁𝑂𝑃𝑄𝑅𝑆𝑇𝑈𝑉𝑊𝑋𝑌𝑍𝑎𝑏𝑐𝑑𝑒𝑓𝑔ℎ𝑖𝑗𝑘𝑙𝑚𝑛𝑜𝑝𝑞𝑟𝑠𝑡𝑢𝑣𝑤𝑥𝑦𝑧𝑨𝑩𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿
+𝒀𝒁𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛𝒜 𝒞𝒟  𝒢  𝒥𝒦  𝒩𝒪𝒫𝒬 𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹 𝒻 𝒽𝒾𝒿
+𝓀𝓁𝓂𝓃 𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿
+𝔀𝔁𝔂𝔃𝔄𝔅ℭ𝔇𝔈𝔉𝔊  𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔 𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ
+𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿
+𝖀𝖁𝖂𝖃𝖄𝖅𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹𝖺𝖻𝖼𝖽𝖾𝖿
+𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿
+𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻𝘼𝘽𝘾𝘿
+𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿
+𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣𝚤𝚥  𝚨𝚩𝚪𝚫𝚬𝚭𝚮𝚯𝚰𝚱𝚲𝚳𝚴𝚵𝚶𝚷𝚸𝚹𝚺𝚻𝚼𝚽𝚾𝚿
+𝛀𝛁𝛂𝛃𝛄𝛅𝛆𝛇𝛈𝛉𝛊𝛋𝛌𝛍𝛎𝛏𝛐𝛑𝛒𝛓𝛔𝛕𝛖𝛗𝛘𝛙𝛚𝛛𝛜𝛝𝛞𝛟𝛠𝛡𝛢𝛣𝛤𝛥𝛦𝛧𝛨𝛩𝛪𝛫𝛬𝛭𝛮𝛯𝛰𝛱𝛲𝛳𝛴𝛵𝛶𝛷𝛸𝛹𝛺𝛻𝛼𝛽𝛾𝛿
+𝜀𝜁𝜂𝜃𝜄𝜅𝜆𝜇𝜈𝜉𝜊𝜋𝜌𝜍𝜎𝜏𝜐𝜑𝜒𝜓𝜔𝜕𝜖𝜗𝜘𝜙𝜚𝜛𝜜𝜝𝜞𝜟𝜠𝜡𝜢𝜣𝜤𝜥𝜦𝜧𝜨𝜩𝜪𝜫𝜬𝜭𝜮𝜯𝜰𝜱𝜲𝜳𝜴𝜵𝜶𝜷𝜸𝜹𝜺𝜻𝜼𝜽𝜾𝜿
+𝝀𝝁𝝂𝝃𝝄𝝅𝝆𝝇𝝈𝝉𝝊𝝋𝝌𝝍𝝎𝝏𝝐𝝑𝝒𝝓𝝔𝝕𝝖𝝗𝝘𝝙𝝚𝝛𝝜𝝝𝝞𝝟𝝠𝝡𝝢𝝣𝝤𝝥𝝦𝝧𝝨𝝩𝝪𝝫𝝬𝝭𝝮𝝯𝝰𝝱𝝲𝝳𝝴𝝵𝝶𝝷𝝸𝝹𝝺𝝻𝝼𝝽𝝾𝝿
+𝞀𝞁𝞂𝞃𝞄𝞅𝞆𝞇𝞈𝞉𝞊𝞋𝞌𝞍𝞎𝞏𝞐𝞑𝞒𝞓𝞔𝞕𝞖𝞗𝞘𝞙𝞚𝞛𝞜𝞝𝞞𝞟𝞠𝞡𝞢𝞣𝞤𝞥𝞦𝞧𝞨𝞩𝞪𝞫𝞬𝞭𝞮𝞯𝞰𝞱𝞲𝞳𝞴𝞵𝞶𝞷𝞸𝞹𝞺𝞻𝞼𝞽𝞾𝞿
+𝟀𝟁𝟂𝟃𝟄𝟅𝟆𝟇𝟈𝟉𝟊𝟋  𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿-->
+
+
+</div>
+</body>
+</html>
