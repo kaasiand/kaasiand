@@ -303,6 +303,10 @@
 		}
 		ctx.putImageData(data, 0, 0);
 	}
+
+	function save() {
+		document.getElementById('save-btn').href = canv.toDataURL()
+	}
 	
 	function getLstar(r, g, b) { // D65/2°
 		let Y, yr;
@@ -513,7 +517,9 @@
 		<div class="imagewrap">
 			<canvas id="canv" width="1" height="1"></canvas>
 		</div>
-		<p style="font-size:.9em; font-style: italic; color: #888;">(right click the output to copy or save it, save/copy buttons are in the works)</p>
+		<a href="#" id="save-btn" download="oven.png" onclick="save()">
+			<button>Save</button>
+		</a>
 	</div>
 </body>
 </html>
