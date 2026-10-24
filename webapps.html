@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Web apps &mdash; Kaasiand.cool </title>
+    <title>Kaasiand.cool</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta property="og:title" content="Kaasiand.cool">
@@ -19,32 +19,38 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="assets/favicon.gif">
   </head>
-  <body onload="init()">
-    <div id="top" class="wrapper">
-        <h1><span>Kaasiand.cool</span></h1>
+  <body onload="init(); loctitle();">
+    <header class="wrapper">
+        <h1><a href="./">Kaasiand.cool</a></h1>
         <small>the one and onion</small>
-    </div>
+        <nav lang="nl">
+            <div><a href="./?lang=nl">Home</a></div>
+            <div><a>Webapps</a></div>
+            <div><a href="games?lang=nl">Spelletjes</a></div>
+        </nav>
+        <nav lang="en">
+            <div><a href="./?lang=en">Home</a></div>
+            <div><a>Web apps</a></div>
+            <div><a href="games?lang=en">Games</a></div>
+        </nav>
+        <nav class="nav2">
+            <div><a style="background-image: url('lingle/favicon.png');" href="lingle/" target="_blank">Lingle</a></div>
+            <div><a style="background-image: url('assets/icon/tophat.png');" href="tophat/" target="_blank">Tophat</a></div>
+            <div><a style="background-image: url('oven/favicon.png');" href="oven/" target="_blank">Oven</a></div>
+            <div><a style="background-image: url('assets/icon/counter.png');" href="counter/" target="_blank">Counter</a></div>
+            <div><a style="background-image: url('bandgen/favicon.png');" href="bandgen/" target="_blank">Bandgen</a></div>
+        </nav>
+    </header>
     <div id="main" class="wrapper">
-        <div class="container leftbar" id="nav">
-            <ul>
-                <li><a href="./">Home</a></li>
-                <li><p>Web apps</p></li>
-                <ul class="pconly">
-                    <!-- <li style="list-style-image: url('sashimi/favicon16.png');"><a href="sashimi/">Sashimi</a></li> -->
-                    <li style="list-style-image: url('lingle/favicon.png');"><a href="lingle/">Lingle</a></li>
-                    <li style="list-style-image: url('assets/icon/tophat.png');"><a href="tophat/">Tophat</a></li>
-                    <li style="list-style-image: url('oven/favicon.png');"><a href="oven/">Oven</a></li>
-                    <li style="list-style-image: url('assets/icon/counter.png');"><a href="counter/">Counter</a></li>
-                    <li style="list-style-image: url('bandgen/favicon.png');"><a href="bandgen/">Bandgen</a></li>
-                </ul>
-                <li class="new"><a href="games">Games</a></li>
-                <!-- <li><a href="#">Other things</a></li> -->
-            </ul>
-
-        </div>
         <div class="container" id="cont">
+        <span lang="nl">
+            <h2>Webapps</h2>
+            <p>Hier vind je mĳn webappjes. Ik schrĳf het liefst programma&rsquo;s die je gewoon gelĳk in je internetbrowser kunt draaien zonder iets te hoeven downloaden of installeren.</p>
+        </span>
+        <span lang="en">
             <h2>Web apps</h2>
-            <p>Here you can access a collection of web apps, made by me.</p>
+            <p>Here you can find all the web apps I&rsquo;ve made. I prefer writing stuff that just runs directly in a browser with no need to download or install anything.</p>
+        </span>
 <!-- 
             <hr>
 
@@ -54,60 +60,61 @@
 
             <a href="sashimi/" class="appbtn">Go to web app</a>
  -->
-            <hr>
+        <div class="coolgrid">
 
-            <img src="assets/apps/lingle.jpg" alt="screenshot of Lingle" class="right" style="width:250px">
-            <h3 id="lingle">Lingle</h3>
-            <p>A Dutch version of <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">Wordle</a> with a familiar look and feel. Supports the Ĳ&nbsp;digraph! </p>
-            <a href="lingle/" class="appbtn">Go to Lingle</a>
+            <div id="lingle">
+                <a href="lingle/"><img src="assets/apps/lingle.jpg" alt="Lingle screenshot" style="width:300px"></a>
+                <h3>Lingle</h3>
+                <p lang="nl">Een Nederlandstalige Wordle met een oude vertrouwde look. Ondersteunt de lange Ĳ!</p>
+                <p lang="en">A Dutch version of Wordle with a familiar look and feel. Supports the Ĳ&nbsp;digraph!</p>
+                <a href="lingle/" class="appbtn" lang="nl">Naar Lingle</a>
+                <a href="lingle/" class="appbtn" lang="en">Go to Lingle</a>
+            </div>
 
-            <hr>
+            <div id="tophat">
+                <a href="tophat/"><img src="assets/apps/tophat.jpg" alt="Tophat screenshot" style="width:333px"></a>
+                <h3>Tophat</h3>
+                <p lang="nl">Een krachtig gereedschap voor het ontwerpen van bitmaplettertypen, bedoeld als hulpmiddel voor het ontwikkelen van software op de <a href="https://play.date/" target="_blank">Playdate</a>. Ondersteunt Unicode, kerning en het importeren van TrueType-lettertypen.</p>
+                <p lang="en">A powerful bitmap font creation tool for <a href="https://play.date/" target="_blank">Playdate</a> game development using the Playdate&nbsp;SDK. It can import TTF/OTF fonts, allows for wide Unicode support, and lets you preview, filter and edit kerning pairs directly from the main&nbsp;screen.</p>
+                <a href="tophat/" class="appbtn" lang="nl">Naar Tophat</a>
+                <a href="tophat/" class="appbtn" lang="en">Go to Tophat</a>
+            </div>
 
-            <img src="assets/apps/tophat.jpg" alt='screenshot of "Tophat" web app' class="right" style="width:260px">
-            <h3 id="tophat">Tophat</h3>
-            <p><b>Tophat</b> is a powerful bitmap font creation tool for <a href="https://play.date/" target="_blank">Playdate</a> game development using the Playdate&nbsp;SDK. It can import TTF/OTF fonts, allows for wide Unicode support, and lets you preview, filter and edit kerning pairs directly from the main&nbsp;screen.</p>
-            <a href="tophat/" class="appbtn">Go to Tophat</a>
+            <div id="oven">
+                <a href="oven/"><img src="assets/apps/oven.jpg" alt="Oven screenshot" style="width:360px"></a>
+                <h3>Oven</h3>
+                <p lang="nl">Een conversieprogrammaatje om afbeeldingen mee te verzwartwitten, wederom bestemd voor Playdate-softwareontwikkeling. Ondersteunt meerdere soorten dithering en aanpasbare helderheidsniveaus.</p>
+                <p lang="en">A simple 1-bit image converter, primarily made to aid in Playdate asset creation. Supports various types of dithering, and features a brightness curve editor.</p>
+                <a href="oven/" class="appbtn" lang="nl">Naar Oven</a>
+                <a href="oven/" class="appbtn" lang="en">Go to Oven</a>
+            </div>
 
-            <hr>
-
-            <img src="assets/apps/oven.jpg" alt='screenshot of "Oven" web app' class="right" style="width:300px">
-            <h3 id="oven">Oven</h3>
-            <p><b>Oven</b> lets you convert images to 1-bit, and is primarily made to help with creating assets for Playdate games. It supports various types of ordered dithering (including blue-noise dithering), and also features a simple brightness curve&nbsp;editor.</p>
-            <!--<p>Redesign with better support for working with multiple images at once coming in the future!</p>-->
-            <a href="oven/" class="appbtn">Go to Oven</a>
-
-            <hr>
-
-            <img src="assets/apps/count.jpg" alt='screenshot of "Counter" web app' class="right">
-            <h3 id="counter">Counter</h3>
-            <p>This thing lets you keep count of anything, saving it to your browser&rsquo;s local storage. You can add multiple counters, change their names and colours, and all of it will still be there even if you refresh the&nbsp;page.</p>
-
-            <a href="counter/" class="appbtn">Go to Counter</a>
-
-            <hr>
-
-            <img src="assets/apps/bandgen.jpg" alt='screenshot of "Bandgen" web app, showing a 3DS Virtual Console banner with "amogus" on it' class="right">
-            <h3 id="bandgen">Bandgen</h3>
-            <p><b>Bandgen</b> is a sloppy made&#x2011;in&#x2011;a&#x2011;day does&#x2011;the&#x2011;job kind of tool that generates 3DS&nbsp;Virtual&nbsp;Console styled banners, made to be used with New&nbsp;Super Ultimate Injector <small>(by&nbsp;Asdolo on&nbsp;GBAtemp)</small> because Wine wouldn't let me use the font Rodin&nbsp;properly.</p>
-
-            <a href="bandgen/" class="appbtn">Go to Bandgen</a>
-        </div>
-        <div class="container rightbar">
-            Here's some things I've been working on&nbsp;recently:
-            <ul>
-              <li>I made <a href="https://kaasiand.itch.io/yakuhigh" target="_blank">YakuHigh</a> for Falling Block Jam&nbsp;2025!</li>
-              <li>I've been updating <a href="lingle/" target="_blank">Lingle</a>.</li>
-            </ul>
-            <hr />
-            <p>Check me out on here too!</p>
-            <ul>
-              <li><p>Itch.io: <a href="https://kaasiand.itch.io/" target="_blank">kaasiand.itch.io</a></p></li>
-            </ul>
-        </div>
-    </div>
+            <div id="counter">
+                <a href="counter/"><img src="assets/apps/count.jpg" alt="Counter screenshot"></a>
+                <h3>Counter</h3>
+                <p lang="nl">Een doodsimpel ding waarmee je van alles kunt bĳhouden, met namen en kleurtjes. Wordt op je eigen computer lokaal opgeslagen, zodat het behouden blĳft ook als je het venster sluit.</p>
+                <p lang="en">This thing lets you keep count of anything, saving it to your browser&rsquo;s local storage. You can add multiple counters, change their names and colours, and all of it will still be there even if you refresh the&nbsp;page.</p>
+                <a href="counter/" class="appbtn" lang="nl">Naar Counter</a>
+                <a href="counter/" class="appbtn" lang="en">Go to Counter</a>
+            </div>
 
 
-    <script>
-    </script>
+            <div id="bandgen">
+                <a href="bandgen/"><img src="assets/apps/bandgen.jpg" alt="Bandgen screenshot"></a>
+                <h3>Bandgen</h3>
+                <p lang="nl">Een shitty tooltje om 3DS&nbsp;Virtual&nbsp;Console-banners mee te maken, puur omdat ik het lettertype Rodin niet werkend kon krĳgen in New&nbsp;Super Ultimate Injector <small>(door&nbsp;Asdolo op&nbsp;GBAtemp)</small> op Linux via Wine.</p>
+                <p lang="en">A sloppy made&#x2011;in&#x2011;a&#x2011;day does&#x2011;the&#x2011;job kind of tool that generates 3DS&nbsp;Virtual&nbsp;Console styled banners, made to be used with New&nbsp;Super Ultimate Injector <small>(by&nbsp;Asdolo on&nbsp;GBAtemp)</small> because Wine wouldn&rsquo;t let me use the font Rodin&nbsp;properly.</p>
+                <a href="bandgen/" class="appbtn" lang="nl">Naar Oven</a>
+                <a href="bandgen/" class="appbtn" lang="en">Go to Oven</a>
+            </div>
+        </div> <!-- sluit coolgrid-->
+
+    </div><!-- sluit cont-->
+    </div><!-- sluit main-->
+
+    <footer>
+    </footer>
+
+    <script type="text/javascript" src="script.js"></script>
   </body>
 </html>

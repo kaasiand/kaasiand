@@ -3,12 +3,40 @@
 }
 
 body {
-    margin: 10px;
-    padding-top: 30px;
+    margin: 0 10px 10px 10px;
     font-family: "Times New Roman", "FreeSerif", Times, serif;
     font-size: large;
     overflow-x: hidden;
 }
+body:has(#rad_nl:checked), body:has(#rad_nl:not(:checked)):has(#rad_en:not(:checked)) {
+    & [lang="en"] { display: none; }
+}
+body:has(#rad_en:checked) {
+    & [lang="nl"] { display: none; }
+}
+
+* { box-sizing: border-box }
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0 10px;
+    gap: 15px;
+
+    text-shadow: 0px 1px 3px black;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    & a { color: white }
+    & a[href] { color: yellow; }
+    & :is(a:hover, a:focus) { color: white }
+    & a[href]:active { color: red }
+    
+    >div>* { padding-left: 20px; }
+    >div>:first-child { background: url('assets/icon/arrow.gif') no-repeat 0px 3px; }
+    >div>:first-child.new { padding-left: 35px; background: url('assets/icon/new.gif') no-repeat 0px 3px; }
+    &.nav2 { font-size: 90%; >div>:first-child { padding-left: 23px; background-position: 0px 3px; } }
+}
+
 div {
     display: block;
 }
@@ -36,7 +64,10 @@ div {
     border-style: solid;
     border-color: burlywood maroon maroon burlywood;
     box-shadow: 2px 2px 5px black;
-    color:ivory;
+    color:white;
+    
+    font-size: 90%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     
     hr {
         clear: both;
@@ -58,19 +89,73 @@ div {
     box-shadow: 2px 2px 5px black;
     width: 70%;
 }
+#cont:only-child { width: 98% }
 #main {
     display: flex;
     align-items: flex-start;
+    margin-top: 10px;
+}
+
+#langpicker {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: -2px;
+    margin: 0;
+    transform: translateY(-100%);
+    font-size: 90%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+input[name="taal"] {
+    appearance: none;
+    padding: 0; margin: 0;
+    
+    +label {
+        width: 120px;
+        text-align: center;
+        padding: 0; margin: 0;
+        background-color: #aaa;
+        padding: 2px;
+        border: 2px solid white;
+        border-color: white black black white;
+        cursor: pointer;
+        &:hover {
+            background-color: #aaa;
+        }
+    }
+    &:checked+label {
+        background-color: #555;
+        color: white;
+        border-color: grey lightgrey lightgrey grey;
+        cursor: default;
+    }
+}
+
+.coolgrid {
+    display: grid;
+    min-width: 80vw;
+    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 400px));
+    gap: 30px 15px;
+    >div { 
+    position: relative };
+    & p {
+        margin: 10px 0 15px;
+    }
+    & h3 {
+        margin: 10px 0 0;
+    }
+    
 }
 
 .noborder {
     border: none;
     background: none;
 }
-#top {
+header {
     text-align: center;
 }
-#top small {
+header small {
     color: sienna;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bold;
@@ -86,7 +171,7 @@ h1 {
     font-size: 36px;
     margin: 0;
 }
-h1 span {
+h1 a {
     filter: drop-shadow(1px 2px 3px black);
 
     background-image: linear-gradient(to top, darkorange, gold);
@@ -118,7 +203,7 @@ h1::after  { transform: scale( 0.7,0.7); }
     word-wrap: break-word;
 }
 .playdatefilter {
-    filter: contrast(0.7) sepia(0.1);
+    filter: blur(0.6px) contrast(0.85) sepia(0.15);
 }
 .pricetag {
     padding: 0px 5px;
@@ -148,41 +233,20 @@ h1::after  { transform: scale( 0.7,0.7); }
     mask-image: linear-gradient(to left, rgba(0,0,0,1), 80%, rgba(0,0,0,0));
     border: none !important;
 }
-#nav {
-    z-index: 3;
-}
-#nav ul {
-    margin-left: -48px;
-    margin-top: -6px;
-}
-#nav li {
-    list-style: none;
-    margin-bottom: 2px;
-    margin-right: 10px;
-
-    float: left;
-}
-#nav li * {
-    position: relative;
-    top: -3px;
-    margin: 0;
-    text-shadow: 0px 1px 3px black;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-:where(.leftbar, .rightbar) a {
+:where(.leftbar, .rightbar, footer) a {
     color: yellow;
 }
-:where(.leftbar, .rightbar) :is(a:hover, a:focus, p) {
+:where(.leftbar, .rightbar, footer) :is(a:hover, a:focus, p) {
     color: white;
 }
-:where(.leftbar, .rightbar) a:active {
+:where(.leftbar, .rightbar, footer) a:active {
     color: red;
 }
 
 #cont img {
     margin-bottom: 10px;
     border: double 3px brown;
-    max-width: 50%;
+    max-width: 100%;
 }
 #cont img.right {
     margin-left: 20px;
@@ -210,6 +274,7 @@ h2 {
     background: darkred;
     color:yellow;
     padding: 5px;
+    margin-right: 5px;
     text-decoration: none;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: medium;
@@ -236,9 +301,10 @@ h2 {
 @media only screen and (min-width: 768px) {
     body {
         padding-top: 0;
+        margin: 10px;
     }
     h1         { font-size: 48px; }
-    h1 span    {
+    h1 a    {
         padding: 0 17px;
     }
     h1::before { transform: scale(-1,1); }
@@ -253,29 +319,8 @@ h2 {
     .mobileonly {
         display: none;
     }
-
-    .leftbar {
-        max-width: 250px;
-        position: unset;
-        width: 30%;
-        height: unset;
-    }
-    #nav ul {
-        list-style-image: url('assets/icon/arrow.gif');
-        margin-left: -10px;
-        margin-top: 0;
-    }
-    #nav li {
-        list-style-image: url('assets/icon/arrow.gif');
-        float: none;
-        white-space: nowrap;
-    }
-    #nav li.new {
-        list-style-image: url('assets/icon/new.gif') !important;
-    }
-
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
     #main {
         flex-wrap: wrap;
     }
@@ -283,4 +328,14 @@ h2 {
         width: 100%;
     }
 
+}
+
+footer {
+    padding: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    font-size: 80%;
+    gap: 30px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    > div { min-width: 80px; display: flex; flex-flow: column nowrap; }
 }

@@ -20,46 +20,69 @@
     <link rel="icon" href="assets/favicon.gif">
   </head>
   <body onload="init()">
-    <div id="top" class="wrapper">
-        <h1><span>Kaasiand.cool</span></h1>
+    <header class="wrapper">
+        <h1><a href="./">Kaasiand.cool</a></h1>
         <small>the one and onion</small>
-    </div>
+        <nav lang="nl">
+            <div><a>Home</a></div>
+            <div><a href="webapps?lang=nl">Webapps</a></div>
+            <div><a href="games?lang=nl" class="">Spelletjes</a></div>
+        </nav>
+        <nav lang="en">
+            <div><a>Home</a></div>
+            <div><a href="webapps?lang=en">Web apps</a></div>
+            <div><a href="games?lang=en" class="">Games</a></div>
+        </nav>
+    </header>
     <div id="main" class="wrapper">
-        <div class="container leftbar" id="nav">
-            <ul>
-                <li><p>Home</p></li>
-                <li><a href="webapps">Web apps</a></li>
-                <li class="new"><a href="games">Games</a></li>
-                <!-- <li><a href="#">Other things</a></li> -->
-            </ul>
-
-        </div>
         <div class="container" id="cont">
             <img src="assets/amiga.jpg" alt="" class="right fadeleft pconly" style="width: 30%; margin-top: -20px; margin-right: -20px; min-width: 150px;">
+        <span lang="nl">
             <h2>Welkom op Kaasiand.cool!</h2>
-            <p>Dit is mĳn website en het thuis van mĳn digitale creaties! Je&nbsp;kunt alles bereiken via de navigatiebalk <span class="pconly">hier&nbsp;links</span><span class="mobileonly">bovenin</span>. De&nbsp;rest&nbsp;van de site is in het Engels.</p>
+            <p>Dit is mĳn website en het thuis van mĳn digitale creaties! Met de linkjes bovenin kom je op de rest van de site.</p>
             <br>
+            
             <h2>Over mĳ</h2>
-            <img src="assets/2025.jpg" alt='selfie' class="left" style="width: 100px">
-            <p>Hallo! Ik ben Daniël. Ik maak coole dingen en hoop dat jĳ ze ook cool vindt. Ik hou van talen, typografie, videogames, frontenddevelopment, kunstzinnig gepriegel in&nbsp;2D en&nbsp;3D, en alles wat een beetje tussen deze vĳf–zes dingen in&nbsp;zit. Geen fan van backenddevelopment.</p>
+            <img src="assets/2025.jpg" alt='selfie' class="left" style="width: 120px">
+            <p>Hallo! Ik ben Daniël. Ik maak coole dingen en hoop dat jĳ ze ook cool vindt. Ik hou van (ver)talen en allerlei soorten kunstzinnig gepriegel: lettertypen, twee– en driedimensionale digitale beeldende kunst, klooien aan videogames (eigen en bestaande), vertalingen, en de overlap van al deze dingen, allemaal puur met menselĳke breinkracht.</p>
+        </span>
+
+        <span lang="en">
+            <h2>Welcome to Kaasiand.cool!</h2>
+            <p>This is my website, where you can find all the stuff I&rsquo;ve made. You can reach the rest of the site through the links at the top.</p>
+            <br>
+            
+            <h2>About me</h2>
+            <img src="assets/2025.jpg" alt='selfie' class="left" style="width: 120px">
+            <p>Hi! I'm Daniel*. I make cool things and hope you'll find them cool too. I like languages, translation, fonts, 2D and 3D digital art, working on my own small games and modding old existing games; all exclusively human-powered.</p>
+            <p><small>*&ThinSpace;My name is officially written Daniël with a diaeresis ¨ and pronounced /'da:nijɛl/ (IPA) in Dutch. In English, I think it looks and sounds better if you just use the English equivalent of the name. The diaeresis only matters to Dutch orthography, and would only cause confusion if you&rsquo;re pronouncing it the English way anyway.</small></p>
+        </span>
         </div>
         <div class="container rightbar">
-            
-            Here's some things I've been working on&nbsp;recently:
-            <ul>
-              <li>I made <a href="https://kaasiand.itch.io/yakuhigh" target="_blank">YakuHigh</a> for Falling Block Jam&nbsp;2025!</li>
-              <li>I've been updating <a href="lingle/" target="_blank">Lingle</a>.</li>
-            </ul>
+            <span lang="nl">Hier het laatste nieuws:</span>
+            <span lang="en">Here&rsquo;s the latest news:</span>
+    <ul lang="nl">
+      <li>Deze site heeft een makeovertje gekregen en is nu zowel in het Nederlands als in het Engels te lezen.<br><small>oktober 2026</small></li>
+      <li><a href="lingle/" target="_blank">Lingle</a> is bĳgewerkt en toont voortaan ook je statistieken.<br><small>oktober 2025</small></li>
+      <li>Ik heb <a href="https://kaasiand.itch.io/yakuhigh" target="_blank">YakuHigh</a> gemaakt voor de Falling Block Jam&nbsp;2025!<br><small>september 2025</small></li>
+    </ul>
+    <ul lang="en">
+      <li>Revamped this website; pages are now available in both Dutch and English.<br><small>October 2026</small></li>
+      <li><a href="lingle/" target="_blank">Lingle</a> has been updated to show your statistics now.<br><small>October 2025</small></li>
+      <li>I made <a href="https://kaasiand.itch.io/yakuhigh" target="_blank">YakuHigh</a> for Falling Block Jam&nbsp;2025!<br><small>September 2025</small></li>
+    </ul>
             <hr />
-            <p>Check me out on here too!</p>
+            <p lang="nl">Ik zit ook op Itch!</p>
+            <p lang="en">You can find me on Itch too!</p>
             <ul>
               <li><p>Itch.io: <a href="https://kaasiand.itch.io/" target="_blank">kaasiand.itch.io</a></p></li>
             </ul>
         </div>
     </div>
 
+    <footer> <!-- comfortabeler lezen als de rest van de site niet helemaal tot de onderzĳde vd pagina reikt -->
+    </footer>
 
-    <script>
-    </script>
+    <script type="text/javascript" src="script.js"></script>
   </body>
 </html>

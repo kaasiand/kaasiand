@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Games &mdash; Kaasiand.cool </title>
+    <title>Kaasiand.cool </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta property="og:title" content="Kaasiand.cool">
@@ -19,70 +19,83 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="assets/favicon.gif">
   </head>
-  <body onload="init()">
-    <div id="top" class="wrapper">
-        <h1><span>Kaasiand.cool</span></h1>
+  <body onload="init(); loctitle();">
+    <header id="top" class="wrapper">
+        <h1><a href="./">Kaasiand.cool</a></h1>
         <small>the one and onion</small>
-    </div>
+        <nav lang="nl">
+            <div><a href="./?lang=nl">Home</a></div>
+            <div><a href="webapps?lang=nl">Webapps</a></div>
+            <div><a>Spelletjes</a></div>
+        </nav>
+        <nav lang="en">
+            <div><a href="./?lang=en">Home</a></div>
+            <div><a href="webapps?lang=en">Web apps</a></div>
+            <div><a>Games</a></div>
+        </nav>
+        <nav class="nav2">
+            <div><a style="background-image: url('assets/icon/yakuhigh.png');" href="https://kaasiand.itch.io/yakuhigh" target="_blank">YakuHigh</a></div>
+            <div><a style="background-image: url('lingle/favicon.png');" href="lingle/" target="_blank">Lingle</a></div>
+            <div><a style="background-image: url('assets/icon/bagboymemory.png');" href="https://kaasiand.itch.io/bag-boy-memory" target="_blank">Bag Boy Memory</a></div>
+        </nav>
+    </header>
     <div id="main" class="wrapper">
-        <div class="container leftbar" id="nav">
-            <ul>
-                <li><a href="./">Home</a></li>
-                <li><a href="webapps">Web apps</a></li>
-                <li><p>Games</p></li>
-                <ul class="pconly">
-                    <li style="list-style-image: url('assets/icon/yakuhigh.png');"><a href="https://kaasiand.itch.io/yakuhigh" target="_blank">YakuHigh</a></li>
-                    <!-- <li style="list-style-image: url('assets/icon/jatsi.png');"><a href="">Jatsi</a></li> -->
-                    <li style="list-style-image: url('assets/icon/bagboymemory.png');"><a href="https://kaasiand.itch.io/bag-boy-memory" target="_blank">Bag&ThinSpace;Boy&ThinSpace;Memory</a></li>
-                </ul>
-                <!-- <li><a href="#">Other things</a></li> -->
-            </ul>
+        <div class="container" id="cont">
+        <span lang="nl">
+            <h2>Spelletjes</h2>
+            <p>Ik maak kleine videogames! De downloadbare zĳn ook te vinden op <a href="https://kaasiand.itch.io/" target="_blank">Kaasiand.itch.io</a>. Meer over de Playdate kun je vinden op <a href="https://play.date/" target="_blank">hun eigen website</a>.</p>
+        </span>
+        <span lang="en">
+            <h2>Games</h2>
+            <p>I make games! You can also find the downloadable ones on <a href="https://kaasiand.itch.io/" target="_blank">Kaasiand.itch.io</a>. Visit <a href="https://play.date/" target="_blank">the Playdate website</a> for more information on Playdate.</p>
+        </span>
+
+        <div class="coolgrid">
+
+            <div id="yakuhigh">
+                <a href="https://kaasiand.itch.io/yakuhigh" target="_blank"><img src="assets/games/yakuhigh.png" alt="YakuHigh banner" class="playdatefilter"></a>
+                <h3>YakuHigh <img src="assets/icon/forplaydate.png" alt="(for Playdate)" class="platformbadge"></h3>
+                <p lang="nl">Een arcadepuzzelspel gebaseerd op Japans mahjong! Gemaakt tĳdens de <a href="https://itch.io/jam/falling-block-jam" target="_blank">Falling&nbsp;Block Jam&nbsp;2025</a>.</p>
+                <p lang="en">A falling-block arcade puzzler with riichi mahjong rules! Made for <a href="https://itch.io/jam/falling-block-jam" target="_blank">Falling&nbsp;Block Jam&nbsp;2025</a>.</p>
+                <a href="https://kaasiand.itch.io/yakuhigh" target="_blank" class="appbtn" lang="nl">Naar YakuHigh op Itch</a>
+                <a href="https://kaasiand.itch.io/yakuhigh" target="_blank" class="appbtn" lang="en">Get YakuHigh on Itch</a>
+            </div>
+
+            <div id="lingle">
+                <a href="lingle/" target="_blank"><img src="assets/apps/lingle.jpg" alt="Lingle screenshot" style="width:250px"></a>
+                <h3>Lingle</h3>
+                <p lang="nl">Een Nederlandstalige Wordle met een oude vertrouwde look, gewoon in de browser. Ondersteunt de lange Ĳ!</p>
+                <p lang="en">A Dutch version of Wordle with a familiar look and feel, right from your browser. Supports the Ĳ&nbsp;digraph!</p>
+<a href="lingle/" target="_blank" class="appbtn" lang="nl">Naar Lingle</a>
+<a href="lingle/" target="_blank" class="appbtn" lang="en">Go to Lingle</a>
+            </div>
+
+            <div id="bagboymemory">
+                <a href="https://kaasiand.itch.io/bag-boy-memory" target="_blank"><img src="assets/games/bagboymemory.png" alt="Bag Boy Memory banner" class="playdatefilter"></a>
+                <h3>Bag Boy Memory <img src="assets/icon/forplaydate.png" alt="(for Playdate)" class="platformbadge"></h3>
+                <p lang="nl">Een namaak van het memoryspel uit de Tiny&nbsp;Chao&nbsp;Garden van Sonic&nbsp;Advance.</p>
+                <p lang="en">A recreation of the memory minigame from Sonic&nbsp;Advance&rsquo;s Tiny&nbsp;Chao&nbsp;Garden.</p>
+<a href="https://kaasiand.itch.io/bag-boy-memory" target="_blank" class="appbtn" lang="nl">Naar Bag Boy Memory op Itch</a><!--<span class="pricetag free" lang="nl">Gratis!</span>-->
+<a href="https://kaasiand.itch.io/bag-boy-memory" target="_blank" class="appbtn" lang="en">Get Bag Boy Memory on Itch</a>
+            </div>
 
         </div>
-        <div class="container" id="cont">
-            <h2>Games</h2>
-            <p>I make games! You can also find them on <a href="https://kaasiand.itch.io/" target="_blank">Kaasiand.itch.io</a>.</p><p>Visit <a href="https://play.date/" target="_blank">the Playdate website</a> for more information on Playdate.</p>
-
-            <hr>
-
-            <img src="assets/games/yakuhigh.png" alt="YakuHigh banner icon" class="gamebanner left playdatefilter pconly">
-            <h3 id="yakuhigh">YakuHigh <img src="assets/icon/forplaydate.png" alt="(for Playdate)" class="platformbadge"></h3>
-            <img src="assets/games/yakuhigh.png" alt="YakuHigh banner icon" class="gamebanner playdatefilter mobileonly">
-            <p>A falling-block puzzle game with riichi mahjong rules! Made for <a href="https://itch.io/jam/falling-block-jam" target="_blank">Falling&nbsp;Block Jam&nbsp;2025</a>.</p>
-            <a href="https://kaasiand.itch.io/yakuhigh" target="_blank" class="appbtn">Get YakuHigh on Itch</a>
 
             <!--<hr>
 
             <img src="assets/games/jatsi.png" alt="Jatsi banner icon" class="gamebanner left playdatefilter pconly">
             <h3 id="jatsi">Jatsi <img src="assets/icon/forplaydate.png" alt="(for Playdate)" class="platformbadge"></h3>
             <img src="assets/games/jatsi.png" alt="Jatsi banner icon" class="gamebanner playdatefilter mobileonly">
+            <p>Een arcadedobbelspel met spelvarianten voor 5 en 6 dobbelstenen, en zeldzame dobbelstenen die dubbele punten waard zĳn.</p>
             <p>A solo Yatzy game, with rare dice worth double points, and multiple modes (including rules based on Yahtzee and Maxi&nbsp;Yatzy).</p>
             <a href="" class="appbtn">Coming Soon!</a>-->
 
-            <hr>
+    </div><!-- sluit cont-->
+    </div><!-- sluit main-->
 
-            <img src="assets/games/bagboymemory.png" alt="Bag Boy Memory banner icon" class="gamebanner left playdatefilter pconly">
-            <h3 id="bagboymemory">Bag Boy Memory <img src="assets/icon/forplaydate.png" alt="(for Playdate)" class="platformbadge"></h3>
-            <img src="assets/games/bagboymemory.png" alt="Bag Boy Memory banner icon" class="gamebanner playdatefilter mobileonly">
-            <p>A recreation of the memory minigame from Sonic&nbsp;Advance&rsquo;s Tiny&nbsp;Chao&nbsp;Garden.</p>
-            <a href="https://kaasiand.itch.io/bag-boy-memory" target="_blank" class="appbtn">Get Bag Boy Memory on Itch</a> <span class="pricetag free">Free!</span>
-        </div>
-        <div class="container rightbar">
-            Here's some things I've been working on&nbsp;recently:
-            <ul>
-              <li>I made <a href="https://kaasiand.itch.io/yakuhigh" target="_blank">YakuHigh</a> for Falling Block Jam&nbsp;2025!</li>
-              <li>I've been updating <a href="lingle/" target="_blank">Lingle</a>.</li>
-            </ul>
-            <hr />
-            <p>Check me out on here too!</p>
-            <ul>
-              <li><p>Itch.io: <a href="https://kaasiand.itch.io/" target="_blank">kaasiand.itch.io</a></p></li>
-            </ul>
-        </div>
-    </div>
+    <footer>
+    </footer>
 
-
-    <script>
-    </script>
+    <script type="text/javascript" src="script.js"></script>
   </body>
 </html>
