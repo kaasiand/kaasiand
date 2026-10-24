@@ -25,14 +25,6 @@ function fillFooter() {
 function addLangPicker() {
     let urlparam = new URLSearchParams(window.location.search);
 
-    let div = document.createElement("div");
-    div.id = "langpicker";
-    div.innerHTML = `
-<input onclick="loctitle('nl')" type="radio" id="rad_nl" name="taal" checked><label for="rad_nl">Nederlands</label>
-<input onclick="loctitle('en')" type="radio" id="rad_en" name="taal"><label for="rad_en">Engels</label>
-`;
-    document.getElementById("cont").appendChild(div);
-
     switch (urlparam.get("lang")) {
         case "en": document.getElementById("rad_en").checked = true; break;
         case "nl": default: document.getElementById("rad_nl").checked = true; break;
