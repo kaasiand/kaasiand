@@ -39,6 +39,9 @@ function init() {
 function loctitle(force) {
     let urlparam = new URLSearchParams(window.location.search);
     let lang = urlparam.get("lang") ?? "nl";
-    if (force) lang = force;
+    if (force) {
+        lang = force;
+        window.location.href = window.location.origin + window.location.pathname + "?lang=" + lang;
+    }
     document.title = document.querySelector(`header nav[lang="${lang}"] a:not([href])`).innerText + " – Kaasiand.cool";
 }
